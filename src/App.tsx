@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
@@ -97,7 +98,7 @@ const AdBanner = ({ width, height, dataKey }: { width: number, height: number, d
   );
 };
 
-export default function App() {
+function MainApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -111,7 +112,6 @@ export default function App() {
   const [adblockDetected, setAdblockDetected] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState(5);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [activePage, setActivePage] = useState<string | null>(null);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -312,7 +312,7 @@ export default function App() {
             </Badge>
           </div>
           <div className="flex items-center gap-4">
-            <a href="https://www.profitablecpmratenetwork.com/n8dibdbq?key=64fbe1c81638a0debe45609e1fe6cce6" target="_blank" rel="noreferrer" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all">
+            <a href="https://penguinsincequalify.com/n8dibdbq?key=64fbe1c81638a0debe45609e1fe6cce6" target="_blank" rel="noreferrer" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all">
               <Zap size={16} />
               Premium APIs
             </a>
@@ -497,55 +497,13 @@ export default function App() {
             <span className="text-slate-500 text-sm ml-2">© {new Date().getFullYear()}</span>
           </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium text-slate-500">
-            <button onClick={() => setActivePage('disclaimer')} className="hover:text-slate-900 transition-colors">Disclaimer</button>
-            <button onClick={() => setActivePage('privacy')} className="hover:text-slate-900 transition-colors">Privacy Policy</button>
-            <button onClick={() => setActivePage('terms')} className="hover:text-slate-900 transition-colors">Terms of Service</button>
+            <RouterLink to="/disclaimer" target="_blank" className="hover:text-slate-900 transition-colors">Disclaimer</RouterLink>
+            <RouterLink to="/privacy" target="_blank" className="hover:text-slate-900 transition-colors">Privacy Policy</RouterLink>
+            <RouterLink to="/terms" target="_blank" className="hover:text-slate-900 transition-colors">Terms of Service</RouterLink>
             <a href="https://t.me/prexzyvillatech" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors">Contact Us</a>
           </div>
         </div>
       </footer>
-
-      {/* Pages Modal */}
-      <Dialog open={!!activePage} onOpenChange={(open) => !open && setActivePage(null)}>
-        <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              {activePage === 'disclaimer' && 'Disclaimer'}
-              {activePage === 'privacy' && 'Privacy Policy'}
-              {activePage === 'terms' && 'Terms of Service'}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="prose prose-slate prose-sm mt-4 text-slate-600 space-y-4">
-            {activePage === 'disclaimer' && (
-              <>
-                <p>The APIs provided in this directory are aggregated from various public sources across the internet. We do not host, control, or take responsibility for the content, availability, or reliability of these external endpoints.</p>
-                <p>Users are solely responsible for how they use these APIs. Please ensure you comply with the respective terms of service of each API provider before using them in production applications.</p>
-                <p>We do not guarantee the uptime, accuracy, or safety of any endpoint listed here. Use them at your own risk.</p>
-              </>
-            )}
-            {activePage === 'privacy' && (
-              <>
-                <p>Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use API Vault.</p>
-                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Information We Collect</h3>
-                <p>We do not require you to create an account to use our directory. We may collect anonymous usage data (such as page views and clicks) to improve our service and user experience.</p>
-                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Third-Party Services</h3>
-                <p>We use third-party advertising networks (like Adsterra) and security services (like Cloudflare Turnstile). These services may use cookies or similar technologies to collect data about your browsing habits to provide relevant ads and ensure security.</p>
-              </>
-            )}
-            {activePage === 'terms' && (
-              <>
-                <p>By accessing and using API Vault, you agree to be bound by these Terms of Service.</p>
-                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Use of Service</h3>
-                <p>API Vault is provided "as is" and "as available". You agree not to misuse the service, including but not limited to attempting to bypass security measures, scraping data excessively, or using the directory for malicious purposes.</p>
-                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Adblockers</h3>
-                <p>We rely on advertising revenue to keep this service free. By using this site, you agree to disable adblockers or whitelist our domain.</p>
-                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Changes to Terms</h3>
-                <p>We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of the new terms.</p>
-              </>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -796,6 +754,70 @@ export default function App() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+function Disclaimer() {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4">
+      <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
+        <h1 className="text-3xl font-bold mb-6">Disclaimer</h1>
+        <div className="prose prose-slate max-w-none">
+          <p>The APIs provided in this directory are aggregated from various public sources across the internet. We do not host, control, or take responsibility for the content, availability, or reliability of these external endpoints.</p>
+          <p>Users are solely responsible for how they use these APIs. Please ensure you comply with the respective terms of service of each API provider before using them in production applications.</p>
+          <p>We do not guarantee the uptime, accuracy, or safety of any endpoint listed here. Use them at your own risk.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Privacy() {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4">
+      <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
+        <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
+        <div className="prose prose-slate max-w-none">
+          <p>Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use API Vault.</p>
+          <h3 className="text-lg font-semibold mt-6 mb-2">Information We Collect</h3>
+          <p>We do not require you to create an account to use our directory. We may collect anonymous usage data (such as page views and clicks) to improve our service and user experience.</p>
+          <h3 className="text-lg font-semibold mt-6 mb-2">Third-Party Services</h3>
+          <p>We use third-party advertising networks (like Adsterra) and security services (like Cloudflare Turnstile). These services may use cookies or similar technologies to collect data about your browsing habits to provide relevant ads and ensure security.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Terms() {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans py-12 px-4">
+      <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
+        <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
+        <div className="prose prose-slate max-w-none">
+          <p>By accessing and using API Vault, you agree to be bound by these Terms of Service.</p>
+          <h3 className="text-lg font-semibold mt-6 mb-2">Use of Service</h3>
+          <p>API Vault is provided "as is" and "as available". You agree not to misuse the service, including but not limited to attempting to bypass security measures, scraping data excessively, or using the directory for malicious purposes.</p>
+          <h3 className="text-lg font-semibold mt-6 mb-2">Adblockers</h3>
+          <p>We rely on advertising revenue to keep this service free. By using this site, you agree to disable adblockers or whitelist our domain.</p>
+          <h3 className="text-lg font-semibold mt-6 mb-2">Changes to Terms</h3>
+          <p>We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of the new terms.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
