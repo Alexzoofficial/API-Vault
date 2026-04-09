@@ -1,0 +1,3376 @@
+{
+  "status": true,
+  "statusCode": 200,
+  "creator": "prexzy",
+  "totalfitur": 543,
+  "endpoints": [
+    {
+      "name": "Artificial Intelligence",
+      "items": [
+        {
+          "AI4Chat": {
+            "desc": "Chat with AI4Chat assistant",
+            "path": "/ai/ai4chat?prompt="
+          }
+        },
+        {
+          "DALL-E 3 XL": {
+            "desc": "Generate high-quality images using DALL-E 3 XL LoRA v2",
+            "path": "/ai/dalle?prompt=&negativePrompt?=&width?=&height?=&seed?=&guidanceScale?="
+          }
+        },
+        {
+          "AI Chat Assistant": {
+            "desc": "Chat with AI assistant",
+            "path": "/ai/aichat?prompt="
+          }
+        },
+        {
+          "Story AI Quick": {
+            "desc": "Generate quick stories with default settings | Example: \"A dragon protecting a magical crystal\" or \"Space adventure on Mars\"",
+            "path": "/ai/quick?text="
+          }
+        },
+        {
+          "Story AI Advanced": {
+            "desc": "Generate stories with customizable genre, length, and creativity | Genres: Action, Sci-fi, Mystery, Horror, etc. | Length: Short, Novel",
+            "path": "/ai/advanced?text=&mode?=&length?=&creative?="
+          }
+        },
+        {
+          "Microsoft Copilot": {
+            "desc": "Chat with Microsoft Copilot AI",
+            "path": "/ai/copilot?text="
+          }
+        },
+        {
+          "Copilot Think Deeper": {
+            "desc": "Deep thinking mode for complex reasoning",
+            "path": "/ai/copilot-think?text="
+          }
+        },
+        {
+          "GPT-5": {
+            "desc": "Advanced GPT-5 AI model",
+            "path": "/ai/gpt-5?text="
+          }
+        },
+        {
+          "ChatBot App": {
+            "desc": "AI chatbot with optional web search capability",
+            "path": "/ai/chatbot?text=&search?="
+          }
+        },
+        {
+          "ChatUp AI": {
+            "desc": "Chat with AI using ChatUp",
+            "path": "/ai/chatup?prompt="
+          }
+        },
+        {
+          "Prompt to Code": {
+            "desc": "Generate code from text prompt in any programming language",
+            "path": "/ai/prompttocode?prompt=&language="
+          }
+        },
+        {
+          "Detect Bugs": {
+            "desc": "Find and fix bugs in your code",
+            "path": "/ai/detectbugs?code="
+          }
+        },
+        {
+          "Convert Code": {
+            "desc": "Convert code between programming languages",
+            "path": "/ai/convertcode?code=&target=&source?="
+          }
+        },
+        {
+          "Explain Code": {
+            "desc": "Get detailed explanation of any code",
+            "path": "/ai/explaincode?code=&lang?="
+          }
+        },
+        {
+          "Chat Everywhere": {
+            "desc": "Chat with GPT-3.5 AI - supports conversation history",
+            "path": "/ai/chateverywhere?text=&userId?=&prompt?=&temperature?=&reset?="
+          }
+        },
+        {
+          "Chat Everywhere Reset": {
+            "desc": "Reset conversation history for Chat Everywhere",
+            "path": "/ai/chateverywhere-reset?userId?="
+          }
+        },
+        {
+          "Dolphin AI Logical": {
+            "desc": "For analytical and reasoning questions",
+            "path": "/ai/logical?text="
+          }
+        },
+        {
+          "Dolphin AI Creative": {
+            "desc": "For creative writing and brainstorming",
+            "path": "/ai/creative?text="
+          }
+        },
+        {
+          "Dolphin AI Summarize": {
+            "desc": "For text summarization and condensation",
+            "path": "/ai/summarize?text="
+          }
+        },
+        {
+          "Dolphin AI Code Beginner": {
+            "desc": "For beginner programming questions",
+            "path": "/ai/code-beginner?text="
+          }
+        },
+        {
+          "Dolphin AI Code Advanced": {
+            "desc": "For advanced programming and algorithms",
+            "path": "/ai/code-advanced?text="
+          }
+        },
+        {
+          "AI Dream Interpreter": {
+            "desc": "Interpret your dreams with AI - describe your dream and get meaningful insights",
+            "path": "/ai/dream?dream="
+          }
+        },
+        {
+          "DeepSeek Chat": {
+            "desc": "Standard DeepSeek chat model",
+            "path": "/ai/deepseekchat?prompt=&image?="
+          }
+        },
+        {
+          "DeepSeek Reasoner": {
+            "desc": "DeepSeek model with reasoning capabilities",
+            "path": "/ai/deepseekreasoner?prompt=&image?="
+          }
+        },
+        {
+          "Reset Conversation": {
+            "desc": "Reset DeepSeek conversation history",
+            "path": "/ai/reset"
+          }
+        },
+        {
+          "Get History": {
+            "desc": "Get current conversation history",
+            "path": "/ai/history"
+          }
+        },
+        {
+          "Gemmy Image": {
+            "desc": "Generate images with Imagen AI - Aspect ratios: 1:1, 16:9, 9:16, 4:3, 3:4",
+            "path": "/ai/gemimage?prompt=&aspect_ratio?="
+          }
+        },
+        {
+          "GPT-4": {
+            "desc": "Chat with GPT-4 AI",
+            "path": "/ai/gpt4?text="
+          }
+        },
+        {
+          "NanoBanana AI": {
+            "desc": "Generate images from text using AI (Text-to-Image)",
+            "path": "/ai/nanobanana?prompt=&num_images?=&image_size?=&output_format?="
+          }
+        },
+        {
+          "NanoBanana Image-to-Image": {
+            "desc": "Transform existing images using AI (Image-to-Image)",
+            "path": "/ai/nanobanana-img?prompt=&image=&num_images?=&image_size?=&output_format?="
+          }
+        },
+        {
+          "Sora Watermark Remover": {
+            "desc": "Remove watermark from Sora AI generated videos",
+            "path": "/ai/soraremover?url="
+          }
+        },
+        {
+          "AI Writer Chat": {
+            "desc": "Chat with AI Writer models (gpt-4o-mini, etc.)",
+            "path": "/ai/aiwriter-chat?prompt=&model?="
+          }
+        },
+        {
+          "AI Writer Image": {
+            "desc": "Generate images with AI Writer - Supports sizes: 1792x1024, 1024x1792, 1024x1024",
+            "path": "/ai/aiwriter-image?prompt=&size?="
+          }
+        },
+        {
+          "AI Writer Models": {
+            "desc": "Get list of available AI Writer models",
+            "path": "/ai/aiwriter-models"
+          }
+        },
+        {
+          "Z.ai GLM-5": {
+            "desc": "Chat with GLM-5 AI model",
+            "path": "/ai/zai?text="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Image Generation",
+      "items": [
+        {
+          "Realistic Image": {
+            "desc": "Generate realistic/photographic images",
+            "path": "/ai/realistic?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Anime Image": {
+            "desc": "Generate anime-style images",
+            "path": "/ai/anime?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Fantasy Image": {
+            "desc": "Generate fantasy/artistic images",
+            "path": "/ai/fantasy?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Cyberpunk Image": {
+            "desc": "Generate cyberpunk/futuristic images",
+            "path": "/ai/cyberpunk?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Watercolor Image": {
+            "desc": "Generate watercolor painting style images",
+            "path": "/ai/watercolor?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Oil Painting Image": {
+            "desc": "Generate oil painting style images",
+            "path": "/ai/oil-painting?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Pixel Art Image": {
+            "desc": "Generate pixel art style images",
+            "path": "/ai/pixel-art?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Sketch Image": {
+            "desc": "Generate sketch/drawing style images",
+            "path": "/ai/sketch?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Cartoon Image": {
+            "desc": "Generate cartoon style images",
+            "path": "/ai/cartoon?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Abstract Image": {
+            "desc": "Generate abstract art images",
+            "path": "/ai/abstract?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Minimalist Image": {
+            "desc": "Generate minimalist style images",
+            "path": "/ai/minimalist?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Surreal Image": {
+            "desc": "Generate surreal/abstract images",
+            "path": "/ai/surreal?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Vintage Image": {
+            "desc": "Generate vintage/retro style images",
+            "path": "/ai/vintage?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Steampunk Image": {
+            "desc": "Generate steampunk style images",
+            "path": "/ai/steampunk?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Horror Image": {
+            "desc": "Generate horror/dark style images",
+            "path": "/ai/horror?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Sci-Fi Image": {
+            "desc": "Generate science fiction style images",
+            "path": "/ai/sci-fi?prompt=&negative_prompt?="
+          }
+        },
+        {
+          "Pop Art Image": {
+            "desc": "Generate pop art style images",
+            "path": "/ai/pop-art?prompt=&negative_prompt?="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Anime",
+      "items": [
+        {
+          "Search Anime": {
+            "desc": "Search for anime by title/keyword",
+            "path": "/anime/animesearch?query="
+          }
+        },
+        {
+          "Anime Detail": {
+            "desc": "Get detailed information and episode list for an anime",
+            "path": "/anime/animedetail?url="
+          }
+        },
+        {
+          "Anime Download": {
+            "desc": "Get streaming servers and download links for anime episodes",
+            "path": "/anime/animedownload?url="
+          }
+        },
+        {
+          "Hanime Search": {
+            "desc": "Search for anime videos on Hanime.tv",
+            "path": "/anime/hanime-search?query=&page?="
+          }
+        },
+        {
+          "Hanime Detail": {
+            "desc": "Get detailed information about a specific anime video",
+            "path": "/anime/hanime-detail?id="
+          }
+        },
+        {
+          "Manga Home": {
+            "desc": "Get latest manga updates from Komiku",
+            "path": "/anime/manga-home?page?="
+          }
+        },
+        {
+          "Manga Search": {
+            "desc": "Search for manga on Komiku",
+            "path": "/anime/manga-search?query="
+          }
+        },
+        {
+          "Manga Detail": {
+            "desc": "Get detailed information about a manga",
+            "path": "/anime/manga-detail?id="
+          }
+        },
+        {
+          "Manga Chapter": {
+            "desc": "Get manga chapter images",
+            "path": "/anime/manga-chapter?chapter_id="
+          }
+        },
+        {
+          "Manga Home": {
+            "desc": "Get manga home page content (comics list)",
+            "path": "/anime/manga-home"
+          }
+        },
+        {
+          "Manga Suggestions": {
+            "desc": "Get manga suggestions",
+            "path": "/anime/manga-suggestions?suggestion_type?="
+          }
+        },
+        {
+          "Manga Detail": {
+            "desc": "Get detailed information about a manga",
+            "path": "/anime/manga-detail?id="
+          }
+        },
+        {
+          "Manga Episodes": {
+            "desc": "Get episodes list of a manga",
+            "path": "/anime/manga-episodes?id="
+          }
+        },
+        {
+          "Manga Series": {
+            "desc": "Get series contents of a manga",
+            "path": "/anime/manga-series?id="
+          }
+        },
+        {
+          "Manga Search": {
+            "desc": "Search for manga by keyword",
+            "path": "/anime/manga-search?word="
+          }
+        },
+        {
+          "Manga Chapter": {
+            "desc": "Get specific chapter content by ID",
+            "path": "/anime/manga-chapter?id="
+          }
+        },
+        {
+          "Manga Comments": {
+            "desc": "Get comments for a manga",
+            "path": "/anime/manga-comments?content_id="
+          }
+        },
+        {
+          "Manga Rank Filters": {
+            "desc": "Get ranking filters",
+            "path": "/anime/manga-rank-filters"
+          }
+        },
+        {
+          "Manga Rank Tags": {
+            "desc": "Get top tags for ranking",
+            "path": "/anime/manga-rank-tags"
+          }
+        },
+        {
+          "Hug": {
+            "desc": "Get a random anime hug GIF",
+            "path": "/anime/hug"
+          }
+        },
+        {
+          "Slap": {
+            "desc": "Get a random anime slap GIF",
+            "path": "/anime/slap"
+          }
+        },
+        {
+          "Pat": {
+            "desc": "Get a random anime pat GIF",
+            "path": "/anime/pat"
+          }
+        },
+        {
+          "Cry": {
+            "desc": "Get a random anime cry GIF",
+            "path": "/anime/cry"
+          }
+        },
+        {
+          "Kill": {
+            "desc": "Get a random anime kill GIF",
+            "path": "/anime/kill"
+          }
+        },
+        {
+          "Bite": {
+            "desc": "Get a random anime bite GIF",
+            "path": "/anime/bite"
+          }
+        },
+        {
+          "Yeet": {
+            "desc": "Get a random anime yeet GIF",
+            "path": "/anime/yeet"
+          }
+        },
+        {
+          "Bully": {
+            "desc": "Get a random anime bully GIF",
+            "path": "/anime/bully"
+          }
+        },
+        {
+          "Bonk": {
+            "desc": "Get a random anime bonk GIF",
+            "path": "/anime/bonk"
+          }
+        },
+        {
+          "Wink": {
+            "desc": "Get a random anime wink GIF",
+            "path": "/anime/wink"
+          }
+        },
+        {
+          "Poke": {
+            "desc": "Get a random anime poke GIF",
+            "path": "/anime/poke"
+          }
+        },
+        {
+          "Nom": {
+            "desc": "Get a random anime nom GIF",
+            "path": "/anime/nom"
+          }
+        },
+        {
+          "Smile": {
+            "desc": "Get a random anime smile GIF",
+            "path": "/anime/smile"
+          }
+        },
+        {
+          "Wave": {
+            "desc": "Get a random anime wave GIF",
+            "path": "/anime/wave"
+          }
+        },
+        {
+          "Awoo": {
+            "desc": "Get a random anime awoo GIF",
+            "path": "/anime/awoo"
+          }
+        },
+        {
+          "Blush": {
+            "desc": "Get a random anime blush GIF",
+            "path": "/anime/blush"
+          }
+        },
+        {
+          "Smug": {
+            "desc": "Get a random anime smug GIF",
+            "path": "/anime/smug"
+          }
+        },
+        {
+          "Glomp": {
+            "desc": "Get a random anime glomp GIF",
+            "path": "/anime/glomp"
+          }
+        },
+        {
+          "Happy": {
+            "desc": "Get a random anime happy GIF",
+            "path": "/anime/happy"
+          }
+        },
+        {
+          "Dance": {
+            "desc": "Get a random anime dance GIF",
+            "path": "/anime/dance"
+          }
+        },
+        {
+          "Cringe": {
+            "desc": "Get a random anime cringe GIF",
+            "path": "/anime/cringe"
+          }
+        },
+        {
+          "Cuddle": {
+            "desc": "Get a random anime cuddle GIF",
+            "path": "/anime/cuddle"
+          }
+        },
+        {
+          "Highfive": {
+            "desc": "Get a random anime highfive GIF",
+            "path": "/anime/highfive"
+          }
+        },
+        {
+          "Handhold": {
+            "desc": "Get a random anime handhold GIF",
+            "path": "/anime/handhold"
+          }
+        },
+        {
+          "Shinobu": {
+            "desc": "Get a random anime shinobu GIF",
+            "path": "/anime/shinobu"
+          }
+        },
+        {
+          "Reactions (Combined)": {
+            "desc": "Get anime reaction GIFs/images - Use individual reaction endpoints instead",
+            "path": "/anime/reactions"
+          }
+        },
+        {
+          "Rule34 Home": {
+            "desc": "Get recent videos and filters from rule34video.com home page",
+            "path": "/anime/rule34-home"
+          }
+        },
+        {
+          "Rule34 Search": {
+            "desc": "Search for videos on rule34video.com",
+            "path": "/anime/rule34-search?query="
+          }
+        },
+        {
+          "Rule34 Video Details": {
+            "desc": "Get detailed information for a specific rule34video.com video",
+            "path": "/anime/rule34-detail?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Downloader",
+      "items": [
+        {
+          "AIO Downloader": {
+            "desc": "Universal downloader for all social media platforms",
+            "path": "/download/aio?url="
+          }
+        },
+        {
+          "Capcut": {
+            "desc": "Download on capcut",
+            "path": "/download/capcut?url="
+          }
+        },
+        {
+          "DoodsStream Downloader": {
+            "desc": "Get download link from DoodsStream video",
+            "path": "/download/doods?url="
+          }
+        },
+        {
+          "Douyin": {
+            "desc": "Download on douyin",
+            "path": "/download/douyin?url="
+          }
+        },
+        {
+          "Facebook Downloader": {
+            "desc": "Download Facebook videos",
+            "path": "/download/facebook?url="
+          }
+        },
+        {
+          "Facebook Downloader V2": {
+            "desc": "Download Facebook videos with multiple quality options",
+            "path": "/download/facebookv2?url="
+          }
+        },
+        {
+          "Instagram V2": {
+            "desc": "Download Instagram reels, posts, photos, videos, and audio from Instagram URLs",
+            "path": "/download/ig2?url="
+          }
+        },
+        {
+          "Instagram Downloader": {
+            "desc": "Download Instagram posts, reels, and stories with multiple fallback methods",
+            "path": "/download/instagram?url="
+          }
+        },
+        {
+          "MediaFire Downloader": {
+            "desc": "Get download links from MediaFire files and folders",
+            "path": "/download/mediafire?url="
+          }
+        },
+        {
+          "Pinterest": {
+            "desc": "Download video/image on pinterest",
+            "path": "/download/pinterest?url="
+          }
+        },
+        {
+          "Pinterest V2": {
+            "desc": "Download video/image on pinterest",
+            "path": "/download/pinterestV2?url="
+          }
+        },
+        {
+          "RedNote Downloader": {
+            "desc": "Download videos and images from RedNote/Xiaohongshu",
+            "path": "/download/rednote?url="
+          }
+        },
+        {
+          "RedNote Media": {
+            "desc": "Redirect to RedNote media URL for direct download",
+            "path": "/download/rednote-media?url="
+          }
+        },
+        {
+          "Web2Zip": {
+            "desc": "Save website as ZIP file",
+            "path": "/download/saveweb2zip?url="
+          }
+        },
+        {
+          "Sfile": {
+            "desc": "Download on sfile.mobi",
+            "path": "/download/sfile?url="
+          }
+        },
+        {
+          "Snackvideo": {
+            "desc": "Download video on snackvideo",
+            "path": "/download/snackvideo?url="
+          }
+        },
+        {
+          "Soundcloud": {
+            "desc": "Download on soundcloud",
+            "path": "/download/soundcloud?url="
+          }
+        },
+        {
+          "Spotify Downloader": {
+            "desc": "Download Spotify tracks with multiple quality options and metadata",
+            "path": "/download/spotify?url="
+          }
+        },
+        {
+          "Terabox": {
+            "desc": "Download on terabox",
+            "path": "/download/terabox?url="
+          }
+        },
+        {
+          "Threads": {
+            "desc": "Download video/image on threads",
+            "path": "/download/threads?url="
+          }
+        },
+        {
+          "Threads V2": {
+            "desc": "Download video/image on threads",
+            "path": "/download/threadsV2?url="
+          }
+        },
+        {
+          "TikTok": {
+            "desc": "Download video/image on tiktok",
+            "path": "/download/tiktok?url="
+          }
+        },
+        {
+          "TikTok Downloader V2": {
+            "desc": "Download TikTok videos and slideshows with multiple quality options",
+            "path": "/download/tiktokV2?url="
+          }
+        },
+        {
+          "TikTok V3": {
+            "desc": "Download video on tiktok",
+            "path": "/download/tiktokV3?url="
+          }
+        },
+        {
+          "TikTok Video Downloader": {
+            "desc": "Download TikTok video without watermark with complete metadata",
+            "path": "/download/tiktokvideo?url="
+          }
+        },
+        {
+          "TikTok Slide Downloader": {
+            "desc": "Download TikTok image slide/photo post with metadata",
+            "path": "/download/tiktokslide?url="
+          }
+        },
+        {
+          "Twitter/X Downloader": {
+            "desc": "Download images and videos from Twitter/X posts",
+            "path": "/download/twitter?url="
+          }
+        },
+        {
+          "YouTube Downloader": {
+            "desc": "Download YouTube videos in multiple formats (video/audio)",
+            "path": "/download/ytdownload?url=&type?=&format?=&quality?=&bitrate?="
+          }
+        },
+        {
+          "YouTube Video Info": {
+            "desc": "Get information about a YouTube video",
+            "path": "/download/ytinfo?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games",
+      "items": [
+        {
+          "Quiz Categories": {
+            "desc": "Get all available quiz categories",
+            "path": "/game/quizcategories"
+          }
+        },
+        {
+          "Guess Quiz": {
+            "desc": "Guess the correct answer from multiple choices",
+            "path": "/game/quizguess?level?="
+          }
+        },
+        {
+          "Puzzle Quiz": {
+            "desc": "Solve puzzle-based questions",
+            "path": "/game/quizpuzzle?level?="
+          }
+        },
+        {
+          "True/False Quiz": {
+            "desc": "Answer true or false questions",
+            "path": "/game/quiztruefalse?level?="
+          }
+        },
+        {
+          "Random Quiz": {
+            "desc": "Mixed random questions from all categories",
+            "path": "/game/quizrandom?level?="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Image Creator",
+      "items": [
+        {
+          "Text to Image": {
+            "desc": "Create simple text images with custom colors",
+            "path": "/imagecreator/image?text=&background?=&color?=&emojiStyle?="
+          }
+        },
+        {
+          "Text to GIF": {
+            "desc": "Create animated text GIFs",
+            "path": "/imagecreator/gif?text=&background?=&color?=&emojiStyle?=&delay?=&endDelay?=&width?=&height?="
+          }
+        },
+        {
+          "Text to MP4": {
+            "desc": "Create animated text videos",
+            "path": "/imagecreator/mp4?text=&background?=&color?=&emojiStyle?=&delay?=&endDelay?=&width?=&height?="
+          }
+        },
+        {
+          "Meme Generator": {
+            "desc": "Create memes with top and bottom text",
+            "path": "/imagecreator/meme?topText=&bottomText=&backgroundImage?=&fontFamily?=&textColor?=&strokeColor?="
+          }
+        },
+        {
+          "Text Meme": {
+            "desc": "Create text-only memes",
+            "path": "/imagecreator/memeText?text=&width?=&height?=&fontFamily?=&textColor?=&strokeColor?="
+          }
+        },
+        {
+          "SpongeBob Brat Meme": {
+            "desc": "Create SpongeBob \"How dare you\" brat meme",
+            "path": "/imagecreator/spongebob?text="
+          }
+        },
+        {
+          "TTP": {
+            "desc": "Text to ttp",
+            "path": "/imagecreator/ttp?text="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "items": [
+        {
+          "Movie Search": {
+            "desc": "Search for movies by title or keyword",
+            "path": "/moviesearch?query="
+          }
+        },
+        {
+          "Movie Detail": {
+            "desc": "Get detailed information about a movie including download links",
+            "path": "/moviedetail?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "NSFW Content",
+      "items": [
+        {
+          "Ass": {
+            "desc": "Random image/video of ass",
+            "path": "/nsfw/ass"
+          }
+        },
+        {
+          "69": {
+            "desc": "Random image/video of 69",
+            "path": "/nsfw/sixtynine"
+          }
+        },
+        {
+          "Pussy": {
+            "desc": "Random image/video of pussy",
+            "path": "/nsfw/pussy"
+          }
+        },
+        {
+          "Dick": {
+            "desc": "Random image/video of dick",
+            "path": "/nsfw/dick"
+          }
+        },
+        {
+          "Anal": {
+            "desc": "Random image/video of anal",
+            "path": "/nsfw/anal"
+          }
+        },
+        {
+          "Boobs": {
+            "desc": "Random image/video of boobs",
+            "path": "/nsfw/boobs"
+          }
+        },
+        {
+          "BDSM": {
+            "desc": "Random image/video of BDSM",
+            "path": "/nsfw/bdsm"
+          }
+        },
+        {
+          "Black": {
+            "desc": "Random image/video of black p**n",
+            "path": "/nsfw/black"
+          }
+        },
+        {
+          "Easter": {
+            "desc": "Random image/video of easter",
+            "path": "/nsfw/easter"
+          }
+        },
+        {
+          "Bottomless": {
+            "desc": "Random image/video of bottomless",
+            "path": "/nsfw/bottomless"
+          }
+        },
+        {
+          "Collared": {
+            "desc": "Random image/video of collared",
+            "path": "/nsfw/collared"
+          }
+        },
+        {
+          "Cum": {
+            "desc": "Random image/video of cum",
+            "path": "/nsfw/cum"
+          }
+        },
+        {
+          "Cumsluts": {
+            "desc": "Random image/video of cumsluts",
+            "path": "/nsfw/cumsluts"
+          }
+        },
+        {
+          "DP": {
+            "desc": "Random image/video of DP",
+            "path": "/nsfw/dp"
+          }
+        },
+        {
+          "Domination": {
+            "desc": "Random image/video of domination",
+            "path": "/nsfw/dom"
+          }
+        },
+        {
+          "Extreme": {
+            "desc": "Random image/video of extreme p**n",
+            "path": "/nsfw/extreme"
+          }
+        },
+        {
+          "Feet": {
+            "desc": "Random image/video of feet",
+            "path": "/nsfw/feet"
+          }
+        },
+        {
+          "Finger": {
+            "desc": "Random image/video of finger",
+            "path": "/nsfw/finger"
+          }
+        },
+        {
+          "F**k": {
+            "desc": "Random image/video of f**k",
+            "path": "/nsfw/fuck"
+          }
+        },
+        {
+          "Futa": {
+            "desc": "Random image/video of futa",
+            "path": "/nsfw/futa"
+          }
+        },
+        {
+          "Gay": {
+            "desc": "Random image/video of gay p**n",
+            "path": "/nsfw/gay"
+          }
+        },
+        {
+          "GIF": {
+            "desc": "Random GIF",
+            "path": "/nsfw/gif"
+          }
+        },
+        {
+          "Group": {
+            "desc": "Random image/video of group p**n",
+            "path": "/nsfw/group"
+          }
+        },
+        {
+          "Hentai": {
+            "desc": "Random image/video of hentai",
+            "path": "/nsfw/hentai"
+          }
+        },
+        {
+          "Kiss": {
+            "desc": "Random image/video of kissing",
+            "path": "/nsfw/kiss"
+          }
+        },
+        {
+          "Lick": {
+            "desc": "Random image/video of licking",
+            "path": "/nsfw/lick"
+          }
+        },
+        {
+          "Pegged": {
+            "desc": "Random image/video of pegged",
+            "path": "/nsfw/pegged"
+          }
+        },
+        {
+          "PornHub GIF": {
+            "desc": "Random PornHub GIF",
+            "path": "/nsfw/phgif"
+          }
+        },
+        {
+          "Puffies": {
+            "desc": "Random image/video of puffies",
+            "path": "/nsfw/puffies"
+          }
+        },
+        {
+          "Real": {
+            "desc": "Random real p**n image/video",
+            "path": "/nsfw/real"
+          }
+        },
+        {
+          "Suck": {
+            "desc": "Random image/video of sucking",
+            "path": "/nsfw/suck"
+          }
+        },
+        {
+          "Tattoo": {
+            "desc": "Random image/video of tattoo",
+            "path": "/nsfw/tattoo"
+          }
+        },
+        {
+          "Tiny": {
+            "desc": "Random image/video of tiny p**n",
+            "path": "/nsfw/tiny"
+          }
+        },
+        {
+          "Toys": {
+            "desc": "Random image/video with toys",
+            "path": "/nsfw/toys"
+          }
+        },
+        {
+          "Xmas": {
+            "desc": "Random Christmas-themed p**n",
+            "path": "/nsfw/xmas"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "items": [
+        {
+          "XNXX Search": {
+            "desc": "Search for videos on xnxx.com",
+            "path": "/nsfw/xnxx-search?query="
+          }
+        },
+        {
+          "XVideos Search": {
+            "desc": "Search for videos on xvideos.com",
+            "path": "/nsfw/xvideos-search?query="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Downloader",
+      "items": [
+        {
+          "XNXX Video Downloader": {
+            "desc": "Downloader for a specific xnxx.com video",
+            "path": "/nsfw/xnxx-dl?url="
+          }
+        },
+        {
+          "XVideos Video Downloader": {
+            "desc": "Downloader for a specific xvideos.com video",
+            "path": "/nsfw/xvideos-dl?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Random",
+      "items": [
+        {
+          "Random SFW Image": {
+            "desc": "Get a random SFW image",
+            "path": "/random/anhsfw"
+          }
+        },
+        {
+          "Random Moe Image": {
+            "desc": "Get a random Moe image",
+            "path": "/random/anhmoe"
+          }
+        },
+        {
+          "Random AI Picture": {
+            "desc": "Get a random AI-generated image",
+            "path": "/random/anhai"
+          }
+        },
+        {
+          "Random NSFW Image": {
+            "desc": "Get a random NSFW image",
+            "path": "/random/anhnsfw"
+          }
+        },
+        {
+          "Random Hentai Image": {
+            "desc": "Get a random Hentai image or video",
+            "path": "/random/anhhentai"
+          }
+        },
+        {
+          "Random NSFW Video Clip": {
+            "desc": "Get a random NSFW short video",
+            "path": "/random/anhvideonsfw"
+          }
+        },
+        {
+          "Blue Archive": {
+            "desc": "Blue archive random image",
+            "path": "/random/bluearchive"
+          }
+        },
+        {
+          "Boy Pic": {
+            "desc": "Get random boy pictures",
+            "path": "/random/boypic"
+          }
+        },
+        {
+          "Car Images": {
+            "desc": "Get random car images",
+            "path": "/random/car"
+          }
+        },
+        {
+          "Cat Images": {
+            "desc": "Get random cute cat images",
+            "path": "/random/cat"
+          }
+        },
+        {
+          "China Girl": {
+            "desc": "Get random China girl images",
+            "path": "/random/chinagirl"
+          }
+        },
+        {
+          "Dog": {
+            "desc": "Get random cute dog images",
+            "path": "/random/dog"
+          }
+        },
+        {
+          "Random Girl": {
+            "desc": "Get random girl images",
+            "path": "/random/randomgirl"
+          }
+        },
+        {
+          "Hijab Girl": {
+            "desc": "Get random Hijab girl images",
+            "path": "/random/hijabgirl"
+          }
+        },
+        {
+          "Indonesia Girl": {
+            "desc": "Get random Indonesia girl images from Reddit",
+            "path": "/random/indonesiagirl"
+          }
+        },
+        {
+          "Japan Girl": {
+            "desc": "Get random Japan girl images",
+            "path": "/random/japangirl"
+          }
+        },
+        {
+          "Korean Girl": {
+            "desc": "Get random Korean girl images",
+            "path": "/random/koreangirl"
+          }
+        },
+        {
+          "Loli": {
+            "desc": "Loli random image",
+            "path": "/random/loli"
+          }
+        },
+        {
+          "Malaysia Girl": {
+            "desc": "Get random Malaysia girl images",
+            "path": "/random/malaysiagirl"
+          }
+        },
+        {
+          "Profile Pictures": {
+            "desc": "Get random profile pictures for social media",
+            "path": "/random/profilepics"
+          }
+        },
+        {
+          "Thailand Girl": {
+            "desc": "Get random Thailand girl images",
+            "path": "/random/thailandgirl"
+          }
+        },
+        {
+          "TikTok Girl": {
+            "desc": "Get random TikTok girl videos",
+            "path": "/random/tiktokgirl"
+          }
+        },
+        {
+          "Vietnam Girl": {
+            "desc": "Get random Vietnam girl images",
+            "path": "/random/vietnamgirl"
+          }
+        },
+        {
+          "Waifu": {
+            "desc": "Waifu random image",
+            "path": "/random/waifu"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Random",
+      "items": [
+        {
+          "Akiyama": {
+            "desc": "Get random Akiyama anime images",
+            "path": "/random/anime/akiyama"
+          }
+        },
+        {
+          "Ana": {
+            "desc": "Get random Ana anime images",
+            "path": "/random/anime/ana"
+          }
+        },
+        {
+          "Asuna": {
+            "desc": "Get random Asuna anime images",
+            "path": "/random/anime/asuna"
+          }
+        },
+        {
+          "Ayuzawa": {
+            "desc": "Get random Ayuzawa anime images",
+            "path": "/random/anime/ayuzawa"
+          }
+        },
+        {
+          "Boruto": {
+            "desc": "Get random Boruto anime images",
+            "path": "/random/anime/boruto"
+          }
+        },
+        {
+          "Chitoge": {
+            "desc": "Get random Chitoge anime images",
+            "path": "/random/anime/chitoge"
+          }
+        },
+        {
+          "Deidara": {
+            "desc": "Get random Deidara anime images",
+            "path": "/random/anime/deidara"
+          }
+        },
+        {
+          "Doraemon": {
+            "desc": "Get random Doraemon anime images",
+            "path": "/random/anime/doraemon"
+          }
+        },
+        {
+          "Elaina": {
+            "desc": "Get random Elaina anime images",
+            "path": "/random/anime/elaina"
+          }
+        },
+        {
+          "Emilia": {
+            "desc": "Get random Emilia anime images",
+            "path": "/random/anime/emilia"
+          }
+        },
+        {
+          "Erza": {
+            "desc": "Get random Erza anime images",
+            "path": "/random/anime/erza"
+          }
+        },
+        {
+          "Hestia": {
+            "desc": "Get random Hestia anime images",
+            "path": "/random/anime/hestia"
+          }
+        },
+        {
+          "Husbu": {
+            "desc": "Get random Husbu anime images",
+            "path": "/random/anime/husbu"
+          }
+        },
+        {
+          "Inori": {
+            "desc": "Get random Inori anime images",
+            "path": "/random/anime/inori"
+          }
+        },
+        {
+          "Itachi": {
+            "desc": "Get random Itachi anime images",
+            "path": "/random/anime/itachi"
+          }
+        },
+        {
+          "Kagura": {
+            "desc": "Get random Kagura anime images",
+            "path": "/random/anime/kagura"
+          }
+        },
+        {
+          "Kaori": {
+            "desc": "Get random Kaori anime images",
+            "path": "/random/anime/kaori"
+          }
+        },
+        {
+          "Keneki": {
+            "desc": "Get random Keneki anime images",
+            "path": "/random/anime/keneki"
+          }
+        },
+        {
+          "Kotori": {
+            "desc": "Get random Kotori anime images",
+            "path": "/random/anime/kotori"
+          }
+        },
+        {
+          "Kurumi": {
+            "desc": "Get random Kurumi anime images",
+            "path": "/random/anime/kurumi"
+          }
+        },
+        {
+          "Madara": {
+            "desc": "Get random Madara anime images",
+            "path": "/random/anime/madara"
+          }
+        },
+        {
+          "Megumin": {
+            "desc": "Get random Megumin anime images",
+            "path": "/random/anime/megumin"
+          }
+        },
+        {
+          "Mikasa": {
+            "desc": "Get random Mikasa anime images",
+            "path": "/random/anime/mikasa"
+          }
+        },
+        {
+          "Miku": {
+            "desc": "Get random Miku anime images",
+            "path": "/random/anime/miku"
+          }
+        },
+        {
+          "Minato": {
+            "desc": "Get random Minato anime images",
+            "path": "/random/anime/minato"
+          }
+        },
+        {
+          "Naruto": {
+            "desc": "Get random Naruto anime images",
+            "path": "/random/anime/naruto"
+          }
+        },
+        {
+          "Nekonime": {
+            "desc": "Get random Nekonime anime images",
+            "path": "/random/anime/nekonime"
+          }
+        },
+        {
+          "Nezuko": {
+            "desc": "Get random Nezuko anime images",
+            "path": "/random/anime/nezuko"
+          }
+        },
+        {
+          "One Piece": {
+            "desc": "Get random One Piece anime images",
+            "path": "/random/anime/onepiece"
+          }
+        },
+        {
+          "Rize": {
+            "desc": "Get random Rize anime images",
+            "path": "/random/anime/rize"
+          }
+        },
+        {
+          "Sagiri": {
+            "desc": "Get random Sagiri anime images",
+            "path": "/random/anime/sagiri"
+          }
+        },
+        {
+          "Sakura": {
+            "desc": "Get random Sakura anime images",
+            "path": "/random/anime/sakura"
+          }
+        },
+        {
+          "Sasuke": {
+            "desc": "Get random Sasuke anime images",
+            "path": "/random/anime/sasuke"
+          }
+        },
+        {
+          "Shinomiya": {
+            "desc": "Get random Shinomiya anime images",
+            "path": "/random/anime/shinomiya"
+          }
+        },
+        {
+          "Tsunade": {
+            "desc": "Get random Tsunade anime images",
+            "path": "/random/anime/tsunade"
+          }
+        },
+        {
+          "Yotsuba": {
+            "desc": "Get random Yotsuba anime images",
+            "path": "/random/anime/yotsuba"
+          }
+        },
+        {
+          "Yuki": {
+            "desc": "Get random Yuki anime images",
+            "path": "/random/anime/yuki"
+          }
+        },
+        {
+          "Yumeko": {
+            "desc": "Get random Yumeko anime images",
+            "path": "/random/anime/yumeko"
+          }
+        },
+        {
+          "Art": {
+            "desc": "Get random art wallpapers",
+            "path": "/random/anime/art"
+          }
+        },
+        {
+          "Cyber": {
+            "desc": "Get random cyber wallpapers",
+            "path": "/random/anime/cyber"
+          }
+        },
+        {
+          "Game Wallpaper": {
+            "desc": "Get random game wallpapers",
+            "path": "/random/anime/gamewallpaper"
+          }
+        },
+        {
+          "Mountain": {
+            "desc": "Get random mountain wallpapers",
+            "path": "/random/anime/mountain"
+          }
+        },
+        {
+          "Programming": {
+            "desc": "Get random programming wallpapers",
+            "path": "/random/anime/programming"
+          }
+        },
+        {
+          "Space": {
+            "desc": "Get random space wallpapers",
+            "path": "/random/anime/space"
+          }
+        },
+        {
+          "Technology": {
+            "desc": "Get random technology wallpapers",
+            "path": "/random/anime/technology"
+          }
+        },
+        {
+          "Wallpaper HP": {
+            "desc": "Get random mobile wallpapers",
+            "path": "/random/anime/wallhp"
+          }
+        },
+        {
+          "Wallpaper ML": {
+            "desc": "Get random Mobile Legends wallpapers",
+            "path": "/random/anime/wallml"
+          }
+        },
+        {
+          "Wallpaper Anime": {
+            "desc": "Get random anime wallpapers",
+            "path": "/random/anime/wallmlnime"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "items": [
+        {
+          "Android1": {
+            "desc": "Search modded game on android1",
+            "path": "/search/android1?q="
+          }
+        },
+        {
+          "Apple Music Search": {
+            "desc": "Search for songs, artists, and playlists on Apple Music",
+            "path": "/search/applemusic?q=&region?="
+          }
+        },
+        {
+          "Cuaca": {
+            "desc": "Search info cuaca",
+            "path": "/search/cuaca?kota="
+          }
+        },
+        {
+          "GitHub Repositories": {
+            "desc": "Search for GitHub repositories",
+            "path": "/search/repos?query=&page?=&per_page?=&sort?=&order?="
+          }
+        },
+        {
+          "GitHub Users": {
+            "desc": "Search for GitHub users",
+            "path": "/search/users?query=&page?=&per_page?=&sort?=&order?="
+          }
+        },
+        {
+          "GitHub Issues": {
+            "desc": "Search for GitHub issues",
+            "path": "/search/issues?query=&page?=&per_page?=&sort?=&order?="
+          }
+        },
+        {
+          "GitHub Code": {
+            "desc": "Search for code on GitHub",
+            "path": "/search/code?query=&page?=&per_page?=&sort?=&order?="
+          }
+        },
+        {
+          "IMDb Search": {
+            "desc": "Search for movie/series information from IMDb",
+            "path": "/search/imdb?query="
+          }
+        },
+        {
+          "Lyrics": {
+            "desc": "Search for song lyrics",
+            "path": "/search/lyrics?title="
+          }
+        },
+        {
+          "Nik Parse": {
+            "desc": "Search nik",
+            "path": "/search/nik?q="
+          }
+        },
+        {
+          "Pinterest": {
+            "desc": "Search image on pinterest",
+            "path": "/search/pinterest?q="
+          }
+        },
+        {
+          "Wallpaper Search": {
+            "desc": "Search HD wallpapers",
+            "path": "/search/wallpaper?query=&page?="
+          }
+        },
+        {
+          "Soundcloud": {
+            "desc": "Search song on soundcloud",
+            "path": "/search/soundcloud?q="
+          }
+        },
+        {
+          "Telegram Channel Search": {
+            "desc": "Search for Telegram channels by keyword",
+            "path": "/search/telegram?query="
+          }
+        },
+        {
+          "Telegram Group Search": {
+            "desc": "Search for Telegram groups and channels",
+            "path": "/search/tggroup?query=&limit?=&detail?="
+          }
+        },
+        {
+          "TikTok": {
+            "desc": "Search video on tiktok",
+            "path": "/search/tiktoksearch?q="
+          }
+        },
+        {
+          "WhatsApp Group Search": {
+            "desc": "Search for WhatsApp groups by keywords",
+            "path": "/search/wagroup?query=&limit?="
+          }
+        },
+        {
+          "YouTube": {
+            "desc": "Search video on youtube",
+            "path": "/search/youtube?q="
+          }
+        },
+        {
+          "YouTube Monetization": {
+            "desc": "YouTube monetization checker",
+            "path": "/search/ytmonet?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Audio",
+      "items": [
+        {
+          "FreeSound Search": {
+            "desc": "Search for free sounds and audio effects",
+            "path": "/sound/search?query="
+          }
+        },
+        {
+          "FreeSound Detail": {
+            "desc": "Get detailed information about a specific sound",
+            "path": "/sound/detail?url="
+          }
+        },
+        {
+          "FreeSound Download": {
+            "desc": "Download sound as MP3 audio file",
+            "path": "/sound/download?url="
+          }
+        },
+        {
+          "NonStick Sounds": {
+            "desc": "Get sound sources from NonStick - supports v1, v2, and list types",
+            "path": "/sound/nonstick?type=&url?="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Screenshot Website",
+      "items": [
+        {
+          "WebSS": {
+            "desc": "Take screenshot using WebSS provider",
+            "path": "/ssweb/webss?url="
+          }
+        },
+        {
+          "API Flash": {
+            "desc": "Take screenshot using Flash provider",
+            "path": "/ssweb/apiFlash?url="
+          }
+        },
+        {
+          "Screenshot Layer": {
+            "desc": "Take screenshot using Screenshot Layer provider",
+            "path": "/ssweb/screenshotLayer?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stalk",
+      "items": [
+        {
+          "FreeFire": {
+            "desc": "Get info freefire account",
+            "path": "/stalk/ffstalk?id="
+          }
+        },
+        {
+          "Instagram": {
+            "desc": "Get info instagram account (@user)",
+            "path": "/stalk/igstalk?user="
+          }
+        },
+        {
+          "TikTok": {
+            "desc": "Get info tiktok account",
+            "path": "/stalk/ttstalk?user="
+          }
+        },
+        {
+          "Twitter": {
+            "desc": "Get info twitter account",
+            "path": "/stalk/twitterstalk?user="
+          }
+        },
+        {
+          "YouTube": {
+            "desc": "Get info youtube account (@user)",
+            "path": "/stalk/ytstalk?user="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Text Maker",
+      "items": [
+        {
+          "Glitch Text": {
+            "desc": "Create digital glitch text effects",
+            "path": "/glitchtext?text="
+          }
+        },
+        {
+          "Write Text on Glass": {
+            "desc": "Write text on wet glass effect",
+            "path": "/writetext?text="
+          }
+        },
+        {
+          "Advanced Glow": {
+            "desc": "Advanced glow text effects",
+            "path": "/advancedglow?text="
+          }
+        },
+        {
+          "Typography Text": {
+            "desc": "Create typography text effect on pavement",
+            "path": "/typographytext?text="
+          }
+        },
+        {
+          "Pixel Glitch": {
+            "desc": "Create pixel glitch text effect",
+            "path": "/pixelglitch?text="
+          }
+        },
+        {
+          "Neon Glitch": {
+            "desc": "Create impressive neon glitch text effects",
+            "path": "/neonglitch?text="
+          }
+        },
+        {
+          "Nigeria Flag Text": {
+            "desc": "Nigeria 3D flag text effect",
+            "path": "/flagtext?text="
+          }
+        },
+        {
+          "American Flag Text": {
+            "desc": "American flag 3D text effect",
+            "path": "/flag3dtext?text="
+          }
+        },
+        {
+          "Deleting Text": {
+            "desc": "Create eraser deleting text effect",
+            "path": "/deletingtext?text="
+          }
+        },
+        {
+          "Blackpink Style": {
+            "desc": "Blackpink style logo maker effect",
+            "path": "/blackpinkstyle?text="
+          }
+        },
+        {
+          "Glowing Text": {
+            "desc": "Create glowing text effects",
+            "path": "/glowingtext?text="
+          }
+        },
+        {
+          "Underwater Text": {
+            "desc": "3D underwater text effect",
+            "path": "/underwatertext?text="
+          }
+        },
+        {
+          "Bear Logo Maker": {
+            "desc": "Free bear logo maker",
+            "path": "/logomaker?text="
+          }
+        },
+        {
+          "Cartoon Style Graffiti": {
+            "desc": "Create cartoon style graffiti text effect",
+            "path": "/cartoonstyle?text="
+          }
+        },
+        {
+          "Paper Cut Style": {
+            "desc": "Multicolor 3D paper cut style text effect",
+            "path": "/papercutstyle?text="
+          }
+        },
+        {
+          "Watercolor Text": {
+            "desc": "Create a watercolor text effect",
+            "path": "/watercolortext?text="
+          }
+        },
+        {
+          "Clouds Text": {
+            "desc": "Write text effect clouds in the sky",
+            "path": "/effectclouds?text="
+          }
+        },
+        {
+          "Blackpink Logo": {
+            "desc": "Create Blackpink logo online",
+            "path": "/blackpinklogo?text="
+          }
+        },
+        {
+          "3D Gradient Text": {
+            "desc": "Create 3D gradient text effect",
+            "path": "/gradienttext?text="
+          }
+        },
+        {
+          "Summer Beach Text": {
+            "desc": "Write in sand summer beach",
+            "path": "/summerbeach?text="
+          }
+        },
+        {
+          "Luxury Gold Text": {
+            "desc": "Create a luxury gold text effect",
+            "path": "/luxurygold?text="
+          }
+        },
+        {
+          "Multicolored Neon": {
+            "desc": "Create multicolored neon light signatures",
+            "path": "/multicoloredneon?text="
+          }
+        },
+        {
+          "Sand Summer Text": {
+            "desc": "Write in sand summer beach",
+            "path": "/sandsummer?text="
+          }
+        },
+        {
+          "Galaxy Wallpaper": {
+            "desc": "Create galaxy wallpaper mobile",
+            "path": "/galaxywallpaper?text="
+          }
+        },
+        {
+          "1917 Style Text": {
+            "desc": "1917 style text effect",
+            "path": "/style1917?text="
+          }
+        },
+        {
+          "Galaxy Neon Text": {
+            "desc": "Making neon light text effect with galaxy style",
+            "path": "/makingneon?text="
+          }
+        },
+        {
+          "Royal Text": {
+            "desc": "Royal text effect online",
+            "path": "/royaltext?text="
+          }
+        },
+        {
+          "3D Hologram Text": {
+            "desc": "Free create a 3D hologram text effect",
+            "path": "/freecreate?text="
+          }
+        },
+        {
+          "Galaxy Style Logo": {
+            "desc": "Create galaxy style free name logo",
+            "path": "/galaxystyle?text="
+          }
+        },
+        {
+          "Green Neon Light": {
+            "desc": "Create light effects green neon",
+            "path": "/lighteffects?text="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tools",
+      "items": [
+        {
+          "Anonymous Email Sender": {
+            "desc": "Send anonymous emails without revealing your identity",
+            "path": "/tools/sendemail?to=&subject=&message=&from?="
+          }
+        },
+        {
+          "Code Analyzer": {
+            "desc": "Analyze code for security issues, vulnerabilities, and code quality",
+            "path": "/tools/codeanalyzer?code?=&url?="
+          }
+        },
+        {
+          "Code Converter": {
+            "desc": "Convert code between programming languages",
+            "path": "/tools/codeconverter?code=&lang?=&from?=&to?="
+          }
+        },
+        {
+          "To JavaScript": {
+            "desc": "Convert code to JavaScript",
+            "path": "/tools/tojavascript?code=&from?="
+          }
+        },
+        {
+          "To Python": {
+            "desc": "Convert code to Python",
+            "path": "/tools/topython?code=&from?="
+          }
+        },
+        {
+          "To Java": {
+            "desc": "Convert code to Java",
+            "path": "/tools/tojava?code=&from?="
+          }
+        },
+        {
+          "To C++": {
+            "desc": "Convert code to C++",
+            "path": "/tools/tocpp?code=&from?="
+          }
+        },
+        {
+          "To PHP": {
+            "desc": "Convert code to PHP",
+            "path": "/tools/tophp?code=&from?="
+          }
+        },
+        {
+          "Code Compiler": {
+            "desc": "Compile and execute code in multiple languages",
+            "path": "/tools/compiler?code=&lang?="
+          }
+        },
+        {
+          "JavaScript Compiler": {
+            "desc": "Compile and run JavaScript code",
+            "path": "/tools/compilejs?code="
+          }
+        },
+        {
+          "Python Compiler": {
+            "desc": "Compile and run Python code",
+            "path": "/tools/compilepython?code="
+          }
+        },
+        {
+          "Java Compiler": {
+            "desc": "Compile and run Java code",
+            "path": "/tools/compilejava?code="
+          }
+        },
+        {
+          "C Compiler": {
+            "desc": "Compile and run C code",
+            "path": "/tools/compilec?code="
+          }
+        },
+        {
+          "C++ Compiler": {
+            "desc": "Compile and run C++ code",
+            "path": "/tools/compilecpp?code="
+          }
+        },
+        {
+          "C# Compiler": {
+            "desc": "Compile and run C# code",
+            "path": "/tools/compilecsharp?code="
+          }
+        },
+        {
+          "Emoji Encrypt": {
+            "desc": "Encrypt text into emojis using password",
+            "path": "/tools/emoji-encrypt?input=&pass="
+          }
+        },
+        {
+          "Emoji Decrypt": {
+            "desc": "Decrypt emojis back to text using password",
+            "path": "/tools/emoji-decrypt?input=&pass="
+          }
+        },
+        {
+          "HTML Encryptor": {
+            "desc": "Encrypt and obfuscate HTML code",
+            "path": "/tools/htmlecnc?html=&level?="
+          }
+        },
+        {
+          "HTML Basic Encryption": {
+            "desc": "Encrypt HTML with basic obfuscation",
+            "path": "/tools/htmlbasic?html="
+          }
+        },
+        {
+          "HTML Extended Encryption": {
+            "desc": "Encrypt HTML with extended security",
+            "path": "/tools/htmlextended?html="
+          }
+        },
+        {
+          "HTML High Encryption": {
+            "desc": "Encrypt HTML with high security level",
+            "path": "/tools/htmlhigh?html="
+          }
+        },
+        {
+          "HTML Maximum Encryption": {
+            "desc": "Encrypt HTML with maximum security",
+            "path": "/tools/htmlmaximum?html="
+          }
+        },
+        {
+          "F-Droid Search": {
+            "desc": "Search for apps on F-Droid repository",
+            "path": "/tools/fdroidsearch?q="
+          }
+        },
+        {
+          "F-Droid Package": {
+            "desc": "Get detailed information about F-Droid package",
+            "path": "/tools/fdroidpackage?url="
+          }
+        },
+        {
+          "F-Droid App": {
+            "desc": "Get app details by package name from F-Droid",
+            "path": "/tools/fdroidapp?package="
+          }
+        },
+        {
+          "GeoIP Lookup": {
+            "desc": "Get geolocation information for any IP address",
+            "path": "/tools/geoip?ip="
+          }
+        },
+        {
+          "My IP Info": {
+            "desc": "Get geolocation information for your own IP address",
+            "path": "/tools/myip"
+          }
+        },
+        {
+          "Host Check": {
+            "desc": "Get detailed hosting information for a domain",
+            "path": "/tools/hostcheck?domain="
+          }
+        },
+        {
+          "Host Check Simple": {
+            "desc": "Get basic hosting information for a domain",
+            "path": "/tools/hostchecksimple?domain="
+          }
+        },
+        {
+          "HTML to Image": {
+            "desc": "Convert HTML to image - returns image URL",
+            "path": "/tools/html2img?html=&width?=&height?=&format?="
+          }
+        },
+        {
+          "HTML to Image Direct": {
+            "desc": "Convert HTML to image - returns actual image",
+            "path": "/tools/html2imgdirect?html=&width?=&height?=&format?="
+          }
+        },
+        {
+          "JS Obfuscator Low": {
+            "desc": "Obfuscate JavaScript code with low protection level",
+            "path": "/tools/obflow?code=&encoding?="
+          }
+        },
+        {
+          "JS Obfuscator Medium": {
+            "desc": "Obfuscate JavaScript code with medium protection level",
+            "path": "/tools/obfmedium?code=&encoding?="
+          }
+        },
+        {
+          "JS Obfuscator High": {
+            "desc": "Obfuscate JavaScript code with high protection level",
+            "path": "/tools/obfhigh?code=&encoding?="
+          }
+        },
+        {
+          "JS Obfuscator Extreme": {
+            "desc": "Obfuscate JavaScript code with extreme protection level",
+            "path": "/tools/obfextreme?code=&encoding?="
+          }
+        },
+        {
+          "TikTok Transcript": {
+            "desc": "Get transcript from TikTok video",
+            "path": "/tools/tiktoktranscript?url="
+          }
+        },
+        {
+          "English to Indonesian": {
+            "desc": "Translate from English to Indonesian",
+            "path": "/tools/entoid?text="
+          }
+        },
+        {
+          "Indonesian to English": {
+            "desc": "Translate from Indonesian to English",
+            "path": "/tools/idtoen?text="
+          }
+        },
+        {
+          "Japanese to Indonesian": {
+            "desc": "Translate from Japanese to Indonesian",
+            "path": "/tools/jatoid?text="
+          }
+        },
+        {
+          "Korean to Indonesian": {
+            "desc": "Translate from Korean to Indonesian",
+            "path": "/tools/kotoid?text="
+          }
+        },
+        {
+          "Chinese to Indonesian": {
+            "desc": "Translate from Chinese to Indonesian",
+            "path": "/tools/zhtoid?text="
+          }
+        },
+        {
+          "Arabic to Indonesian": {
+            "desc": "Translate from Arabic to Indonesian",
+            "path": "/tools/artoid?text="
+          }
+        },
+        {
+          "Detect Language": {
+            "desc": "Detect the language of provided text",
+            "path": "/tools/detectlanguage?text="
+          }
+        },
+        {
+          "Supported Languages": {
+            "desc": "Get list of supported languages for translation",
+            "path": "/tools/languages"
+          }
+        },
+        {
+          "YouTube Transcript": {
+            "desc": "Get YouTube video transcript, details and related videos",
+            "path": "/tools/youtube-transcript?url="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Url Shortner",
+      "items": [
+        {
+          "da.gd": {
+            "desc": "Shorten URL using da.gd service",
+            "path": "/tools/dagd?url=&custom_name?="
+          }
+        },
+        {
+          "v.gd": {
+            "desc": "Shorten URL using v.gd service",
+            "path": "/tools/vgd?url=&custom_name?="
+          }
+        },
+        {
+          "tinu.be": {
+            "desc": "Shorten URL using tinu.be service",
+            "path": "/tools/tinube?url=&custom_name?="
+          }
+        },
+        {
+          "Spoo.me": {
+            "desc": "Shorten URL using Spoo.me service",
+            "path": "/tools/spooMe?url=&custom_name?="
+          }
+        },
+        {
+          "Spoo.me Emoji": {
+            "desc": "Shorten URL with emojis using Spoo.me",
+            "path": "/tools/spooEmoji?url=&emojis?="
+          }
+        },
+        {
+          "Random Shortener": {
+            "desc": "Shorten URL using random provider",
+            "path": "/tools/random?url=&custom_name?="
+          }
+        }
+      ]
+    },
+    {
+      "name": "StyleText",
+      "items": [
+        {
+          "All Text Styles": {
+            "desc": "Generate all 35+ text styles at once",
+            "path": "/tools/allstyles?text="
+          }
+        },
+        {
+          "Circled": {
+            "desc": "Convert text to Circled style",
+            "path": "/tools/circled?text="
+          }
+        },
+        {
+          "Circled (neg)": {
+            "desc": "Convert text to Circled (neg) style",
+            "path": "/tools/circledneg?text="
+          }
+        },
+        {
+          "Fullwidth": {
+            "desc": "Convert text to Fullwidth style",
+            "path": "/tools/fullwidth?text="
+          }
+        },
+        {
+          "Math bold": {
+            "desc": "Convert text to Math bold style",
+            "path": "/tools/mathbold?text="
+          }
+        },
+        {
+          "Math bold Fraktur": {
+            "desc": "Convert text to Math bold Fraktur style",
+            "path": "/tools/mathboldfraktur?text="
+          }
+        },
+        {
+          "Math bold italic": {
+            "desc": "Convert text to Math bold italic style",
+            "path": "/tools/mathbolditalic?text="
+          }
+        },
+        {
+          "Math bold script": {
+            "desc": "Convert text to Math bold script style",
+            "path": "/tools/mathboldscript?text="
+          }
+        },
+        {
+          "Math double-struck": {
+            "desc": "Convert text to Math double-struck style",
+            "path": "/tools/mathdoublestruck?text="
+          }
+        },
+        {
+          "Math monospace": {
+            "desc": "Convert text to Math monospace style",
+            "path": "/tools/mathmonospace?text="
+          }
+        },
+        {
+          "Math sans": {
+            "desc": "Convert text to Math sans style",
+            "path": "/tools/mathsans?text="
+          }
+        },
+        {
+          "Math sans bold": {
+            "desc": "Convert text to Math sans bold style",
+            "path": "/tools/mathsansbold?text="
+          }
+        },
+        {
+          "Math sans bold italic": {
+            "desc": "Convert text to Math sans bold italic style",
+            "path": "/tools/mathsansbolditalic?text="
+          }
+        },
+        {
+          "Math sans italic": {
+            "desc": "Convert text to Math sans italic style",
+            "path": "/tools/mathsansitalic?text="
+          }
+        },
+        {
+          "Parenthesized": {
+            "desc": "Convert text to Parenthesized style",
+            "path": "/tools/parenthesized?text="
+          }
+        },
+        {
+          "Regional Indicator": {
+            "desc": "Convert text to Regional Indicator style",
+            "path": "/tools/regionalindicator?text="
+          }
+        },
+        {
+          "Squared": {
+            "desc": "Convert text to Squared style",
+            "path": "/tools/squared?text="
+          }
+        },
+        {
+          "Squared (neg)": {
+            "desc": "Convert text to Squared (neg) style",
+            "path": "/tools/squaredneg?text="
+          }
+        },
+        {
+          "Tag": {
+            "desc": "Convert text to Tag style",
+            "path": "/tools/tag?text="
+          }
+        },
+        {
+          "A-cute": {
+            "desc": "Convert text to A-cute style",
+            "path": "/tools/acute?text="
+          }
+        },
+        {
+          "CJK+Thai": {
+            "desc": "Convert text to CJK+Thai style",
+            "path": "/tools/cjkthai?text="
+          }
+        },
+        {
+          "Curvy 1": {
+            "desc": "Convert text to Curvy 1 style",
+            "path": "/tools/curvy1?text="
+          }
+        },
+        {
+          "Curvy 2": {
+            "desc": "Convert text to Curvy 2 style",
+            "path": "/tools/curvy2?text="
+          }
+        },
+        {
+          "Curvy 3": {
+            "desc": "Convert text to Curvy 3 style",
+            "path": "/tools/curvy3?text="
+          }
+        },
+        {
+          "Faux Cyrillic": {
+            "desc": "Convert text to Faux Cyrillic style",
+            "path": "/tools/fauxcyrillic?text="
+          }
+        },
+        {
+          "Faux Ethiopic": {
+            "desc": "Convert text to Faux Ethiopic style",
+            "path": "/tools/fauxethiopic?text="
+          }
+        },
+        {
+          "Math Fraktur": {
+            "desc": "Convert text to Math Fraktur style",
+            "path": "/tools/mathfraktur?text="
+          }
+        },
+        {
+          "Rock Dots": {
+            "desc": "Convert text to Rock Dots style",
+            "path": "/tools/rockdots?text="
+          }
+        },
+        {
+          "Small Caps": {
+            "desc": "Convert text to Small Caps style",
+            "path": "/tools/smallcaps?text="
+          }
+        },
+        {
+          "Stroked": {
+            "desc": "Convert text to Stroked style",
+            "path": "/tools/stroked?text="
+          }
+        },
+        {
+          "Subscript": {
+            "desc": "Convert text to Subscript style",
+            "path": "/tools/subscript?text="
+          }
+        },
+        {
+          "Superscript": {
+            "desc": "Convert text to Superscript style",
+            "path": "/tools/superscript?text="
+          }
+        },
+        {
+          "Inverted": {
+            "desc": "Convert text to Inverted style",
+            "path": "/tools/inverted?text="
+          }
+        },
+        {
+          "Reversed": {
+            "desc": "Convert text to Reversed style",
+            "path": "/tools/reversed?text="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Text To Speech",
+      "items": [
+        {
+          "TTS English": {
+            "desc": "Convert text to speech - English",
+            "path": "/tts/tts-en?text="
+          }
+        },
+        {
+          "TTS Indonesian": {
+            "desc": "Convert text to speech - Indonesian (Bahasa Indonesia)",
+            "path": "/tts/tts-id?text="
+          }
+        },
+        {
+          "TTS Spanish": {
+            "desc": "Convert text to speech - Spanish (Español)",
+            "path": "/tts/tts-es?text="
+          }
+        },
+        {
+          "TTS French": {
+            "desc": "Convert text to speech - French (Français)",
+            "path": "/tts/tts-fr?text="
+          }
+        },
+        {
+          "TTS German": {
+            "desc": "Convert text to speech - German (Deutsch)",
+            "path": "/tts/tts-de?text="
+          }
+        },
+        {
+          "TTS Italian": {
+            "desc": "Convert text to speech - Italian (Italiano)",
+            "path": "/tts/tts-it?text="
+          }
+        },
+        {
+          "TTS Portuguese": {
+            "desc": "Convert text to speech - Portuguese (Português)",
+            "path": "/tts/tts-pt?text="
+          }
+        },
+        {
+          "TTS Dutch": {
+            "desc": "Convert text to speech - Dutch (Nederlands)",
+            "path": "/tts/tts-nl?text="
+          }
+        },
+        {
+          "TTS Polish": {
+            "desc": "Convert text to speech - Polish (Polski)",
+            "path": "/tts/tts-pl?text="
+          }
+        },
+        {
+          "TTS Russian": {
+            "desc": "Convert text to speech - Russian (Русский)",
+            "path": "/tts/tts-ru?text="
+          }
+        },
+        {
+          "TTS Japanese": {
+            "desc": "Convert text to speech - Japanese (日本語)",
+            "path": "/tts/tts-ja?text="
+          }
+        },
+        {
+          "TTS Korean": {
+            "desc": "Convert text to speech - Korean (한국어)",
+            "path": "/tts/tts-ko?text="
+          }
+        },
+        {
+          "TTS Chinese": {
+            "desc": "Convert text to speech - Chinese Simplified (中文)",
+            "path": "/tts/tts-zhcn?text="
+          }
+        },
+        {
+          "TTS Taiwanese": {
+            "desc": "Convert text to speech - Chinese Traditional (中文)",
+            "path": "/tts/tts-zhtw?text="
+          }
+        },
+        {
+          "TTS Arabic": {
+            "desc": "Convert text to speech - Arabic (العربية)",
+            "path": "/tts/tts-ar?text="
+          }
+        },
+        {
+          "TTS Hindi": {
+            "desc": "Convert text to speech - Hindi (हिन्दी)",
+            "path": "/tts/tts-hi?text="
+          }
+        },
+        {
+          "TTS Thai": {
+            "desc": "Convert text to speech - Thai (ไทย)",
+            "path": "/tts/tts-th?text="
+          }
+        },
+        {
+          "TTS Vietnamese": {
+            "desc": "Convert text to speech - Vietnamese (Tiếng Việt)",
+            "path": "/tts/tts-vi?text="
+          }
+        },
+        {
+          "TTS Turkish": {
+            "desc": "Convert text to speech - Turkish (Türkçe)",
+            "path": "/tts/tts-tr?text="
+          }
+        },
+        {
+          "TTS Swedish": {
+            "desc": "Convert text to speech - Swedish (Svenska)",
+            "path": "/tts/tts-sv?text="
+          }
+        },
+        {
+          "TTS Norwegian": {
+            "desc": "Convert text to speech - Norwegian (Norsk)",
+            "path": "/tts/tts-no?text="
+          }
+        },
+        {
+          "TTS Danish": {
+            "desc": "Convert text to speech - Danish (Dansk)",
+            "path": "/tts/tts-da?text="
+          }
+        },
+        {
+          "TTS Finnish": {
+            "desc": "Convert text to speech - Finnish (Suomi)",
+            "path": "/tts/tts-fi?text="
+          }
+        },
+        {
+          "TTS Greek": {
+            "desc": "Convert text to speech - Greek (Ελληνικά)",
+            "path": "/tts/tts-el?text="
+          }
+        },
+        {
+          "TTS Hebrew": {
+            "desc": "Convert text to speech - Hebrew (עברית)",
+            "path": "/tts/tts-he?text="
+          }
+        },
+        {
+          "TTS Czech": {
+            "desc": "Convert text to speech - Czech (Čeština)",
+            "path": "/tts/tts-cs?text="
+          }
+        },
+        {
+          "TTS Hungarian": {
+            "desc": "Convert text to speech - Hungarian (Magyar)",
+            "path": "/tts/tts-hu?text="
+          }
+        },
+        {
+          "TTS Romanian": {
+            "desc": "Convert text to speech - Romanian (Română)",
+            "path": "/tts/tts-ro?text="
+          }
+        },
+        {
+          "TTS Ukrainian": {
+            "desc": "Convert text to speech - Ukrainian (Українська)",
+            "path": "/tts/tts-uk?text="
+          }
+        },
+        {
+          "Xiaofei": {
+            "desc": "Chinese female voice with 19 styles - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaofei?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaolei": {
+            "desc": "Chinese male voice with 10 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaolei?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaojie": {
+            "desc": "Chinese male voice with 12 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaojie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaohua": {
+            "desc": "Chinese female voice - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaohua?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaofeng": {
+            "desc": "Chinese male voice with 8 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaofeng?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoze": {
+            "desc": "Chinese male voice - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaoze?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoyuan": {
+            "desc": "Chinese female voice with 9 styles - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoyuan?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaozheng": {
+            "desc": "Chinese male voice with 3 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaozheng?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoying": {
+            "desc": "Chinese female voice with 12 styles - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoying?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoqing": {
+            "desc": "Chinese female voice - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoqing?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoxiang": {
+            "desc": "Chinese female voice - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoxiang?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoyan": {
+            "desc": "Chinese female voice with 3 styles - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoyan?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xianran": {
+            "desc": "Chinese child female voice with chat style - Chinese (Simplified) (Female)",
+            "path": "/tts/xianran?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoxue": {
+            "desc": "Chinese female voice - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoxue?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoxuan": {
+            "desc": "Chinese child female voice - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaoxuan?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaolu": {
+            "desc": "Chinese female voice with 6 styles - Chinese (Simplified) (Female)",
+            "path": "/tts/xiaolu?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaowei": {
+            "desc": "Chinese male voice with 7 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaowei?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaozhe": {
+            "desc": "Chinese male voice with advertisement style - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaozhe?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaohao": {
+            "desc": "Chinese male voice - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaohao?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoyi": {
+            "desc": "Chinese male voice with 5 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaoyi?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaotao": {
+            "desc": "Chinese male voice with 8 styles - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaotao?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xiaoming": {
+            "desc": "Chinese male voice - Chinese (Simplified) (Male)",
+            "path": "/tts/xiaoming?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "David": {
+            "desc": "English US male voice with empathetic style - English (US) (Male)",
+            "path": "/tts/david?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Layla": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/layla?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "James": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/james?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Joey": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/joey?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Jennifer": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/jennifer?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "John": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/john?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Paul": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/paul?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Xena": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/xena?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Marcus": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/marcus?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Jacob": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/jacob?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Sam": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/sam?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Camila": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/camila?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Amy": {
+            "desc": "English US female voice with 11 styles - English (US) (Female)",
+            "path": "/tts/amy?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Quincy": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/quincy?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Sally": {
+            "desc": "English US female voice with 7 styles - English (US) (Female)",
+            "path": "/tts/sally?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Emma": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/emma?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Ethan": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/ethan?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Michael": {
+            "desc": "English US male voice with 11 styles - English (US) (Male)",
+            "path": "/tts/michael?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Olivia": {
+            "desc": "English US female voice with 16 styles - English (US) (Female)",
+            "path": "/tts/olivia?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Mia": {
+            "desc": "English US female voice with 10 styles - English (US) (Female)",
+            "path": "/tts/mia?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Jackson": {
+            "desc": "English US male voice with 10 styles - English (US) (Male)",
+            "path": "/tts/jackson?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Matthew": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/matthew?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Sophia": {
+            "desc": "English US female voice with 13 styles - English (US) (Female)",
+            "path": "/tts/sophia?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Owen": {
+            "desc": "English US male voice with 11 styles - English (US) (Male)",
+            "path": "/tts/owen?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Beatrice": {
+            "desc": "English US female voice with 10 styles - English (US) (Female)",
+            "path": "/tts/beatrice?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Scott": {
+            "desc": "English US male voice with 10 styles - English (US) (Male)",
+            "path": "/tts/scott?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Ivy": {
+            "desc": "English US child female voice - English (US) (Female)",
+            "path": "/tts/ivy?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Eric": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/eric?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Kevin": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/kevin?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Hannah": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/hannah?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Katrina": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/katrina?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Victor": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/victor?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Justin": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/justin?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Leo": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/leo?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Grace": {
+            "desc": "English US female voice - English (US) (Female)",
+            "path": "/tts/grace?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Casey": {
+            "desc": "English US neutral voice - English (US) (Neutral)",
+            "path": "/tts/casey?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Dylan": {
+            "desc": "English US male voice with conversation style - English (US) (Male)",
+            "path": "/tts/dylan?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Julie": {
+            "desc": "English US female voice with conversation style - English (US) (Female)",
+            "path": "/tts/julie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Thomas": {
+            "desc": "English US male voice - English (US) (Male)",
+            "path": "/tts/thomas?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Freya": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/freya?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Max": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/max?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Phoebe": {
+            "desc": "English UK female voice with cheerful style - English (UK) (Female)",
+            "path": "/tts/phoebe?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Noah": {
+            "desc": "English UK male voice with chat style - English (UK) (Male)",
+            "path": "/tts/noah?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Sophie": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/sophie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Isla": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/isla?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Theo": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/theo?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Ella": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/ella?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Freddie": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/freddie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Arthur": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/arthur?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Isabella": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/isabella?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Evie": {
+            "desc": "English UK child female voice - English (UK) (Female)",
+            "path": "/tts/evie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "William": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/william?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Henry": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/henry?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Lily": {
+            "desc": "English UK female voice - English (UK) (Female)",
+            "path": "/tts/lily?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "Charlie": {
+            "desc": "English UK male voice - English (UK) (Male)",
+            "path": "/tts/charlie?text=&speed?=&pitch?=&style?="
+          }
+        },
+        {
+          "🎤 All TTS Voices": {
+            "desc": "Get list of all 30 available TTS voices",
+            "path": "/tts/tts-voices"
+          }
+        },
+        {
+          "🗣️ Adult Female": {
+            "desc": "Convert text to speech using \"Adult Female #1, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-female--1-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Female": {
+            "desc": "Convert text to speech using \"Adult Female #2, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-female--2-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #1, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--1-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #2, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--2-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #3, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--3-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #4, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--4-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #5, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--5-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #6, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--6-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #7, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--7-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Adult Male": {
+            "desc": "Convert text to speech using \"Adult Male #8, American English (TruVoice)\" voice",
+            "path": "/tts/tts-adult-male--8-american-english-truvoice?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Female Whisper": {
+            "desc": "Convert text to speech using \"Female Whisper\" voice",
+            "path": "/tts/tts-female-whisper?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Male Whisper": {
+            "desc": "Convert text to speech using \"Male Whisper\" voice",
+            "path": "/tts/tts-male-whisper?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mary": {
+            "desc": "Convert text to speech using \"Mary\" voice",
+            "path": "/tts/tts-mary?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mary (for Telephone)": {
+            "desc": "Convert text to speech using \"Mary (for Telephone)\" voice",
+            "path": "/tts/tts-mary-for-telephone?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mary in Hall": {
+            "desc": "Convert text to speech using \"Mary in Hall\" voice",
+            "path": "/tts/tts-mary-in-hall?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mary in Space": {
+            "desc": "Convert text to speech using \"Mary in Space\" voice",
+            "path": "/tts/tts-mary-in-space?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mary in Stadium": {
+            "desc": "Convert text to speech using \"Mary in Stadium\" voice",
+            "path": "/tts/tts-mary-in-stadium?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mike": {
+            "desc": "Convert text to speech using \"Mike\" voice",
+            "path": "/tts/tts-mike?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mike (for Telephone)": {
+            "desc": "Convert text to speech using \"Mike (for Telephone)\" voice",
+            "path": "/tts/tts-mike-for-telephone?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mike in Hall": {
+            "desc": "Convert text to speech using \"Mike in Hall\" voice",
+            "path": "/tts/tts-mike-in-hall?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mike in Space": {
+            "desc": "Convert text to speech using \"Mike in Space\" voice",
+            "path": "/tts/tts-mike-in-space?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Mike in Stadium": {
+            "desc": "Convert text to speech using \"Mike in Stadium\" voice",
+            "path": "/tts/tts-mike-in-stadium?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft Five": {
+            "desc": "Convert text to speech using \"RoboSoft Five\" voice",
+            "path": "/tts/tts-robosoft-five?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft Four": {
+            "desc": "Convert text to speech using \"RoboSoft Four\" voice",
+            "path": "/tts/tts-robosoft-four?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft One": {
+            "desc": "Convert text to speech using \"RoboSoft One\" voice",
+            "path": "/tts/tts-robosoft-one?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft Six": {
+            "desc": "Convert text to speech using \"RoboSoft Six\" voice",
+            "path": "/tts/tts-robosoft-six?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft Three": {
+            "desc": "Convert text to speech using \"RoboSoft Three\" voice",
+            "path": "/tts/tts-robosoft-three?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ RoboSoft Two": {
+            "desc": "Convert text to speech using \"RoboSoft Two\" voice",
+            "path": "/tts/tts-robosoft-two?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Sam": {
+            "desc": "Convert text to speech using \"Sam\" voice",
+            "path": "/tts/tts-sam?text=&pitch?=&speed?="
+          }
+        },
+        {
+          "🗣️ Bonzi": {
+            "desc": "Convert text to speech using \"Bonzi\" voice",
+            "path": "/tts/tts-bonzi?text=&pitch?=&speed?="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virtual Number",
+      "items": [
+        {
+          "SMS24 Countries": {
+            "desc": "Get available countries from SMS24",
+            "path": "/vnum/sms24-countries"
+          }
+        },
+        {
+          "SMS24 Numbers": {
+            "desc": "Get virtual numbers from SMS24 by country",
+            "path": "/vnum/sms24-numbers?country="
+          }
+        },
+        {
+          "SMS24 Messages": {
+            "desc": "Get messages from SMS24 by number",
+            "path": "/vnum/sms24-messages?number="
+          }
+        },
+        {
+          "VeePN Countries": {
+            "desc": "Get available countries from VeePN SMS service",
+            "path": "/vnum/veepn-countries"
+          }
+        },
+        {
+          "VeePN Numbers": {
+            "desc": "Get virtual numbers from VeePN by country",
+            "path": "/vnum/veepn-numbers?country="
+          }
+        },
+        {
+          "VeePN Messages": {
+            "desc": "Get messages from VeePN virtual number",
+            "path": "/vnum/veepn-messages?country=&number=&page?=&count?="
+          }
+        }
+      ]
+    }
+  ]
+}

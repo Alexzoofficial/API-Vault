@@ -1,0 +1,657 @@
+import { useState, useMemo, useEffect } from 'react';
+import { motion } from 'motion/react';
+import Fuse from 'fuse.js';
+import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
+import { Input } from '@/src/components/ui/input';
+import { Button } from '@/src/components/ui/button';
+import { Badge } from '@/src/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
+import endpointsData from '@/src/data/endpoints.json';
+
+const categoryIcons: Record<string, any> = {
+  "Artificial Intelligence": Cpu,
+  "Image Generation": ImageIcon,
+  "Anime": Tv,
+  "Downloader": Download,
+  "Games": Gamepad2,
+  "Image Creator": Palette,
+  "Movies": Film,
+  "NSFW Content": AlertTriangle,
+  "Search": SearchIcon,
+  "Audio": Music,
+  "Screenshot Website": Monitor,
+  "Stalk": Eye,
+  "Text Maker": Type,
+  "Text To Speech": Mic,
+  "URL Shortener": Link,
+  "StyleText": Palette,
+  "Virtual Number": Phone,
+  "Public Utilities & Tools": Wrench,
+  "Developer & Testing Tools": Code2,
+  "Finance & Crypto": Coins,
+  "Entertainment & Pop Culture": Smile,
+  "Science & Weather": FlaskConical,
+  "More Utilities": Box,
+  "Temp Numbers & SMS": MessageSquare,
+  "Books & Literature": BookOpen,
+  "Animals & Nature": Leaf,
+  "Health & Food": Coffee,
+  "Security & Network": Wifi,
+  "Art & Design": Brush,
+  "Music & Audio": Headphones,
+  "Vehicles & Transport": Car,
+  "University & Education": GraduationCap,
+  "Sports & Fitness": Trophy,
+  "News & Information": Newspaper,
+  "Jobs & Careers": Briefcase,
+  "Machine Learning & AI": BrainCircuit,
+  "Open Data & Government": Building2,
+  "Transportation & Logistics": Train,
+  "Video Games & eSports": Gamepad2,
+  "Blockchain & Cryptocurrency": Bitcoin,
+  "Photography & Imagery": Camera,
+  "Shopping & E-Commerce": ShoppingCart,
+  "Test Data & Mocking": TestTube,
+  "Dictionaries & Words": BookA,
+  "Calendar & Time": Calendar,
+  "Math & Calculation": Calculator,
+  "Geocoding & Maps": MapIcon,
+  "DNS & Network Tools": Network,
+  "Validation & Verification": CheckSquare,
+  "Social Media & Engagement": Share2,
+  "JSONPlaceholder Data": Database,
+  "Pokemon API": Gamepad2,
+  "Rick and Morty API": Tv,
+  "DummyJSON Products": ShoppingCart
+};
+
+export default function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedEndpoint, setSelectedEndpoint] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [params, setParams] = useState<Record<string, string>>({});
+  const [method, setMethod] = useState('GET');
+  const [requestBody, setRequestBody] = useState('');
+  const [response, setResponse] = useState<{ data: any; status: number; time: number; type: string } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [origin, setOrigin] = useState('');
+  const [adblockDetected, setAdblockDetected] = useState(false);
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+
+    // Adblock Detection Logic
+    const bait = document.createElement('div');
+    bait.className = 'ad-banner adsbox doubleclick sponsor-ad';
+    bait.style.height = '10px';
+    bait.style.width = '10px';
+    bait.style.position = 'absolute';
+    bait.style.left = '-9999px';
+    bait.style.top = '-9999px';
+    document.body.appendChild(bait);
+
+    setTimeout(() => {
+      const isBlocked = bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none';
+      if (isBlocked) {
+        setAdblockDetected(true);
+      }
+      bait.remove();
+    }, 500);
+  }, []);
+
+  const categories = endpointsData.endpoints || [];
+  const totalEndpoints = endpointsData.totalfitur || 0;
+
+  const flatEndpoints = useMemo(() => {
+    const flat: any[] = [];
+    categories.forEach((category: any) => {
+      category.items.forEach((itemObj: any) => {
+        const name = Object.keys(itemObj)[0];
+        const details = itemObj[name];
+        flat.push({
+          categoryName: category.name,
+          name: name,
+          desc: details.desc || '',
+          path: details.path || '',
+          originalItem: itemObj
+        });
+      });
+    });
+    return flat;
+  }, [categories]);
+
+  const fuse = useMemo(() => new Fuse(flatEndpoints, {
+    keys: [
+      { name: 'name', weight: 0.5 },
+      { name: 'desc', weight: 0.3 },
+      { name: 'path', weight: 0.1 },
+      { name: 'categoryName', weight: 0.1 }
+    ],
+    threshold: 0.3, // 0.0 requires perfect match, 1.0 matches anything
+    includeScore: true,
+    ignoreLocation: true
+  }), [flatEndpoints]);
+
+  const filteredCategories = useMemo(() => {
+    if (!searchQuery.trim()) return categories;
+    
+    const results = fuse.search(searchQuery);
+    
+    const categoryMap = new Map<string, any>();
+    results.forEach(result => {
+      const item = result.item;
+      if (!categoryMap.has(item.categoryName)) {
+        categoryMap.set(item.categoryName, {
+          name: item.categoryName,
+          items: []
+        });
+      }
+      categoryMap.get(item.categoryName).items.push(item.originalItem);
+    });
+
+    return Array.from(categoryMap.values());
+  }, [categories, searchQuery, fuse]);
+
+  const handleOpenModal = (name: string, details: any) => {
+    setSelectedEndpoint({ name, ...details });
+    setResponse(null);
+    setMethod(details.method || 'GET');
+    setRequestBody(details.exampleBody ? JSON.stringify(details.exampleBody, null, 2) : '');
+    
+    // Parse params from path
+    const urlParams = details.path.split('?')[1];
+    const initialParams: Record<string, string> = {};
+    if (urlParams) {
+      urlParams.split('&').forEach((p: string) => {
+        const key = p.split('=')[0];
+        if (key) initialParams[key] = '';
+      });
+    }
+    setParams(initialParams);
+    setIsModalOpen(true);
+  };
+
+  const handleTestEndpoint = async () => {
+    if (!selectedEndpoint) return;
+    
+    setLoading(true);
+    setResponse(null);
+    
+    try {
+      let finalPath = selectedEndpoint.path.split('?')[0];
+      const queryParams = new URLSearchParams();
+      
+      Object.entries(params).forEach(([key, value]) => {
+        const isOptional = key.endsWith('?');
+        const cleanKey = isOptional ? key.slice(0, -1) : key;
+        if (value || !isOptional) {
+          queryParams.append(cleanKey, value);
+        }
+      });
+      
+      const queryString = queryParams.toString();
+      
+      let url = '';
+      if (finalPath.startsWith('http')) {
+        url = `${finalPath}${queryString ? `?${queryString}` : ''}`;
+      } else {
+        url = `/api${finalPath}${queryString ? `?${queryString}` : ''}`;
+      }
+      
+      const options: RequestInit = { method };
+      if (['POST', 'PUT', 'PATCH'].includes(method) && requestBody) {
+        options.headers = { 'Content-Type': 'application/json' };
+        try {
+          JSON.parse(requestBody); // Validate JSON
+          options.body = requestBody;
+        } catch (e) {
+          options.body = requestBody; // Send as text if invalid JSON
+        }
+      }
+      
+      const startTime = Date.now();
+      const res = await fetch(url, options);
+      const endTime = Date.now();
+      
+      const contentType = res.headers.get('content-type') || '';
+      let data;
+      let type = 'text';
+      
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+        type = 'json';
+      } else if (contentType.includes('image/') || contentType.includes('video/') || contentType.includes('audio/')) {
+        const blob = await res.blob();
+        data = URL.createObjectURL(blob);
+        type = contentType.split('/')[0];
+      } else {
+        data = await res.text();
+      }
+      
+      setResponse({
+        data,
+        status: res.status,
+        time: endTime - startTime,
+        type
+      });
+    } catch (error: any) {
+      setResponse({
+        data: error.message || 'Failed to fetch',
+        status: 0,
+        time: 0,
+        type: 'error'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans relative overflow-hidden">
+      {/* Premium Ambient Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.1),transparent_70%)] blur-[100px]"></div>
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(129,140,248,0.05),transparent_70%)] blur-[100px]"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay"></div>
+      </div>
+
+      {/* Header */}
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shadow-sm">
+              <Terminal size={16} className="text-blue-600" />
+            </div>
+            <h1 className="text-lg font-semibold tracking-tight text-slate-900">API Vault</h1>
+            <Badge variant="outline" className="ml-2 border-emerald-200 text-emerald-700 bg-emerald-50 hidden sm:inline-flex px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              All Systems Operational
+            </Badge>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="https://t.me/prexzyvillatech" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2 text-sm font-medium">
+              <Globe size={16} />
+              <span className="hidden sm:inline">Community</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-16 max-w-6xl relative z-10">
+        {/* Hero Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center text-center mb-20 space-y-6"
+        >
+          <Badge variant="outline" className="border-slate-200 bg-white text-slate-600 px-3 py-1 text-xs mb-4 shadow-sm">
+            v3.0 is now live
+          </Badge>
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-slate-900 to-slate-600 pb-2">
+            The Ultimate API <br className="hidden md:block" />
+            Directory
+          </h2>
+          <p className="text-lg md:text-xl text-slate-500 max-w-2xl font-light">
+            A highly curated, ultra-fast collection of powerful endpoints. 
+            Currently serving <strong className="text-slate-900 font-medium">{totalEndpoints}</strong> active APIs.
+          </p>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mt-10">
+            {[
+              { icon: Activity, label: "99.9% Uptime", color: "text-blue-500" },
+              { icon: Zap, label: "Ultra Fast", color: "text-amber-500" },
+              { icon: Shield, label: "Secure", color: "text-emerald-500" },
+              { icon: Code2, label: "Easy Integration", color: "text-indigo-500" }
+            ].map((stat, i) => (
+              <div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition-all">
+                <stat.icon className={`${stat.color} mb-3`} size={24} strokeWidth={1.5} />
+                <span className="text-sm font-medium text-slate-700">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Search */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="relative max-w-2xl mx-auto mb-20"
+        >
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-slate-400" />
+          </div>
+          <Input
+            type="text"
+            placeholder="Search endpoints, categories, or descriptions..."
+            className="w-full pl-12 pr-4 py-7 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-2xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 text-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </motion.div>
+
+        {/* Endpoints List */}
+        <div className="space-y-20">
+          {filteredCategories.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-slate-500 text-lg">No endpoints found matching "{searchQuery}"</p>
+            </div>
+          ) : (
+            filteredCategories.map((category: any, idx: number) => {
+              const Icon = categoryIcons[category.name] || Folder;
+              
+              return (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4 }}
+                key={idx} 
+                className="space-y-6"
+              >
+                <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
+                  <div className="p-2 bg-white border border-slate-200 text-slate-600 rounded-lg shadow-sm">
+                    <Icon size={20} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-slate-900 tracking-tight">{category.name}</h3>
+                  <Badge variant="outline" className="bg-slate-100 text-slate-500 border-slate-200 ml-auto md:ml-0 font-mono text-xs">
+                    {category.items.length}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {category.items.map((itemObj: any, itemIdx: number) => {
+                    const name = Object.keys(itemObj)[0];
+                    const details = itemObj[name];
+                    const isExternal = details.path.startsWith('http');
+                    const displayPath = isExternal ? details.path.split('?')[0] : `${origin}/api${details.path.split('?')[0]}`;
+                    
+                    return (
+                      <Card key={itemIdx} className="bg-white border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 group overflow-hidden relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <CardHeader className="pb-3 relative z-10">
+                          <div className="flex justify-between items-start">
+                            <CardTitle className="text-lg text-slate-800 group-hover:text-blue-600 transition-colors font-medium">
+                              {name}
+                            </CardTitle>
+                            <Badge variant="outline" className="bg-blue-50 text-blue-600 border-blue-200 font-mono text-[10px] uppercase tracking-wider">
+                              GET
+                            </Badge>
+                          </div>
+                          <CardDescription className="text-slate-500 line-clamp-2 mt-2 text-sm">
+                            {details.desc}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="relative z-10">
+                          <div className="bg-slate-50 rounded-lg p-2.5 flex items-center justify-between border border-slate-100 group-hover:border-slate-200 transition-colors">
+                            <code className="text-xs text-slate-500 font-mono truncate mr-2">
+                              {displayPath.replace(/^https?:\/\//, '')}
+                            </code>
+                            <Button 
+                              size="sm" 
+                              variant="ghost" 
+                              className="h-7 px-2 text-xs bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 shrink-0 shadow-sm"
+                              onClick={() => handleOpenModal(name, details)}
+                            >
+                              <Play className="w-3 h-3 mr-1.5" /> Test
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            );
+            })
+          )}
+        </div>
+      </main>
+
+      {/* Test Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-2xl w-full max-h-[90vh] overflow-y-auto sm:rounded-2xl shadow-2xl p-0 gap-0">
+          <div className="p-6 border-b border-slate-100">
+            <DialogHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <select 
+                  value={method} 
+                  onChange={(e) => setMethod(e.target.value)}
+                  className="bg-blue-50 text-blue-600 border border-blue-200 font-mono text-xs rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                >
+                  <option value="GET">GET</option>
+                  <option value="POST">POST</option>
+                  <option value="PUT">PUT</option>
+                  <option value="PATCH">PATCH</option>
+                  <option value="DELETE">DELETE</option>
+                </select>
+                <DialogTitle className="text-xl font-semibold text-slate-900">{selectedEndpoint?.name}</DialogTitle>
+              </div>
+              <DialogDescription className="text-slate-500 text-sm">
+                {selectedEndpoint?.desc}
+              </DialogDescription>
+              {(selectedEndpoint?.docs || selectedEndpoint?.exampleResponse || selectedEndpoint?.statusCodes) && (
+                <div className="mt-2 flex gap-4">
+                  {selectedEndpoint?.docs && (
+                    <a href={selectedEndpoint.docs} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-medium">
+                      <Link size={12} /> API Documentation
+                    </a>
+                  )}
+                  {selectedEndpoint?.statusCodes && (
+                    <span className="text-xs text-slate-500 flex items-center gap-1">
+                      <Activity size={12} /> Status: {selectedEndpoint.statusCodes.join(', ')}
+                    </span>
+                  )}
+                </div>
+              )}
+            </DialogHeader>
+          </div>
+
+          <div className="p-6 space-y-8">
+            {/* Base URL Preview */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Full Request URL</h4>
+              <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between group">
+                <code className="text-sm text-slate-700 font-mono break-all">
+                  {(() => {
+                    if (!selectedEndpoint) return '';
+                    let finalPath = selectedEndpoint.path.split('?')[0];
+                    const queryParams = new URLSearchParams();
+                    Object.entries(params).forEach(([key, value]) => {
+                      const isOptional = key.endsWith('?');
+                      const cleanKey = isOptional ? key.slice(0, -1) : key;
+                      if (value || !isOptional) {
+                        queryParams.append(cleanKey, value);
+                      }
+                    });
+                    const queryString = queryParams.toString();
+                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
+                    return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+                  })()}
+                </code>
+                <Button 
+                  size="icon" 
+                  variant="ghost" 
+                  className="h-8 w-8 text-slate-400 hover:text-slate-700 hover:bg-slate-200 opacity-0 group-hover:opacity-100 transition-all"
+                  onClick={() => {
+                    let finalPath = selectedEndpoint.path.split('?')[0];
+                    const queryParams = new URLSearchParams();
+                    Object.entries(params).forEach(([key, value]) => {
+                      const isOptional = key.endsWith('?');
+                      const cleanKey = isOptional ? key.slice(0, -1) : key;
+                      if (value || !isOptional) {
+                        queryParams.append(cleanKey, value);
+                      }
+                    });
+                    const queryString = queryParams.toString();
+                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
+                    copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
+                  }}
+                >
+                  {copied ? <CheckCircle2 size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                </Button>
+              </div>
+            </div>
+
+            {/* Parameters */}
+            {Object.keys(params).length > 0 && (
+              <div className="space-y-4">
+                <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Query Parameters</h4>
+                <div className="space-y-3">
+                  {Object.keys(params).map((key) => {
+                    const isOptional = key.endsWith('?');
+                    const cleanKey = isOptional ? key.slice(0, -1) : key;
+                    
+                    return (
+                      <div key={key} className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                          {cleanKey}
+                          {isOptional ? (
+                            <span className="text-[10px] text-emerald-500 uppercase tracking-wider">Optional</span>
+                          ) : (
+                            <span className="text-[10px] text-red-500 uppercase tracking-wider">Required</span>
+                          )}
+                        </label>
+                        <Input
+                          value={params[key]}
+                          onChange={(e) => setParams({ ...params, [key]: e.target.value })}
+                          placeholder={`Enter value for ${cleanKey}...`}
+                          className="bg-white border-slate-200 text-slate-900 focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 h-11"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Request Body */}
+            {['POST', 'PUT', 'PATCH'].includes(method) && (
+              <div className="space-y-2">
+                <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Request Body (JSON)</h4>
+                <textarea
+                  value={requestBody}
+                  onChange={(e) => setRequestBody(e.target.value)}
+                  placeholder="{\n  &quot;key&quot;: &quot;value&quot;\n}"
+                  className="w-full h-32 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 outline-none resize-y"
+                />
+              </div>
+            )}
+
+            {/* Action */}
+            <Button 
+              onClick={handleTestEndpoint} 
+              disabled={loading}
+              className="w-full bg-slate-900 text-white hover:bg-slate-800 h-12 text-sm font-semibold rounded-xl transition-all shadow-md"
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Executing...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Play size={16} fill="currentColor" />
+                  Send Request
+                </span>
+              )}
+            </Button>
+
+            {/* Response */}
+            {response && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-3 pt-4 border-t border-slate-100"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Response</h4>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-slate-500">{response.time}ms</span>
+                    <Badge variant="outline" className={
+                      response.status >= 200 && response.status < 300 
+                        ? "bg-emerald-50 text-emerald-600 border-emerald-200 font-mono" 
+                        : "bg-red-50 text-red-600 border-red-200 font-mono"
+                    }>
+                      {response.status}
+                    </Badge>
+                  </div>
+                </div>
+                
+                <div className="relative bg-slate-900 border border-slate-800 rounded-xl overflow-hidden group shadow-inner">
+                  <div className="absolute top-2 right-2 flex gap-2 z-10">
+                    {response.type === 'json' && (
+                      <Button 
+                        size="icon" 
+                        variant="ghost" 
+                        className="h-8 w-8 text-slate-400 hover:text-white hover:bg-white/10 bg-black/50 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-all"
+                        onClick={() => copyToClipboard(JSON.stringify(response.data, null, 2))}
+                      >
+                        {copied ? <CheckCircle2 size={14} className="text-emerald-400" /> : <Copy size={14} />}
+                      </Button>
+                    )}
+                  </div>
+                  
+                  <div className="p-4 overflow-auto max-h-[400px] custom-scrollbar">
+                    {response.type === 'json' ? (
+                      <pre className="text-[13px] leading-relaxed text-slate-300 font-mono">
+                        {JSON.stringify(response.data, null, 2)}
+                      </pre>
+                    ) : response.type === 'image' ? (
+                      <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg border border-white/10" />
+                    ) : response.type === 'video' ? (
+                      <video src={response.data} controls className="max-w-full rounded-lg border border-white/10" />
+                    ) : response.type === 'audio' ? (
+                      <audio src={response.data} controls className="w-full" />
+                    ) : (
+                      <pre className="text-[13px] leading-relaxed text-slate-300 font-mono whitespace-pre-wrap">
+                        {String(response.data)}
+                      </pre>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Adblocker Warning Modal */}
+      <Dialog open={adblockDetected} onOpenChange={() => {}}>
+        <DialogContent 
+          className="bg-white border-slate-200 text-slate-900 sm:max-w-md [&>button]:hidden" 
+          onPointerDownOutside={(e) => e.preventDefault()} 
+          onEscapeKeyDown={(e) => e.preventDefault()}
+        >
+          <div className="flex flex-col items-center text-center p-6 space-y-4">
+            <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-2">
+              <ShieldAlert size={32} />
+            </div>
+            <DialogTitle className="text-2xl font-bold text-slate-900">Adblocker Detected!</DialogTitle>
+            <DialogDescription className="text-slate-600 text-base">
+              It looks like you are using an adblocker. We rely on ads to keep this API directory free and servers running. 
+              <br/><br/>
+              Please <strong>disable your adblocker</strong> for this site and refresh the page to continue using API Vault.
+            </DialogDescription>
+            <Button 
+              className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white h-12 text-md font-semibold rounded-xl"
+              onClick={() => window.location.reload()}
+            >
+              I have disabled it, Refresh Page
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
