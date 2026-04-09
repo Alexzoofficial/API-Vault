@@ -98,11 +98,19 @@ function MainApp() {
   const [copied, setCopied] = useState(false);
   const [origin, setOrigin] = useState('');
   const [adblockDetected, setAdblockDetected] = useState(false);
+  const [botVerificationOpen, setBotVerificationOpen] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState(5);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   useEffect(() => {
     setOrigin(window.location.origin);
+
+    // Bot Verification Logic
+    const lastVerification = localStorage.getItem('lastVerification');
+    const now = Date.now();
+    if (!lastVerification || now - parseInt(lastVerification) > 30 * 60 * 1000) {
+      setBotVerificationOpen(true);
+    }
 
     // Adblock Detection Logic
     const bait = document.createElement('div');
@@ -122,6 +130,11 @@ function MainApp() {
       bait.remove();
     }, 500);
   }, []);
+
+  const handleVerificationSuccess = () => {
+    localStorage.setItem('lastVerification', Date.now().toString());
+    setBotVerificationOpen(false);
+  };
 
   const categories = useMemo(() => {
     const rawCategories = JSON.parse(JSON.stringify(endpointsData.endpoints || []));
@@ -571,47 +584,28 @@ function MainApp() {
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-2xl w-full max-h-[90vh] overflow-y-auto sm:rounded-2xl shadow-2xl p-0 gap-0">
-          <div className="p-6 border-b border-slate-100">
-            <DialogHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <select 
-                  value={method} 
-                  onChange={(e) => setMethod(e.target.value)}
-                  className="bg-blue-50 text-blue-600 border border-blue-200 font-mono text-xs rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                >
-                  <option value="GET">GET</option>
-                  <option value="POST">POST</option>
-                  <option value="PUT">PUT</option>
-                  <option value="PATCH">PATCH</option>
-                  <option value="DELETE">DELETE</option>
-                </select>
-                <DialogTitle className="text-xl font-semibold text-slate-900">{selectedEndpoint?.name}</DialogTitle>
+          <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-50 text-blue-600 font-mono text-xs font-bold rounded-md px-2 py-1">
+                {method}
               </div>
-              <DialogDescription className="text-slate-500 text-sm">
-                {selectedEndpoint?.desc}
-              </DialogDescription>
-              {(selectedEndpoint?.docs || selectedEndpoint?.exampleResponse || selectedEndpoint?.statusCodes) && (
-                <div className="mt-2 flex gap-4">
-                  {selectedEndpoint?.docs && (
-                    <a href={selectedEndpoint.docs} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-medium">
-                      <Link size={12} /> API Documentation
-                    </a>
-                  )}
-                  {selectedEndpoint?.statusCodes && (
-                    <span className="text-xs text-slate-500 flex items-center gap-1">
-                      <Activity size={12} /> Status: {selectedEndpoint.statusCodes.join(', ')}
-                    </span>
-                  )}
-                </div>
-              )}
-            </DialogHeader>
+              <DialogTitle className="text-xl font-semibold text-slate-900">{selectedEndpoint?.name}</DialogTitle>
+            </div>
+            <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+              <span className="sr-only">Close</span>
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
           </div>
 
-          <div className="p-6 space-y-8">
-            {/* Base URL Preview */}
+          <div className="p-6 space-y-6">
+            <DialogDescription className="text-slate-500 text-sm">
+              {selectedEndpoint?.desc}
+            </DialogDescription>
+
+            {/* Full Request URL */}
             <div className="space-y-2">
-              <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Full Request URL</h4>
-              <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between group">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Request URL</h4>
+              <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
                 <code className="text-sm text-slate-700 font-mono break-all">
                   {(() => {
                     if (!selectedEndpoint) return '';
@@ -629,54 +623,26 @@ function MainApp() {
                     return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
                   })()}
                 </code>
-                <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="h-8 w-8 text-slate-400 hover:text-slate-700 hover:bg-slate-200 opacity-0 group-hover:opacity-100 transition-all"
-                  onClick={() => {
-                    let finalPath = selectedEndpoint.path.split('?')[0];
-                    const queryParams = new URLSearchParams();
-                    Object.entries(params).forEach(([key, value]) => {
-                      const isOptional = key.endsWith('?');
-                      const cleanKey = isOptional ? key.slice(0, -1) : key;
-                      if (value || !isOptional) {
-                        queryParams.append(cleanKey, value as string);
-                      }
-                    });
-                    const queryString = queryParams.toString();
-                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                    copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
-                  }}
-                >
-                  {copied ? <CheckCircle2 size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </Button>
               </div>
             </div>
 
             {/* Parameters */}
             {Object.keys(params).length > 0 && (
-              <div className="space-y-4">
-                <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Query Parameters</h4>
-                <div className="space-y-3">
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Query Parameters</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
                     const cleanKey = isOptional ? key.slice(0, -1) : key;
                     
                     return (
-                      <div key={key} className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                          {cleanKey}
-                          {isOptional ? (
-                            <span className="text-[10px] text-emerald-500 uppercase tracking-wider">Optional</span>
-                          ) : (
-                            <span className="text-[10px] text-red-500 uppercase tracking-wider">Required</span>
-                          )}
-                        </label>
+                      <div key={key} className="flex flex-col gap-1">
+                        <label className="text-xs font-medium text-slate-500">{cleanKey}</label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
-                          placeholder={`Enter value for ${cleanKey}...`}
-                          className="bg-white border-slate-200 text-slate-900 focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 h-11"
+                          placeholder={cleanKey}
+                          className="bg-white border-slate-200 text-slate-900 h-10"
                         />
                       </div>
                     );
@@ -685,107 +651,62 @@ function MainApp() {
               </div>
             )}
 
-            {/* Request Body */}
-            {['POST', 'PUT', 'PATCH'].includes(method) && (
-              <div className="space-y-2">
-                <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Request Body (JSON)</h4>
-                <textarea
-                  value={requestBody}
-                  onChange={(e) => setRequestBody(e.target.value)}
-                  placeholder="{\n  &quot;key&quot;: &quot;value&quot;\n}"
-                  className="w-full h-32 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-slate-700 focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 outline-none resize-y"
-                />
-              </div>
-            )}
-
-            {/* Cloudflare Turnstile */}
-            <div className="flex justify-center py-2">
-              <Turnstile 
-                siteKey="0x4AAAAAAC2peINI9p1_A0No"
-                onSuccess={(token) => setTurnstileToken(token)}
-                options={{ theme: 'light' }}
-              />
-            </div>
-
             {/* Action */}
             <Button 
               onClick={handleTestEndpoint} 
-              disabled={loading || !turnstileToken}
-              className="w-full bg-slate-900 text-white hover:bg-slate-800 h-12 text-sm font-semibold rounded-xl transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 text-sm font-semibold rounded-lg transition-all shadow-md"
             >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                  Executing...
-                </span>
-              ) : !turnstileToken ? (
-                <span className="flex items-center gap-2">
-                  <Shield size={16} fill="currentColor" />
-                  Verify to Send Request
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <Play size={16} fill="currentColor" />
-                  Send Request
-                </span>
-              )}
+              {loading ? 'Executing...' : 'Send Request'}
             </Button>
 
             {/* Response */}
             {response && (
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-3 pt-4 border-t border-slate-100"
-              >
+              <div className="space-y-3 pt-4 border-t border-slate-100">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wider">Response</h4>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-slate-500">{response.time}ms</span>
-                    <Badge variant="outline" className={
-                      response.status >= 200 && response.status < 300 
-                        ? "bg-emerald-50 text-emerald-600 border-emerald-200 font-mono" 
-                        : "bg-red-50 text-red-600 border-red-200 font-mono"
-                    }>
-                      {response.status}
-                    </Badge>
-                  </div>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Response</h4>
+                  <Badge variant="outline" className={
+                    response.status >= 200 && response.status < 300 
+                      ? "bg-emerald-50 text-emerald-600 border-emerald-200" 
+                      : "bg-red-50 text-red-600 border-red-200"
+                  }>
+                    {response.status}
+                  </Badge>
                 </div>
                 
-                <div className="relative bg-slate-900 border border-slate-800 rounded-xl overflow-hidden group shadow-inner">
-                  <div className="absolute top-2 right-2 flex gap-2 z-10">
-                    {response.type === 'json' && (
-                      <Button 
-                        size="icon" 
-                        variant="ghost" 
-                        className="h-8 w-8 text-slate-400 hover:text-white hover:bg-white/10 bg-black/50 backdrop-blur-md border border-white/10 opacity-0 group-hover:opacity-100 transition-all"
-                        onClick={() => copyToClipboard(JSON.stringify(response.data, null, 2))}
-                      >
-                        {copied ? <CheckCircle2 size={14} className="text-emerald-400" /> : <Copy size={14} />}
-                      </Button>
-                    )}
-                  </div>
-                  
-                  <div className="p-4 overflow-auto max-h-[400px] custom-scrollbar">
-                    {response.type === 'json' ? (
-                      <pre className="text-[13px] leading-relaxed text-slate-300 font-mono">
-                        {JSON.stringify(response.data, null, 2)}
-                      </pre>
-                    ) : response.type === 'image' ? (
-                      <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg border border-white/10" />
-                    ) : response.type === 'video' ? (
-                      <video src={response.data} controls className="max-w-full rounded-lg border border-white/10" />
-                    ) : response.type === 'audio' ? (
-                      <audio src={response.data} controls className="w-full" />
-                    ) : (
-                      <pre className="text-[13px] leading-relaxed text-slate-300 font-mono whitespace-pre-wrap">
-                        {String(response.data)}
-                      </pre>
-                    )}
-                  </div>
+                <div className="bg-slate-900 rounded-lg p-4 overflow-auto max-h-[300px]">
+                  <pre className="text-xs text-slate-300 font-mono whitespace-pre-wrap">
+                    {response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data)}
+                  </pre>
                 </div>
-              </motion.div>
+              </div>
             )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Bot Verification Modal */}
+      <Dialog open={botVerificationOpen} onOpenChange={() => {}}>
+        <DialogContent 
+          className="bg-white border-slate-200 text-slate-900 sm:max-w-md [&>button]:hidden" 
+          onPointerDownOutside={(e) => e.preventDefault()} 
+          onEscapeKeyDown={(e) => e.preventDefault()}
+        >
+          <div className="flex flex-col items-center text-center p-6 space-y-4">
+            <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-2">
+              <Shield size={32} />
+            </div>
+            <DialogTitle className="text-2xl font-bold text-slate-900">Bot Verification</DialogTitle>
+            <DialogDescription className="text-slate-600 text-base">
+              Please complete the verification to continue using API Vault.
+            </DialogDescription>
+            <div className="py-2">
+              <Turnstile 
+                siteKey="0x4AAAAAAC2peINI9p1_A0No"
+                onSuccess={handleVerificationSuccess}
+                options={{ theme: 'light' }}
+              />
+            </div>
           </div>
         </DialogContent>
       </Dialog>
