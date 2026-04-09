@@ -605,7 +605,7 @@ function MainApp() {
             {/* Full Request URL */}
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Request URL</h4>
-              <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between">
+              <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between group">
                 <code className="text-sm text-slate-700 font-mono break-all">
                   {(() => {
                     if (!selectedEndpoint) return '';
@@ -623,6 +623,27 @@ function MainApp() {
                     return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
                   })()}
                 </code>
+                <Button 
+                  size="icon" 
+                  variant="ghost" 
+                  className="h-8 w-8 text-slate-400 hover:text-slate-700 hover:bg-slate-200 opacity-0 group-hover:opacity-100 transition-all ml-2"
+                  onClick={() => {
+                    let finalPath = selectedEndpoint?.path.split('?')[0] || '';
+                    const queryParams = new URLSearchParams();
+                    Object.entries(params).forEach(([key, value]) => {
+                      const isOptional = key.endsWith('?');
+                      const cleanKey = isOptional ? key.slice(0, -1) : key;
+                      if (value || !isOptional) {
+                        queryParams.append(cleanKey, value as string);
+                      }
+                    });
+                    const queryString = queryParams.toString();
+                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
+                    copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
+                  }}
+                >
+                  {copied ? <CheckCircle2 size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                </Button>
               </div>
             </div>
 
@@ -630,18 +651,18 @@ function MainApp() {
             {Object.keys(params).length > 0 && (
               <div className="space-y-3">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Query Parameters</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
                     const cleanKey = isOptional ? key.slice(0, -1) : key;
                     
                     return (
                       <div key={key} className="flex flex-col gap-1">
-                        <label className="text-xs font-medium text-slate-500">{cleanKey}</label>
+                        <label className="text-xs font-medium text-slate-500">{cleanKey} {isOptional ? '(Optional)' : '(Required)'}</label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
-                          placeholder={cleanKey}
+                          placeholder={`Enter ${cleanKey}`}
                           className="bg-white border-slate-200 text-slate-900 h-10"
                         />
                       </div>
