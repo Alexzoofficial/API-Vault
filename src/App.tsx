@@ -69,30 +69,19 @@ const categoryIcons: Record<string, any> = {
 };
 
 const AdBanner = ({ width, height, dataKey }: { width: number, height: number, dataKey: string }) => {
-  const bannerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!bannerRef.current) return;
-    
-    // Clear previous
-    bannerRef.current.innerHTML = '';
-    
-    const conf = document.createElement('script');
-    conf.type = 'text/javascript';
-    conf.innerHTML = `atOptions = { 'key' : '${dataKey}', 'format' : 'iframe', 'height' : ${height}, 'width' : ${width}, 'params' : {} };`;
-    
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = `https://www.highperformanceformat.com/${dataKey}/invoke.js`;
-    
-    bannerRef.current.appendChild(conf);
-    bannerRef.current.appendChild(script);
-  }, [dataKey, width, height]);
-  
   return (
     <div className="flex justify-center my-8 overflow-hidden w-full">
-      <div ref={bannerRef} style={{ width, height, minHeight: height }} className="bg-slate-100 rounded-lg flex items-center justify-center relative">
-        <span className="text-xs text-slate-400 absolute">Advertisement</span>
+      <div style={{ width, height, minHeight: height }} className="bg-slate-100 rounded-lg flex items-center justify-center relative">
+        <span className="text-xs text-slate-400 absolute z-0">Advertisement</span>
+        <iframe 
+          src={`/ad.html?key=${dataKey}&width=${width}&height=${height}`}
+          width={width}
+          height={height}
+          frameBorder="0"
+          scrolling="no"
+          className="relative z-10"
+          title="Advertisement"
+        />
       </div>
     </div>
   );
@@ -386,6 +375,14 @@ function MainApp() {
           <AdBanner width={728} height={90} dataKey="3f774e44518c99b802b52db67915bdbe" />
         </div>
 
+        {/* Disclaimer */}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-10 flex items-start gap-3 text-amber-800 shadow-sm">
+          <AlertTriangle className="shrink-0 mt-0.5" size={18} />
+          <div className="text-sm">
+            <strong>Disclaimer:</strong> In APIs ki koi guarantee nahi hai. Yeh public sources se hain. Kripya apne jokhim (risk) par use karein.
+          </div>
+        </div>
+
         {/* Endpoints List */}
         <div className="space-y-20">
           {filteredCategories.length === 0 ? (
@@ -396,6 +393,7 @@ function MainApp() {
             <>
               {filteredCategories.slice(0, visibleCategories).map((category: any, idx: number) => {
                 const Icon = categoryIcons[category.name] || Folder;
+                const isPremium = category.name === "Premium Custom APIs";
                 
                 return (
                   <div key={idx}>
@@ -423,8 +421,32 @@ function MainApp() {
                     const isExternal = details.path.startsWith('http');
                     const displayPath = isExternal ? details.path.split('?')[0] : `${origin}/api${details.path.split('?')[0]}`;
                     
-                    return (
-                      <Card key={itemIdx} className="bg-white border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 group overflow-hidden relative">
+                    const card = isPremium ? (
+                      <Card key={`item-${itemIdx}`} className="bg-gradient-to-br from-indigo-50 to-blue-50 border-blue-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 group overflow-hidden relative">
+                        <CardHeader className="pb-3 relative z-10">
+                          <div className="flex justify-between items-start">
+                            <CardTitle className="text-lg text-blue-900 font-bold">
+                              {name}
+                            </CardTitle>
+                            <Badge variant="default" className="bg-blue-600 hover:bg-blue-700 text-white font-mono text-[10px] uppercase tracking-wider">
+                              PREMIUM
+                            </Badge>
+                          </div>
+                          <CardDescription className="text-blue-700/70 line-clamp-2 mt-2 text-sm">
+                            {details.desc}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="relative z-10">
+                          <div className="bg-white/60 rounded-lg p-3 flex flex-col items-center justify-center border border-blue-100 text-center gap-2">
+                            <span className="text-sm font-medium text-slate-700">API lene ke liye site visit Karen</span>
+                            <a href={details.path} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm font-semibold transition-colors">
+                              <Globe size={16} /> Visit Site
+                            </a>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      <Card key={`item-${itemIdx}`} className="bg-white border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-300 group overflow-hidden relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <CardHeader className="pb-3 relative z-10">
                           <div className="flex justify-between items-start">
@@ -455,6 +477,24 @@ function MainApp() {
                           </div>
                         </CardContent>
                       </Card>
+                    );
+
+                    return (
+                      <div className="contents" key={`frag-${itemIdx}`}>
+                        {card}
+                        {/* 300x250 Banner every 2 endpoints */}
+                        {((itemIdx + 1) % 2 === 0) && (
+                          <div className="flex justify-center items-center bg-slate-50 rounded-xl border border-slate-200 overflow-hidden min-h-[250px]">
+                            <AdBanner width={300} height={250} dataKey="36c65a945aa722669a63704442691dd9" />
+                          </div>
+                        )}
+                        {/* 728x90 Banner every 5 endpoints */}
+                        {((itemIdx + 1) % 5 === 0) && (
+                          <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center py-4 hidden md:flex bg-slate-50 rounded-xl border border-slate-200 my-2">
+                            <AdBanner width={728} height={90} dataKey="3f774e44518c99b802b52db67915bdbe" />
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </div>

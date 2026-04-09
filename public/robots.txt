@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://apivault.pages.dev/sitemap.xml
