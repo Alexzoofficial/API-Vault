@@ -71,20 +71,17 @@ const categoryIcons: Record<string, any> = {
 const AdBanner = ({ width, height, dataKey }: { width: number, height: number, dataKey: string }) => {
   return (
     <div className="flex justify-center my-8 overflow-hidden w-full">
-      <div style={{ width, height, minHeight: height }} className="bg-slate-100 rounded-lg flex items-center justify-center relative">
-        <span className="text-xs text-slate-400 absolute z-0">Advertisement</span>
-        <iframe 
-          src={`/ad.html?key=${dataKey}&width=${width}&height=${height}`}
-          width={width}
-          height={height}
-          frameBorder="0"
-          scrolling="no"
-          className="relative z-10"
-          title="Advertisement"
-          loading="eager"
-          fetchPriority="high"
-        />
-      </div>
+      <iframe 
+        src={`/ad.html?key=${dataKey}&width=${width}&height=${height}`}
+        width={width}
+        height={height}
+        frameBorder="0"
+        scrolling="no"
+        className="bg-slate-100 rounded-lg"
+        title="Advertisement"
+        loading="eager"
+        fetchPriority="high"
+      />
     </div>
   );
 };
@@ -317,9 +314,6 @@ function MainApp() {
               <Terminal size={16} className="text-blue-600" />
             </div>
             <h1 className="text-lg font-semibold tracking-tight text-slate-900">API Vault</h1>
-            <a href="https://t.me/Alexzochannel" target="_blank" rel="noreferrer" className="text-[#0088cc] hover:text-[#006699] transition-colors flex items-center justify-center" title="Join our Telegram Channel">
-              <Send size={18} />
-            </a>
             <Badge variant="outline" className="ml-2 border-emerald-200 text-emerald-700 bg-emerald-50 hidden sm:inline-flex px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
               All Systems Operational

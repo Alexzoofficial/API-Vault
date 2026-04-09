@@ -38,37 +38,37 @@
       "items": [
         {
           "YouTube Video Downloader": {
-            "path": "https://api.example.com/yt-download",
+            "path": "https://apivault.pages.dev/yt-download",
             "desc": "Download YouTube videos in MP4 format."
           }
         },
         {
           "Instagram Reel Downloader": {
-            "path": "https://api.example.com/ig-reel",
+            "path": "https://apivault.pages.dev/ig-reel",
             "desc": "Download Instagram Reels easily."
           }
         },
         {
           "TikTok No Watermark": {
-            "path": "https://api.example.com/tiktok-dl",
+            "path": "https://apivault.pages.dev/tiktok-dl",
             "desc": "Download TikTok videos without watermark."
           }
         },
         {
           "Twitter Video Downloader": {
-            "path": "https://api.example.com/twitter-vid",
+            "path": "https://apivault.pages.dev/twitter-vid",
             "desc": "Download videos from Twitter/X."
           }
         },
         {
           "Facebook Video Downloader": {
-            "path": "https://api.example.com/fb-vid",
+            "path": "https://apivault.pages.dev/fb-vid",
             "desc": "Download public Facebook videos."
           }
         },
         {
           "Pinterest Image/Video": {
-            "path": "https://api.example.com/pinterest",
+            "path": "https://apivault.pages.dev/pinterest",
             "desc": "Download media from Pinterest."
           }
         }
