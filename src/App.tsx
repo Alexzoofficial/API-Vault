@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert, Send } from 'lucide-react';
+import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert, Send, X } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
 import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
@@ -583,30 +583,38 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-2xl w-full max-h-[90vh] overflow-y-auto sm:rounded-2xl shadow-2xl p-0 gap-0">
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-50 text-blue-600 font-mono text-xs font-bold rounded-md px-2 py-1">
-                {method}
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl shadow-2xl p-0 gap-0 outline-none">
+          {/* Modal Header */}
+          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 p-5 sm:p-6 flex items-start justify-between">
+            <div className="flex flex-col gap-1 overflow-hidden">
+              <div className="flex items-center gap-2">
+                <div className="bg-blue-50 text-blue-600 font-mono text-[10px] sm:text-xs font-bold rounded-md px-2 py-1 flex-shrink-0">
+                  {method}
+                </div>
+                <DialogTitle className="text-lg sm:text-2xl font-bold text-slate-900 truncate">
+                  {selectedEndpoint?.name}
+                </DialogTitle>
               </div>
-              <DialogTitle className="text-xl font-semibold text-slate-900">{selectedEndpoint?.name}</DialogTitle>
+              {selectedEndpoint?.desc && (
+                <DialogDescription className="text-slate-500 text-sm leading-relaxed">
+                  {selectedEndpoint.desc}
+                </DialogDescription>
+              )}
             </div>
-            <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600">
-              <span className="sr-only">Close</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            <button 
+              onClick={() => setIsModalOpen(false)} 
+              className="p-1 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
+            >
+              <X size={24} />
             </button>
           </div>
 
-          <div className="p-6 space-y-6">
-            <DialogDescription className="text-slate-500 text-sm">
-              {selectedEndpoint?.desc}
-            </DialogDescription>
-
-            {/* Full Request URL */}
-            <div className="space-y-2">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Request URL</h4>
-              <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center justify-between group">
-                <code className="text-sm text-slate-700 font-mono break-all">
+          <div className="p-5 sm:p-8 space-y-6 sm:space-y-8">
+            {/* Full Request URL Section */}
+            <div className="space-y-3">
+              <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Full Request URL</h4>
+              <div className="bg-white rounded-xl p-4 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group transition-all">
+                <code className="text-xs sm:text-sm text-slate-600 font-mono break-all leading-relaxed flex-1">
                   {(() => {
                     if (!selectedEndpoint) return '';
                     let finalPath = selectedEndpoint.path.split('?')[0];
@@ -624,9 +632,8 @@ function MainApp() {
                   })()}
                 </code>
                 <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="h-8 w-8 text-slate-400 hover:text-slate-700 hover:bg-slate-200 opacity-0 group-hover:opacity-100 transition-all ml-2"
+                  size="sm" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-9 px-4 rounded-lg shadow-sm transition-all flex-shrink-0 w-full sm:w-auto"
                   onClick={() => {
                     let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                     const queryParams = new URLSearchParams();
@@ -642,28 +649,35 @@ function MainApp() {
                     copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
                   }}
                 >
-                  {copied ? <CheckCircle2 size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                  {copied ? 'Copied' : 'Copy URL'}
                 </Button>
               </div>
             </div>
 
-            {/* Parameters */}
+            {/* Parameters Section */}
             {Object.keys(params).length > 0 && (
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Query Parameters</h4>
-                <div className="grid grid-cols-1 gap-3">
+              <div className="space-y-4">
+                <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Query Parameters</h4>
+                <div className="grid grid-cols-1 gap-4">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
                     const cleanKey = isOptional ? key.slice(0, -1) : key;
                     
                     return (
-                      <div key={key} className="flex flex-col gap-1">
-                        <label className="text-xs font-medium text-slate-500">{cleanKey} {isOptional ? '(Optional)' : '(Required)'}</label>
+                      <div key={key} className="flex flex-col gap-2">
+                        <label className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
+                          {cleanKey}
+                          {isOptional ? (
+                            <span className="text-[9px] text-emerald-500 uppercase font-bold">Optional</span>
+                          ) : (
+                            <span className="text-[9px] text-red-500 uppercase font-bold">Required</span>
+                          )}
+                        </label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
-                          placeholder={`Enter ${cleanKey}`}
-                          className="bg-white border-slate-200 text-slate-900 h-10"
+                          placeholder={cleanKey}
+                          className="bg-white border-slate-200 text-slate-900 h-12 rounded-xl focus-visible:ring-blue-500 transition-all"
                         />
                       </div>
                     );
@@ -672,33 +686,59 @@ function MainApp() {
               </div>
             )}
 
-            {/* Action */}
+            {/* Action Button */}
             <Button 
               onClick={handleTestEndpoint} 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 text-sm font-semibold rounded-lg transition-all shadow-md"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? 'Executing...' : 'Send Request'}
             </Button>
 
-            {/* Response */}
+            {/* Response Section */}
             {response && (
-              <div className="space-y-3 pt-4 border-t border-slate-100">
+              <div className="space-y-4 pt-6 border-t border-slate-100">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Response</h4>
-                  <Badge variant="outline" className={
-                    response.status >= 200 && response.status < 300 
-                      ? "bg-emerald-50 text-emerald-600 border-emerald-200" 
-                      : "bg-red-50 text-red-600 border-red-200"
-                  }>
-                    {response.status}
-                  </Badge>
+                  <h4 className="text-sm sm:text-lg font-bold text-slate-900">Response</h4>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-lg text-xs font-bold">
+                      {response.status}
+                    </div>
+                    <div className="text-slate-400 text-xs font-bold">
+                      {response.time}ms
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="bg-slate-900 rounded-lg p-4 overflow-auto max-h-[300px]">
-                  <pre className="text-xs text-slate-300 font-mono whitespace-pre-wrap">
-                    {response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data)}
-                  </pre>
+                <div className="relative bg-white border border-slate-200 rounded-2xl overflow-hidden group">
+                  <div className="absolute top-3 right-3 z-10">
+                    <Button 
+                      size="sm" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-8 px-4 rounded-lg shadow-sm transition-all"
+                      onClick={() => {
+                        const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
+                        copyToClipboard(textToCopy);
+                      }}
+                    >
+                      {response.type === 'json' ? 'Copy JSON' : 'Copy Response'}
+                    </Button>
+                  </div>
+                  
+                  <div className="p-5 overflow-auto max-h-[400px] custom-scrollbar">
+                    {response.type === 'json' ? (
+                      <pre className="text-[13px] text-slate-700 font-mono leading-relaxed">
+                        {JSON.stringify(response.data, null, 2)}
+                      </pre>
+                    ) : response.type === 'image' ? (
+                      <div className="flex justify-center p-4">
+                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm border border-slate-200" />
+                      </div>
+                    ) : (
+                      <pre className="text-[13px] text-slate-700 font-mono leading-relaxed whitespace-pre-wrap">
+                        {String(response.data)}
+                      </pre>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
