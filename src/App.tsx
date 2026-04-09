@@ -583,27 +583,27 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-3xl shadow-2xl p-0 gap-0 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-0 gap-0 outline-none">
           {/* Modal Header */}
-          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 p-5 sm:p-6 flex items-start justify-between">
-            <div className="flex flex-col gap-1 overflow-hidden">
+          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 p-5 sm:p-7 flex items-start justify-between">
+            <div className="flex flex-col gap-1.5 overflow-hidden">
               <div className="flex items-center gap-2">
                 <div className="bg-blue-50 text-blue-600 font-mono text-[10px] sm:text-xs font-bold rounded-md px-2 py-1 flex-shrink-0">
                   {method}
                 </div>
-                <DialogTitle className="text-lg sm:text-2xl font-bold text-slate-900 truncate">
+                <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 truncate">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
               {selectedEndpoint?.desc && (
-                <DialogDescription className="text-slate-500 text-sm leading-relaxed">
+                <DialogDescription className="text-slate-500 text-sm leading-relaxed line-clamp-2 sm:line-clamp-none">
                   {selectedEndpoint.desc}
                 </DialogDescription>
               )}
             </div>
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="p-1 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
+              className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
             >
               <X size={24} />
             </button>
@@ -611,29 +611,31 @@ function MainApp() {
 
           <div className="p-5 sm:p-8 space-y-6 sm:space-y-8">
             {/* Full Request URL Section */}
-            <div className="space-y-3">
-              <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Full Request URL</h4>
-              <div className="bg-white rounded-xl p-4 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group transition-all">
-                <code className="text-xs sm:text-sm text-slate-600 font-mono break-all leading-relaxed flex-1">
-                  {(() => {
-                    if (!selectedEndpoint) return '';
-                    let finalPath = selectedEndpoint.path.split('?')[0];
-                    const queryParams = new URLSearchParams();
-                    Object.entries(params).forEach(([key, value]) => {
-                      const isOptional = key.endsWith('?');
-                      const cleanKey = isOptional ? key.slice(0, -1) : key;
-                      if (value || !isOptional) {
-                        queryParams.append(cleanKey, value as string);
-                      }
-                    });
-                    const queryString = queryParams.toString();
-                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                    return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
-                  })()}
-                </code>
+            <div className="space-y-2">
+              <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Full Request URL</h4>
+              <div className="bg-white rounded-xl p-2.5 sm:p-4 border border-slate-200 flex items-center justify-between gap-2 transition-all hover:border-blue-200 shadow-sm">
+                <div className="flex-1 overflow-hidden">
+                  <code className="text-[10px] sm:text-sm text-slate-600 font-mono truncate block px-1">
+                    {(() => {
+                      if (!selectedEndpoint) return '';
+                      let finalPath = selectedEndpoint.path.split('?')[0];
+                      const queryParams = new URLSearchParams();
+                      Object.entries(params).forEach(([key, value]) => {
+                        const isOptional = key.endsWith('?');
+                        const cleanKey = isOptional ? key.slice(0, -1) : key;
+                        if (value || !isOptional) {
+                          queryParams.append(cleanKey, value as string);
+                        }
+                      });
+                      const queryString = queryParams.toString();
+                      const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
+                      return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+                    })()}
+                  </code>
+                </div>
                 <Button 
                   size="sm" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-9 px-4 rounded-lg shadow-sm transition-all flex-shrink-0 w-full sm:w-auto"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-8 px-3 rounded-lg shadow-sm transition-all flex-shrink-0"
                   onClick={() => {
                     let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                     const queryParams = new URLSearchParams();
@@ -657,7 +659,7 @@ function MainApp() {
             {/* Parameters Section */}
             {Object.keys(params).length > 0 && (
               <div className="space-y-4">
-                <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest">Query Parameters</h4>
+                <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Query Parameters</h4>
                 <div className="grid grid-cols-1 gap-4">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
@@ -665,19 +667,19 @@ function MainApp() {
                     
                     return (
                       <div key={key} className="flex flex-col gap-2">
-                        <label className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
-                          {cleanKey}
+                        <label className="text-sm font-bold text-slate-700 flex items-center justify-between px-1">
+                          <span>{cleanKey}</span>
                           {isOptional ? (
-                            <span className="text-[9px] text-emerald-500 uppercase font-bold">Optional</span>
+                            <span className="text-[9px] text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Optional</span>
                           ) : (
-                            <span className="text-[9px] text-red-500 uppercase font-bold">Required</span>
+                            <span className="text-[9px] text-red-500 bg-red-50 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Required</span>
                           )}
                         </label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
-                          placeholder={cleanKey}
-                          className="bg-white border-slate-200 text-slate-900 h-12 rounded-xl focus-visible:ring-blue-500 transition-all"
+                          placeholder={`Enter ${cleanKey}...`}
+                          className="bg-white border-slate-200 text-slate-900 h-12 sm:h-14 rounded-2xl focus-visible:ring-blue-500 transition-all shadow-sm"
                         />
                       </div>
                     );
@@ -690,31 +692,36 @@ function MainApp() {
             <Button 
               onClick={handleTestEndpoint} 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg hover:shadow-blue-100 active:scale-[0.98] disabled:opacity-50"
             >
-              {loading ? 'Executing...' : 'Send Request'}
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Executing...
+                </div>
+              ) : 'Send Request'}
             </Button>
 
             {/* Response Section */}
             {response && (
               <div className="space-y-4 pt-6 border-t border-slate-100">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between px-1">
                   <h4 className="text-sm sm:text-lg font-bold text-slate-900">Response</h4>
                   <div className="flex items-center gap-2">
-                    <div className="bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-lg text-xs font-bold">
+                    <div className={`px-3 py-1 rounded-xl text-xs font-bold ${response.status >= 200 && response.status < 300 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
                       {response.status}
                     </div>
-                    <div className="text-slate-400 text-xs font-bold">
+                    <div className="bg-slate-50 text-slate-400 px-3 py-1 rounded-xl text-xs font-bold">
                       {response.time}ms
                     </div>
                   </div>
                 </div>
                 
-                <div className="relative bg-white border border-slate-200 rounded-2xl overflow-hidden group">
-                  <div className="absolute top-3 right-3 z-10">
+                <div className="relative bg-white border border-slate-200 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden group shadow-sm">
+                  <div className="absolute top-4 right-4 z-10">
                     <Button 
                       size="sm" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-8 px-4 rounded-lg shadow-sm transition-all"
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-8 px-4 rounded-xl shadow-md transition-all opacity-0 group-hover:opacity-100 sm:opacity-100"
                       onClick={() => {
                         const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
                         copyToClipboard(textToCopy);
@@ -724,19 +731,19 @@ function MainApp() {
                     </Button>
                   </div>
                   
-                  <div className="p-5 overflow-auto max-h-[400px] custom-scrollbar">
+                  <div className="p-6 overflow-auto max-h-[400px] custom-scrollbar">
                     {response.type === 'json' ? (
                       <pre className="text-[13px] text-slate-700 font-mono leading-relaxed">
                         {JSON.stringify(response.data, null, 2)}
                       </pre>
                     ) : response.type === 'image' ? (
-                      <div className="flex justify-center p-4">
-                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm border border-slate-200" />
+                      <div className="flex justify-center p-2">
+                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-xl shadow-sm" />
                       </div>
                     ) : (
-                      <pre className="text-[13px] text-slate-700 font-mono leading-relaxed whitespace-pre-wrap">
-                        {String(response.data)}
-                      </pre>
+                      <div className="text-[13px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
+                        {String(response.data).length > 2000 ? String(response.data).substring(0, 2000) + '...' : String(response.data)}
+                      </div>
                     )}
                   </div>
                 </div>
