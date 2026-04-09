@@ -18,41 +18,43 @@ async function startServer() {
         "^/api": "", // remove /api prefix
       },
       selfHandleResponse: true,
-      onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
-        // Ensure CORS headers are set
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        
-        // Only intercept JSON responses
-        if (proxyRes.headers['content-type'] && proxyRes.headers['content-type'].includes('application/json')) {
-          const response = responseBuffer.toString('utf8');
-          try {
-            const json = JSON.parse(response);
-            
-            // Recursively remove or replace creator/author fields
-            const cleanCreator = (obj: any) => {
-              if (typeof obj === 'object' && obj !== null) {
-                if ('creator' in obj) {
-                  obj.creator = 'Nexus API Hub';
+      on: {
+        proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
+          // Ensure CORS headers are set
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          
+          // Only intercept JSON responses
+          if (proxyRes.headers['content-type'] && proxyRes.headers['content-type'].includes('application/json')) {
+            const response = responseBuffer.toString('utf8');
+            try {
+              const json = JSON.parse(response);
+              
+              // Recursively remove or replace creator/author fields
+              const cleanCreator = (obj: any) => {
+                if (typeof obj === 'object' && obj !== null) {
+                  if ('creator' in obj) {
+                    obj.creator = 'Nexus API Hub';
+                  }
+                  if ('author' in obj) {
+                    obj.author = 'Nexus API Hub';
+                  }
+                  for (const key in obj) {
+                    cleanCreator(obj[key]);
+                  }
                 }
-                if ('author' in obj) {
-                  obj.author = 'Nexus API Hub';
-                }
-                for (const key in obj) {
-                  cleanCreator(obj[key]);
-                }
-              }
-            };
-            
-            cleanCreator(json);
-            return JSON.stringify(json);
-          } catch (e) {
-            // If parsing fails, return original buffer
-            return responseBuffer;
+              };
+              
+              cleanCreator(json);
+              return JSON.stringify(json);
+            } catch (e) {
+              // If parsing fails, return original buffer
+              return responseBuffer;
+            }
           }
-        }
-        
-        return responseBuffer;
-      })
+          
+          return responseBuffer;
+        })
+      }
     })
   );
 

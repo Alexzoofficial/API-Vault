@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert } from 'lucide-react';
+import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert, Send } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
 import { Input } from '@/src/components/ui/input';
 import { Button } from '@/src/components/ui/button';
@@ -81,6 +81,8 @@ const AdBanner = ({ width, height, dataKey }: { width: number, height: number, d
           scrolling="no"
           className="relative z-10"
           title="Advertisement"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
     </div>
@@ -124,7 +126,27 @@ function MainApp() {
     }, 500);
   }, []);
 
-  const categories = endpointsData.endpoints || [];
+  const categories = useMemo(() => {
+    const rawCategories = JSON.parse(JSON.stringify(endpointsData.endpoints || []));
+    const premiumCategoryIndex = rawCategories.findIndex((c: any) => c.name === "Featured APIs");
+    
+    if (premiumCategoryIndex === -1) return rawCategories;
+    
+    const premiumItems = rawCategories[premiumCategoryIndex].items;
+    const newCategories = rawCategories.filter((_: any, idx: number) => idx !== premiumCategoryIndex);
+    
+    // Distribute premium items into the first few categories
+    premiumItems.forEach((item: any, idx: number) => {
+      if (newCategories[idx]) {
+        const itemName = Object.keys(item)[0];
+        item[itemName].isPremium = true;
+        // Insert at index 1 to mix it naturally
+        newCategories[idx].items.splice(1, 0, item);
+      }
+    });
+    
+    return newCategories;
+  }, []);
   const totalEndpoints = endpointsData.totalfitur || 0;
 
   const flatEndpoints = useMemo(() => {
@@ -211,7 +233,7 @@ function MainApp() {
         const isOptional = key.endsWith('?');
         const cleanKey = isOptional ? key.slice(0, -1) : key;
         if (value || !isOptional) {
-          queryParams.append(cleanKey, value);
+          queryParams.append(cleanKey, value as string);
         }
       });
       
@@ -295,12 +317,19 @@ function MainApp() {
               <Terminal size={16} className="text-blue-600" />
             </div>
             <h1 className="text-lg font-semibold tracking-tight text-slate-900">API Vault</h1>
+            <a href="https://t.me/Alexzochannel" target="_blank" rel="noreferrer" className="text-[#0088cc] hover:text-[#006699] transition-colors flex items-center justify-center" title="Join our Telegram Channel">
+              <Send size={18} />
+            </a>
             <Badge variant="outline" className="ml-2 border-emerald-200 text-emerald-700 bg-emerald-50 hidden sm:inline-flex px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
               All Systems Operational
             </Badge>
           </div>
           <div className="flex items-center gap-4">
+            <a href="https://t.me/Alexzochannel" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 text-sm font-medium">
+              <Send size={16} />
+              <span className="hidden sm:inline">Telegram</span>
+            </a>
             <a href="https://penguinsincequalify.com/n8dibdbq?key=64fbe1c81638a0debe45609e1fe6cce6" target="_blank" rel="noreferrer" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all">
               <Zap size={16} />
               Premium APIs
@@ -379,7 +408,7 @@ function MainApp() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-10 flex items-start gap-3 text-amber-800 shadow-sm">
           <AlertTriangle className="shrink-0 mt-0.5" size={18} />
           <div className="text-sm">
-            <strong>Disclaimer:</strong> In APIs ki koi guarantee nahi hai. Yeh public sources se hain. Kripya apne jokhim (risk) par use karein.
+            <strong>Disclaimer:</strong> These APIs are collected from public sources and come with no guarantees. Please use them at your own risk.
           </div>
         </div>
 
@@ -393,7 +422,6 @@ function MainApp() {
             <>
               {filteredCategories.slice(0, visibleCategories).map((category: any, idx: number) => {
                 const Icon = categoryIcons[category.name] || Folder;
-                const isPremium = category.name === "Premium Custom APIs";
                 
                 return (
                   <div key={idx}>
@@ -420,8 +448,9 @@ function MainApp() {
                     const details = itemObj[name];
                     const isExternal = details.path.startsWith('http');
                     const displayPath = isExternal ? details.path.split('?')[0] : `${origin}/api${details.path.split('?')[0]}`;
+                    const isPremiumItem = details.isPremium;
                     
-                    const card = isPremium ? (
+                    const card = isPremiumItem ? (
                       <Card key={`item-${itemIdx}`} className="bg-gradient-to-br from-indigo-50 to-blue-50 border-blue-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 group overflow-hidden relative">
                         <CardHeader className="pb-3 relative z-10">
                           <div className="flex justify-between items-start">
@@ -438,7 +467,7 @@ function MainApp() {
                         </CardHeader>
                         <CardContent className="relative z-10">
                           <div className="bg-white/60 rounded-lg p-3 flex flex-col items-center justify-center border border-blue-100 text-center gap-2">
-                            <span className="text-sm font-medium text-slate-700">API lene ke liye site visit Karen</span>
+                            <span className="text-sm font-medium text-slate-700">Get access to this API</span>
                             <a href={details.path} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm font-semibold transition-colors">
                               <Globe size={16} /> Visit Site
                             </a>
@@ -598,7 +627,7 @@ function MainApp() {
                       const isOptional = key.endsWith('?');
                       const cleanKey = isOptional ? key.slice(0, -1) : key;
                       if (value || !isOptional) {
-                        queryParams.append(cleanKey, value);
+                        queryParams.append(cleanKey, value as string);
                       }
                     });
                     const queryString = queryParams.toString();
@@ -617,7 +646,7 @@ function MainApp() {
                       const isOptional = key.endsWith('?');
                       const cleanKey = isOptional ? key.slice(0, -1) : key;
                       if (value || !isOptional) {
-                        queryParams.append(cleanKey, value);
+                        queryParams.append(cleanKey, value as string);
                       }
                     });
                     const queryString = queryParams.toString();
