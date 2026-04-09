@@ -111,6 +111,7 @@ export default function App() {
   const [adblockDetected, setAdblockDetected] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState(5);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [activePage, setActivePage] = useState<string | null>(null);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -484,6 +485,67 @@ export default function App() {
           )}
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-200 bg-white mt-10 relative z-10">
+        <div className="container mx-auto px-4 py-8 max-w-6xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shadow-sm">
+              <Terminal size={16} className="text-blue-600" />
+            </div>
+            <span className="font-semibold text-slate-900">API Vault</span>
+            <span className="text-slate-500 text-sm ml-2">© {new Date().getFullYear()}</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm font-medium text-slate-500">
+            <button onClick={() => setActivePage('disclaimer')} className="hover:text-slate-900 transition-colors">Disclaimer</button>
+            <button onClick={() => setActivePage('privacy')} className="hover:text-slate-900 transition-colors">Privacy Policy</button>
+            <button onClick={() => setActivePage('terms')} className="hover:text-slate-900 transition-colors">Terms of Service</button>
+            <a href="https://t.me/prexzyvillatech" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </footer>
+
+      {/* Pages Modal */}
+      <Dialog open={!!activePage} onOpenChange={(open) => !open && setActivePage(null)}>
+        <DialogContent className="bg-white border-slate-200 text-slate-900 max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {activePage === 'disclaimer' && 'Disclaimer'}
+              {activePage === 'privacy' && 'Privacy Policy'}
+              {activePage === 'terms' && 'Terms of Service'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="prose prose-slate prose-sm mt-4 text-slate-600 space-y-4">
+            {activePage === 'disclaimer' && (
+              <>
+                <p>The APIs provided in this directory are aggregated from various public sources across the internet. We do not host, control, or take responsibility for the content, availability, or reliability of these external endpoints.</p>
+                <p>Users are solely responsible for how they use these APIs. Please ensure you comply with the respective terms of service of each API provider before using them in production applications.</p>
+                <p>We do not guarantee the uptime, accuracy, or safety of any endpoint listed here. Use them at your own risk.</p>
+              </>
+            )}
+            {activePage === 'privacy' && (
+              <>
+                <p>Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use API Vault.</p>
+                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Information We Collect</h3>
+                <p>We do not require you to create an account to use our directory. We may collect anonymous usage data (such as page views and clicks) to improve our service and user experience.</p>
+                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Third-Party Services</h3>
+                <p>We use third-party advertising networks (like Adsterra) and security services (like Cloudflare Turnstile). These services may use cookies or similar technologies to collect data about your browsing habits to provide relevant ads and ensure security.</p>
+              </>
+            )}
+            {activePage === 'terms' && (
+              <>
+                <p>By accessing and using API Vault, you agree to be bound by these Terms of Service.</p>
+                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Use of Service</h3>
+                <p>API Vault is provided "as is" and "as available". You agree not to misuse the service, including but not limited to attempting to bypass security measures, scraping data excessively, or using the directory for malicious purposes.</p>
+                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Adblockers</h3>
+                <p>We rely on advertising revenue to keep this service free. By using this site, you agree to disable adblockers or whitelist our domain.</p>
+                <h3 className="text-lg font-semibold text-slate-900 mt-6 mb-2">Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Continued use of the service constitutes acceptance of the new terms.</p>
+              </>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
