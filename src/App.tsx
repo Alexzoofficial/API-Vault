@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
+import { Turnstile } from '@marsidev/react-turnstile';
 import Fuse from 'fuse.js';
 import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
@@ -66,6 +67,36 @@ const categoryIcons: Record<string, any> = {
   "DummyJSON Products": ShoppingCart
 };
 
+const AdBanner = ({ width, height, dataKey }: { width: number, height: number, dataKey: string }) => {
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!bannerRef.current) return;
+    
+    // Clear previous
+    bannerRef.current.innerHTML = '';
+    
+    const conf = document.createElement('script');
+    conf.type = 'text/javascript';
+    conf.innerHTML = `atOptions = { 'key' : '${dataKey}', 'format' : 'iframe', 'height' : ${height}, 'width' : ${width}, 'params' : {} };`;
+    
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = `https://www.highperformanceformat.com/${dataKey}/invoke.js`;
+    
+    bannerRef.current.appendChild(conf);
+    bannerRef.current.appendChild(script);
+  }, [dataKey, width, height]);
+  
+  return (
+    <div className="flex justify-center my-8 overflow-hidden w-full">
+      <div ref={bannerRef} style={{ width, height, minHeight: height }} className="bg-slate-100 rounded-lg flex items-center justify-center relative">
+        <span className="text-xs text-slate-400 absolute">Advertisement</span>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEndpoint, setSelectedEndpoint] = useState<any>(null);
@@ -78,6 +109,8 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [origin, setOrigin] = useState('');
   const [adblockDetected, setAdblockDetected] = useState(false);
+  const [visibleCategories, setVisibleCategories] = useState(5);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -159,6 +192,7 @@ export default function App() {
     setResponse(null);
     setMethod(details.method || 'GET');
     setRequestBody(details.exampleBody ? JSON.stringify(details.exampleBody, null, 2) : '');
+    setTurnstileToken(null); // Reset Turnstile on modal open
     
     // Parse params from path
     const urlParams = details.path.split('?')[1];
@@ -277,9 +311,13 @@ export default function App() {
             </Badge>
           </div>
           <div className="flex items-center gap-4">
-            <a href="https://t.me/prexzyvillatech" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2 text-sm font-medium">
+            <a href="https://www.profitablecpmratenetwork.com/n8dibdbq?key=64fbe1c81638a0debe45609e1fe6cce6" target="_blank" rel="noreferrer" className="hidden sm:flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-all">
+              <Zap size={16} />
+              Premium APIs
+            </a>
+            <a href="https://alexzo.vercel.app/" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2 text-sm font-medium">
               <Globe size={16} />
-              <span className="hidden sm:inline">Community</span>
+              <span className="hidden sm:inline">Website</span>
             </a>
           </div>
         </div>
@@ -291,10 +329,10 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center text-center mb-20 space-y-6"
+          className="flex flex-col items-center text-center mb-12 space-y-6"
         >
           <Badge variant="outline" className="border-slate-200 bg-white text-slate-600 px-3 py-1 text-xs mb-4 shadow-sm">
-            v3.0 is now live
+            v1 is now live
           </Badge>
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-slate-900 to-slate-600 pb-2">
             The Ultimate API <br className="hidden md:block" />
@@ -325,7 +363,7 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative max-w-2xl mx-auto mb-20"
+          className="relative max-w-2xl mx-auto mb-10"
         >
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
             <Search className="h-5 w-5 text-slate-400" />
@@ -335,9 +373,17 @@ export default function App() {
             placeholder="Search endpoints, categories, or descriptions..."
             className="w-full pl-12 pr-4 py-7 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-2xl focus-visible:ring-1 focus-visible:ring-blue-500 focus-visible:border-blue-500 text-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setVisibleCategories(5); // Reset pagination on search
+            }}
           />
         </motion.div>
+
+        {/* 728x90 Banner */}
+        <div className="hidden md:block mb-16">
+          <AdBanner width={728} height={90} dataKey="3f774e44518c99b802b52db67915bdbe" />
+        </div>
 
         {/* Endpoints List */}
         <div className="space-y-20">
@@ -346,18 +392,19 @@ export default function App() {
               <p className="text-slate-500 text-lg">No endpoints found matching "{searchQuery}"</p>
             </div>
           ) : (
-            filteredCategories.map((category: any, idx: number) => {
-              const Icon = categoryIcons[category.name] || Folder;
-              
-              return (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4 }}
-                key={idx} 
-                className="space-y-6"
-              >
+            <>
+              {filteredCategories.slice(0, visibleCategories).map((category: any, idx: number) => {
+                const Icon = categoryIcons[category.name] || Folder;
+                
+                return (
+                  <div key={idx}>
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.4 }}
+                      className="space-y-6"
+                    >
                 <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
                   <div className="p-2 bg-white border border-slate-200 text-slate-600 rounded-lg shadow-sm">
                     <Icon size={20} strokeWidth={1.5} />
@@ -411,8 +458,29 @@ export default function App() {
                   })}
                 </div>
               </motion.div>
+              
+              {/* Insert 300x250 Banner after every 3 categories */}
+              {(idx + 1) % 3 === 0 && (
+                <div className="mt-20">
+                  <AdBanner width={300} height={250} dataKey="36c65a945aa722669a63704442691dd9" />
+                </div>
+              )}
+            </div>
             );
-            })
+            })}
+            
+            {visibleCategories < filteredCategories.length && (
+              <div className="flex justify-center pt-10 pb-20">
+                <Button 
+                  onClick={() => setVisibleCategories(prev => prev + 5)}
+                  className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 px-8 py-6 rounded-xl shadow-sm hover:shadow-md transition-all text-base font-medium"
+                  variant="outline"
+                >
+                  Load More Categories
+                </Button>
+              </div>
+            )}
+          </>
           )}
         </div>
       </main>
@@ -547,16 +615,30 @@ export default function App() {
               </div>
             )}
 
+            {/* Cloudflare Turnstile */}
+            <div className="flex justify-center py-2">
+              <Turnstile 
+                siteKey="0x4AAAAAAC2peINI9p1_A0No"
+                onSuccess={(token) => setTurnstileToken(token)}
+                options={{ theme: 'light' }}
+              />
+            </div>
+
             {/* Action */}
             <Button 
               onClick={handleTestEndpoint} 
-              disabled={loading}
-              className="w-full bg-slate-900 text-white hover:bg-slate-800 h-12 text-sm font-semibold rounded-xl transition-all shadow-md"
+              disabled={loading || !turnstileToken}
+              className="w-full bg-slate-900 text-white hover:bg-slate-800 h-12 text-sm font-semibold rounded-xl transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                   Executing...
+                </span>
+              ) : !turnstileToken ? (
+                <span className="flex items-center gap-2">
+                  <Shield size={16} fill="currentColor" />
+                  Verify to Send Request
                 </span>
               ) : (
                 <span className="flex items-center gap-2">
