@@ -600,15 +600,15 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-xl w-full max-h-[90vh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-0 gap-0 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-0 gap-0 outline-none">
           {/* Modal Header */}
-          <div className="p-5 sm:p-8 pb-0 flex items-start justify-between">
-            <div className="space-y-1">
+          <div className="p-6 sm:p-8 pb-0 flex items-start justify-between">
+            <div className="space-y-2">
               <div className="flex items-center gap-3">
-                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-[10px] sm:text-xs rounded-md px-2.5 py-1 uppercase tracking-wider">
+                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-[10px] sm:text-xs rounded-md px-2.5 py-1.5 uppercase tracking-wider">
                   {method}
                 </div>
-                <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                <DialogTitle className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
@@ -622,11 +622,11 @@ function MainApp() {
               onClick={() => setIsModalOpen(false)} 
               className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors"
             >
-              <X size={24} />
+              <X size={28} />
             </button>
           </div>
 
-          <div className="p-5 sm:p-8 space-y-6">
+          <div className="p-6 sm:p-8 space-y-6">
             {/* Full Request URL Section */}
             <div className="bg-white rounded-xl p-4 border border-slate-200 relative group">
               <div className="pr-24 overflow-hidden">
@@ -701,45 +701,21 @@ function MainApp() {
               </div>
             )}
 
-            {/* Action Button */}
-            <Button 
-              onClick={handleTestEndpoint} 
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl transition-all shadow-lg active:scale-[0.98] disabled:opacity-50"
-            >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                  Executing...
-                </div>
-              ) : 'Send Request'}
-            </Button>
-
             {/* Response Section */}
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
-                <h4 className="text-lg font-bold text-slate-900">Response</h4>
-                {(response || loading) && (
-                  <div className="flex items-center gap-2">
-                    {loading ? (
-                      <div className="bg-slate-50 text-slate-400 px-3 py-1 rounded-lg text-xs font-bold animate-pulse">
-                        Processing...
-                      </div>
-                    ) : (
-                      <>
-                        <div className={`px-3 py-1 rounded-lg text-xs font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-[#ecfdf5] text-[#10b981]' : 'bg-red-50 text-red-600'}`}>
-                          {response?.status}
-                        </div>
-                        <div className="text-[#94a3b8] px-1 py-1 text-xs font-medium">
-                          {response?.time}ms
-                        </div>
-                      </>
-                    )}
+                <h4 className="text-xl font-bold text-slate-900">Response</h4>
+                <div className="flex items-center gap-3">
+                  <div className={`px-3 py-1 rounded-lg text-xs font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-[#ecfdf5] text-[#10b981]' : (response ? 'bg-red-50 text-red-600' : 'bg-slate-50 text-slate-400')}`}>
+                    {response ? response.status : '200'}
                   </div>
-                )}
+                  <div className="text-[#94a3b8] text-xs font-medium">
+                    {response ? `${response.time}ms` : '200ms'}
+                  </div>
+                </div>
               </div>
               
-              <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-[120px]">
+              <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-[100px]">
                 {loading ? (
                   <div className="p-6 flex items-center justify-center h-full">
                     <div className="text-slate-400 font-mono text-sm animate-pulse">Loading...</div>
@@ -776,15 +752,26 @@ function MainApp() {
                     </div>
                   </>
                 ) : (
-                  <div className="p-10 flex flex-col items-center justify-center text-center space-y-2">
-                    <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-300">
-                      <Terminal size={24} />
-                    </div>
-                    <p className="text-sm text-slate-400 font-medium">No response yet. Send a request to see results.</p>
+                  <div className="p-6 flex items-center justify-center h-full min-h-[100px]">
+                    <div className="text-slate-400 font-mono text-sm">Loading...</div>
                   </div>
                 )}
               </div>
             </div>
+
+            {/* Action Button */}
+            <Button 
+              onClick={handleTestEndpoint} 
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl transition-all shadow-lg active:scale-[0.98] disabled:opacity-50"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Executing...
+                </div>
+              ) : 'Send Request'}
+            </Button>
 
             {/* Modal Ad */}
             <div className="flex justify-center pt-2">
@@ -803,48 +790,26 @@ function MainApp() {
           onPointerDownOutside={(e) => e.preventDefault()} 
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
-          <div className="flex flex-col items-center text-center p-6 sm:p-10 space-y-8 sm:space-y-12 max-w-lg w-full">
-            <motion.div 
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="w-24 h-24 sm:w-32 sm:h-32 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shadow-inner relative"
-            >
-              <Shield size={48} sm:size={64} className="relative z-10" />
-              <div className="absolute inset-0 rounded-full bg-blue-100 animate-ping opacity-20"></div>
-            </motion.div>
-            
-            <div className="space-y-3 sm:space-y-4">
-              <DialogTitle className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
-                Security Verification
+          <div className="flex flex-col items-center text-center p-6 space-y-8 max-w-lg w-full">
+            <div className="space-y-2">
+              <DialogTitle className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+                Security Check
               </DialogTitle>
-              <DialogDescription className="text-slate-500 text-base sm:text-xl leading-relaxed max-w-md mx-auto">
-                Please complete the security check to access the API Vault directory. 
-                This helps us prevent automated abuse.
+              <DialogDescription className="text-slate-500 text-sm sm:text-base">
+                Verifying your connection to API Vault...
               </DialogDescription>
             </div>
 
-            <div className="w-full flex justify-center py-10 sm:py-14 bg-slate-50 rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="flex justify-center scale-110 sm:scale-150 relative z-10">
-                <Turnstile 
-                  siteKey="0x4AAAAAAC2peINI9p1_A0No"
-                  onSuccess={handleVerificationSuccess}
-                  options={{ theme: 'light' }}
-                />
-              </div>
+            <div className="flex justify-center scale-110 sm:scale-125">
+              <Turnstile 
+                siteKey="0x4AAAAAAC2peINI9p1_A0No"
+                onSuccess={handleVerificationSuccess}
+                options={{ theme: 'light' }}
+              />
             </div>
 
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex items-center gap-3 px-4 py-2 bg-slate-100 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <span className="text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">
-                  Secure Connection Verified
-                </span>
-              </div>
-              <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-[0.3em] font-medium">
-                Protected by Cloudflare Turnstile
-              </div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-[0.2em] font-medium">
+              Protected by Cloudflare
             </div>
           </div>
         </DialogContent>
