@@ -275,15 +275,19 @@ function MainApp() {
       let data;
       let type = 'text';
       
-      if (contentType.includes('application/json')) {
-        data = await res.json();
-        type = 'json';
-      } else if (contentType.includes('image/') || contentType.includes('video/') || contentType.includes('audio/')) {
+      if (contentType.includes('image/') || contentType.includes('video/') || contentType.includes('audio/')) {
         const blob = await res.blob();
         data = URL.createObjectURL(blob);
         type = contentType.split('/')[0];
       } else {
-        data = await res.text();
+        const text = await res.text();
+        try {
+          data = JSON.parse(text);
+          type = 'json';
+        } catch (e) {
+          data = text;
+          type = 'text';
+        }
       }
       
       setResponse({
