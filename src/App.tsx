@@ -600,11 +600,11 @@ function MainApp() {
             </button>
           </div>
 
-          <div className="p-4 sm:p-8 space-y-4 sm:space-y-8">
+          <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
             {/* Full Request URL Section */}
-            <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 transition-all hover:border-blue-200 shadow-sm">
-              <div className="flex-1 overflow-hidden">
-                <code className="text-[10px] sm:text-sm text-slate-600 font-mono break-all sm:truncate block">
+            <div className="bg-white rounded-xl p-2 sm:p-2.5 border border-slate-200 flex items-center justify-between gap-2 transition-all hover:border-blue-200 shadow-sm">
+              <div className="flex-1 overflow-hidden pl-2">
+                <code className="text-[10px] sm:text-[13px] text-slate-600 font-mono truncate block">
                   {(() => {
                     if (!selectedEndpoint) return '';
                     let finalPath = selectedEndpoint.path.split('?')[0];
@@ -624,7 +624,7 @@ function MainApp() {
               </div>
               <Button 
                 size="sm" 
-                className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-9 sm:h-8 px-4 rounded-lg shadow-sm transition-all flex-shrink-0"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-8 sm:h-9 px-3 sm:px-4 rounded-lg shadow-sm transition-all flex-shrink-0"
                 onClick={() => {
                   let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                   const queryParams = new URLSearchParams();
@@ -692,36 +692,23 @@ function MainApp() {
 
             {/* Response Section */}
             {response && (
-              <div className="space-y-3 pt-4 border-t border-slate-100">
+              <div className="space-y-3 pt-2">
                 <div className="flex items-center justify-between px-1">
-                  <h4 className="text-xs sm:text-base font-bold text-slate-900">Response</h4>
+                  <h4 className="text-sm sm:text-lg font-bold text-slate-900">Response</h4>
                   <div className="flex items-center gap-2">
-                    <div className={`px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-bold ${response.status >= 200 && response.status < 300 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+                    <div className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold ${response.status >= 200 && response.status < 300 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
                       {response.status}
                     </div>
-                    <div className="bg-slate-50 text-slate-400 px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-bold">
+                    <div className="bg-slate-50 text-slate-400 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold">
                       {response.time}ms
                     </div>
                   </div>
                 </div>
                 
-                <div className="relative bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group shadow-sm">
-                  <div className="absolute top-3 right-3 z-10">
-                    <Button 
-                      size="sm" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold h-7 px-3 rounded-lg shadow-md transition-all opacity-0 group-hover:opacity-100 sm:opacity-100"
-                      onClick={() => {
-                        const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
-                        copyToClipboard(textToCopy);
-                      }}
-                    >
-                      {response.type === 'json' ? 'Copy JSON' : 'Copy Response'}
-                    </Button>
-                  </div>
-                  
-                  <div className="p-4 overflow-auto max-h-[300px] custom-scrollbar">
+                <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden group shadow-sm">
+                  <div className="p-4 overflow-auto max-h-[400px] custom-scrollbar">
                     {response.type === 'json' ? (
-                      <pre className="text-[11px] sm:text-[13px] text-slate-700 font-mono leading-relaxed">
+                      <pre className="text-[11px] sm:text-[14px] text-slate-700 font-mono leading-relaxed">
                         {JSON.stringify(response.data, null, 2)}
                       </pre>
                     ) : response.type === 'image' ? (
@@ -729,10 +716,24 @@ function MainApp() {
                         <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" referrerPolicy="no-referrer" />
                       </div>
                     ) : (
-                      <div className="text-[11px] sm:text-[13px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
-                        {String(response.data).length > 2000 ? String(response.data).substring(0, 2000) + '...' : String(response.data)}
+                      <div className="text-[11px] sm:text-[14px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
+                        {String(response.data).length > 5000 ? String(response.data).substring(0, 5000) + '...' : String(response.data)}
                       </div>
                     )}
+                  </div>
+                  
+                  <div className="absolute top-3 right-3 z-10">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="bg-white/80 backdrop-blur-sm border-slate-200 text-slate-600 text-[9px] font-bold h-7 px-3 rounded-lg shadow-sm transition-all opacity-0 group-hover:opacity-100"
+                      onClick={() => {
+                        const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
+                        copyToClipboard(textToCopy);
+                      }}
+                    >
+                      Copy
+                    </Button>
                   </div>
                 </div>
               </div>
