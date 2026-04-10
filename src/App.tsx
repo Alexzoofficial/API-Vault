@@ -602,9 +602,9 @@ function MainApp() {
 
           <div className="p-4 sm:p-8 space-y-4 sm:space-y-8">
             {/* Full Request URL Section */}
-            <div className="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 flex items-center justify-between gap-2 transition-all hover:border-blue-200 shadow-sm">
+            <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 transition-all hover:border-blue-200 shadow-sm">
               <div className="flex-1 overflow-hidden">
-                <code className="text-[10px] sm:text-sm text-slate-600 font-mono truncate block">
+                <code className="text-[10px] sm:text-sm text-slate-600 font-mono break-all sm:truncate block">
                   {(() => {
                     if (!selectedEndpoint) return '';
                     let finalPath = selectedEndpoint.path.split('?')[0];
@@ -624,7 +624,7 @@ function MainApp() {
               </div>
               <Button 
                 size="sm" 
-                className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-8 px-3 rounded-lg shadow-sm transition-all flex-shrink-0"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-9 sm:h-8 px-4 rounded-lg shadow-sm transition-all flex-shrink-0"
                 onClick={() => {
                   let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                   const queryParams = new URLSearchParams();
@@ -667,7 +667,7 @@ function MainApp() {
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
                           placeholder={`Enter ${cleanKey}...`}
-                          className="bg-white border-slate-200 text-slate-900 h-10 sm:h-12 rounded-xl focus-visible:ring-blue-500 transition-all shadow-sm text-sm"
+                          className="bg-white border-slate-200 text-slate-900 h-11 sm:h-12 rounded-xl focus-visible:ring-blue-500 transition-all shadow-sm text-sm"
                         />
                       </div>
                     );
@@ -705,7 +705,7 @@ function MainApp() {
                   </div>
                 </div>
                 
-                <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden group shadow-sm">
+                <div className="relative bg-slate-50 border border-slate-200 rounded-xl overflow-hidden group shadow-sm">
                   <div className="absolute top-3 right-3 z-10">
                     <Button 
                       size="sm" 
@@ -726,7 +726,7 @@ function MainApp() {
                       </pre>
                     ) : response.type === 'image' ? (
                       <div className="flex justify-center p-1">
-                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" />
+                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" referrerPolicy="no-referrer" />
                       </div>
                     ) : (
                       <div className="text-[11px] sm:text-[13px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
@@ -746,28 +746,28 @@ function MainApp() {
       {/* Bot Verification Modal */}
       <Dialog open={botVerificationOpen} onOpenChange={() => {}}>
         <DialogContent 
-          className="bg-white border-none text-slate-900 max-w-[90vw] sm:max-w-md w-full rounded-[2rem] shadow-2xl p-0 gap-0 outline-none [&>button]:hidden" 
+          className="bg-white border-none text-slate-900 max-w-[90vw] sm:max-w-md w-full rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-0 gap-0 outline-none [&>button]:hidden" 
           onPointerDownOutside={(e) => e.preventDefault()} 
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
-          <div className="flex flex-col items-center text-center p-8 sm:p-10 space-y-6">
-            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shadow-inner">
-              <Shield size={40} />
+          <div className="flex flex-col items-center text-center p-6 sm:p-10 space-y-4 sm:space-y-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shadow-inner">
+              <Shield size={32} sm:size={40} />
             </div>
-            <div className="space-y-2">
-              <DialogTitle className="text-2xl sm:text-3xl font-bold text-slate-900">Bot Verification</DialogTitle>
-              <DialogDescription className="text-slate-500 text-sm sm:text-base leading-relaxed">
+            <div className="space-y-1 sm:space-y-2">
+              <DialogTitle className="text-xl sm:text-3xl font-bold text-slate-900">Bot Verification</DialogTitle>
+              <DialogDescription className="text-slate-500 text-[13px] sm:text-base leading-relaxed">
                 Please complete the verification to continue using API Vault.
               </DialogDescription>
             </div>
-            <div className="w-full flex justify-center py-2 overflow-hidden">
+            <div className="w-full flex justify-center py-1 sm:py-2 overflow-hidden">
               <Turnstile 
                 siteKey="0x4AAAAAAC2peINI9p1_A0No"
                 onSuccess={handleVerificationSuccess}
                 options={{ theme: 'light' }}
               />
             </div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
+            <div className="text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-widest font-bold">
               Secure Connection by Cloudflare
             </div>
           </div>
