@@ -291,6 +291,13 @@
       "name": "Image Generation",
       "items": [
         {
+          "Sora Watermark Remover": {
+            "desc": "Remove watermark from Sora AI generated videos",
+            "path": "/ai/soraremover?url=",
+            "description": "Remove watermark from Sora AI generated videos"
+          }
+        },
+        {
           "Realistic Image": {
             "desc": "Generate realistic/photographic images",
             "path": "/ai/realistic?prompt=&negative_prompt?=",

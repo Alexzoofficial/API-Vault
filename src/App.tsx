@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'motion/react';
 import { Turnstile } from '@marsidev/react-turnstile';
-import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link as RouterLink, Navigate } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { Search, Terminal, Activity, Zap, Shield, Code2, Copy, CheckCircle2, Play, Cpu, Image as ImageIcon, Tv, Download, Gamepad2, Film, AlertTriangle, Search as SearchIcon, Music, Monitor, Eye, Type, Mic, Link, Palette, Phone, Wrench, Folder, ChevronRight, Globe, Coins, Smile, FlaskConical, Box, Database, MessageSquare, BookOpen, Leaf, Coffee, Wifi, Brush, Headphones, Car, GraduationCap, Trophy, Newspaper, Briefcase, BrainCircuit, Building2, Train, Bitcoin, Camera, ShoppingCart, TestTube, BookA, Calendar, Calculator, Map as MapIcon, Network, CheckSquare, Share2, ShieldAlert, Send, X } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src/components/ui/card';
@@ -10,6 +10,8 @@ import { Button } from '@/src/components/ui/button';
 import { Badge } from '@/src/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
 import endpointsData from '@/src/data/endpoints.json';
+
+const Tools = lazy(() => import('./pages/Tools'));
 
 const categoryIcons: Record<string, any> = {
   "Artificial Intelligence": Cpu,
@@ -315,8 +317,13 @@ function MainApp() {
           data = JSON.parse(text);
           type = 'json';
         } catch (e) {
-          data = text;
-          type = 'text';
+          // Force JSON format even for HTML/text errors to ensure clean JSON output
+          data = { 
+            error: "Invalid JSON response", 
+            status: res.status,
+            raw_response: text.substring(0, 500) + (text.length > 500 ? '...' : '')
+          };
+          type = 'json';
         }
       }
       
@@ -416,6 +423,27 @@ function MainApp() {
               </div>
             ))}
           </div>
+
+          <div className="w-full max-w-3xl mt-6">
+            <RouterLink to="/tools" className="block group">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between shadow-sm group-hover:shadow-md transition-all">
+                <div className="flex items-center gap-4 text-left mb-4 sm:mb-0">
+                  <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-sm shrink-0">
+                    <Terminal size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">Developer Tools</h3>
+                    <p className="text-sm text-slate-600">Access our suite of free developer utilities including JSON formatters, encoders, and more.</p>
+                  </div>
+                </div>
+                <div className="shrink-0">
+                  <Button variant="outline" className="bg-white text-blue-600 border-blue-200 hover:bg-blue-50 font-semibold group-hover:scale-105 transition-transform">
+                    Explore Tools <ChevronRight size={16} className="ml-1" />
+                  </Button>
+                </div>
+              </div>
+            </RouterLink>
+          </div>
         </motion.div>
 
         {/* Search */}
@@ -488,7 +516,7 @@ function MainApp() {
                     const name = Object.keys(itemObj)[0];
                     const details = itemObj[name];
                     const isExternal = details.path.startsWith('http');
-                    const displayPath = isExternal ? details.path.split('?')[0] : `${origin}/api${details.path.split('?')[0]}`;
+                    const displayPath = isExternal ? details.path.split('?')[0] : `https://apis.prexzyvilla.site${details.path.split('?')[0]}`;
                     const isPremiumItem = details.isPremium;
                     
                     const card = isPremiumItem ? (
@@ -534,7 +562,7 @@ function MainApp() {
                         <CardContent className="relative z-10">
                           <div className="bg-slate-50 rounded-lg p-2.5 flex items-center justify-between border border-slate-100 group-hover:border-slate-200 transition-colors">
                             <code className="text-xs text-slate-500 font-mono truncate mr-2">
-                              {displayPath.replace(/^https?:\/\//, '')}
+                              {displayPath}
                             </code>
                             <Button 
                               size="sm" 
@@ -617,79 +645,73 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-0 gap-0 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-6 outline-none">
           {/* Modal Header */}
-          <div className="p-5 sm:p-6 pb-0 flex items-start justify-between">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2.5">
-                <div className="bg-blue-50 text-blue-600 font-bold text-[10px] rounded-md px-2 py-1 uppercase tracking-wider border border-blue-100">
+          <div className="flex items-start justify-between mb-2">
+            <div className="space-y-1">
+              <div className="flex items-center gap-3">
+                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-xs rounded px-2 py-1 uppercase tracking-wider">
                   {method}
                 </div>
-                <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
               {selectedEndpoint?.desc && (
-                <DialogDescription className="text-slate-500 text-xs sm:text-sm font-medium leading-relaxed">
+                <DialogDescription className="text-slate-600 text-sm">
                   {selectedEndpoint.desc}
                 </DialogDescription>
               )}
             </div>
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"
+              className="text-slate-500 hover:text-slate-700 transition-colors"
             >
-              <X size={20} />
+              <X size={24} />
             </button>
           </div>
 
-          <div className="p-5 sm:p-6 space-y-5">
+          <div className="p-5 sm:p-6 space-y-6">
             {/* Full Request URL Section */}
-            <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 relative group">
-              <div className="pr-20 overflow-hidden">
-                <code className="text-[11px] sm:text-xs text-slate-500 font-mono break-all leading-relaxed block">
-                  {(() => {
-                    if (!selectedEndpoint) return '';
-                    let finalPath = selectedEndpoint.path.split('?')[0];
-                    const queryParams = new URLSearchParams();
-                    Object.entries(params).forEach(([key, value]) => {
-                      const isOptional = key.endsWith('?');
-                      const cleanKey = isOptional ? key.slice(0, -1) : key;
-                      if (value || !isOptional) {
-                        queryParams.append(cleanKey, value as string);
-                      }
-                    });
-                    const queryString = queryParams.toString();
-                    const baseUrl = 'https://apis.prexzyvilla.site';
-                    const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
-                    return `${fullUrl}${queryString ? `?${queryString}` : ''}`;
-                  })()}
-                </code>
+            <div className="border border-slate-300 rounded-lg p-3 relative flex items-center justify-between gap-3">
+              <div className="font-mono text-sm text-slate-800 break-all flex-1">
+                {(() => {
+                  if (!selectedEndpoint) return '';
+                  let finalPath = selectedEndpoint.path.split('?')[0];
+                  const queryParams = new URLSearchParams();
+                  Object.entries(params).forEach(([key, value]) => {
+                    const isOptional = key.endsWith('?');
+                    const cleanKey = isOptional ? key.slice(0, -1) : key;
+                    if (value || !isOptional) {
+                      queryParams.append(cleanKey, value as string);
+                    }
+                  });
+                  const queryString = queryParams.toString();
+                  const baseUrl = 'https://apis.prexzyvilla.site';
+                  const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
+                  return `${fullUrl}${queryString ? `?${queryString}` : ''}`;
+                })()}
               </div>
-              <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                <Button 
-                  size="sm" 
-                  variant="secondary"
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-7 px-3 rounded-md shadow-sm transition-all"
-                  onClick={() => {
-                    let finalPath = selectedEndpoint?.path.split('?')[0] || '';
-                    const queryParams = new URLSearchParams();
-                    Object.entries(params).forEach(([key, value]) => {
-                      const isOptional = key.endsWith('?');
-                      const cleanKey = isOptional ? key.slice(0, -1) : key;
-                      if (value || !isOptional) {
-                        queryParams.append(cleanKey, value as string);
-                      }
-                    });
-                    const queryString = queryParams.toString();
-                    const baseUrl = 'https://apis.prexzyvilla.site';
-                    const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
-                    copyToClipboard(`${fullUrl}${queryString ? `?${queryString}` : ''}`);
-                  }}
-                >
-                  {copied ? 'Copied' : 'Copy URL'}
-                </Button>
-              </div>
+              <Button 
+                className="shrink-0 bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-medium px-4 py-1.5 h-auto rounded-md"
+                onClick={() => {
+                  let finalPath = selectedEndpoint?.path.split('?')[0] || '';
+                  const queryParams = new URLSearchParams();
+                  Object.entries(params).forEach(([key, value]) => {
+                    const isOptional = key.endsWith('?');
+                    const cleanKey = isOptional ? key.slice(0, -1) : key;
+                    if (value || !isOptional) {
+                      queryParams.append(cleanKey, value as string);
+                    }
+                  });
+                  const queryString = queryParams.toString();
+                  const baseUrl = 'https://apis.prexzyvilla.site';
+                  const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
+                  copyToClipboard(`${fullUrl}${queryString ? `?${queryString}` : ''}`);
+                }}
+              >
+                {copied ? 'Copied' : 'Copy URL'}
+              </Button>
             </div>
 
             {/* Parameters Section */}
@@ -719,60 +741,55 @@ function MainApp() {
             )}
 
             {/* Response Section */}
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between px-1">
-                <h4 className="text-lg font-bold text-slate-900">Response</h4>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-base font-bold text-slate-900">Response</h4>
                 <div className="flex items-center gap-2">
-                  <div className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : (response ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-[#f0fdf4] text-[#16a34a] border border-[#dcfce7]')}`}>
+                  <div className={`px-2 py-0.5 rounded text-xs font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-[#e6f4ea] text-[#137333]' : (response ? 'bg-red-100 text-red-600' : 'bg-[#e6f4ea] text-[#137333]')}`}>
                     {response ? response.status : '200'}
                   </div>
-                  <div className="text-slate-400 text-[10px] font-medium">
+                  <div className="text-slate-500 text-xs">
                     {response ? `${response.time}ms` : '200ms'}
                   </div>
                 </div>
               </div>
               
-              <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-[80px]">
-                {loading ? (
-                  <div className="p-5 flex items-center justify-start h-full">
-                    <div className="text-slate-600 font-mono text-sm">Loading...</div>
+              <div className="border border-slate-300 rounded-lg p-3 min-h-[100px] max-h-[300px] overflow-auto relative">
+                {response && (
+                  <div className="absolute top-2 right-2 z-10">
+                    <Button 
+                      size="sm" 
+                      variant="ghost"
+                      className="bg-white/90 backdrop-blur hover:bg-slate-100 text-slate-600 text-[10px] font-bold h-7 px-3 rounded-md border border-slate-200 transition-all"
+                      onClick={() => {
+                        const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
+                        copyToClipboard(textToCopy);
+                      }}
+                    >
+                      {response.type === 'json' ? 'Copy JSON' : 'Copy Response'}
+                    </Button>
                   </div>
+                )}
+                {loading ? (
+                  <div className="font-mono text-sm text-slate-800">Loading...</div>
                 ) : response ? (
                   <>
-                    <div className="absolute top-2 right-2 z-10">
-                      <Button 
-                        size="sm" 
-                        variant="ghost"
-                        className="bg-white/90 backdrop-blur hover:bg-white text-slate-500 text-[10px] font-bold h-7 px-3 rounded-md shadow-sm border border-slate-200 transition-all"
-                        onClick={() => {
-                          const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
-                          copyToClipboard(textToCopy);
-                        }}
-                      >
-                        {response.type === 'json' ? 'Copy JSON' : 'Copy Response'}
-                      </Button>
-                    </div>
-                    
-                    <div className="p-4 overflow-auto max-h-[350px] custom-scrollbar">
-                      {response.type === 'json' ? (
-                        <pre className="text-[12px] text-slate-600 font-mono leading-relaxed">
-                          {JSON.stringify(response.data, null, 2)}
-                        </pre>
-                      ) : response.type === 'image' ? (
-                        <div className="flex justify-center p-1">
-                          <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" referrerPolicy="no-referrer" />
-                        </div>
-                      ) : (
-                        <div className="text-[12px] text-slate-600 font-mono whitespace-pre-wrap">
-                          {String(response.data)}
-                        </div>
-                      )}
-                    </div>
+                    {response.type === 'json' ? (
+                      <pre className="font-mono text-sm text-slate-800 whitespace-pre-wrap break-all mt-6">
+                        {JSON.stringify(response.data, null, 2)}
+                      </pre>
+                    ) : response.type === 'image' ? (
+                      <div className="flex justify-center p-1 mt-6">
+                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" referrerPolicy="no-referrer" />
+                      </div>
+                    ) : (
+                      <div className="font-mono text-sm text-slate-800 whitespace-pre-wrap break-all mt-6">
+                        {String(response.data)}
+                      </div>
+                    )}
                   </>
                 ) : (
-                  <div className="p-5 flex items-center justify-start h-full min-h-[80px]">
-                    <div className="text-slate-600 font-mono text-sm">Loading...</div>
-                  </div>
+                  <div className="font-mono text-sm text-slate-800">Loading...</div>
                 )}
               </div>
             </div>
@@ -781,18 +798,13 @@ function MainApp() {
             <Button 
               onClick={handleTestEndpoint} 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 text-sm font-bold rounded-xl transition-all shadow-md active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-slate-900 hover:bg-slate-800 text-white h-10 text-sm font-medium rounded-lg"
             >
-              {loading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                  Executing...
-                </div>
-              ) : 'Send Request'}
+              {loading ? 'Sending...' : 'Send Request'}
             </Button>
 
             {/* Modal Ad */}
-            <div className="flex justify-center pt-1">
+            <div className="flex justify-center mt-4">
               <AdBanner width={320} height={50} dataKey="3f774e44518c99b802b52db67915bdbe" />
             </div>
           </div>
@@ -919,6 +931,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainApp />} />
+        <Route path="/tools" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500">Loading tools...</div>}><Tools /></Suspense>} />
+        <Route path="/tool" element={<Navigate to="/tools" replace />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
