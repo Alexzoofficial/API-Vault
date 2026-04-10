@@ -645,36 +645,36 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-6 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl p-5 sm:p-6 outline-none [&>button]:hidden">
           {/* Modal Header */}
-          <div className="flex items-start justify-between mb-2">
-            <div className="space-y-1">
-              <div className="flex items-center gap-3">
-                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-xs rounded px-2 py-1 uppercase tracking-wider">
+          <div className="flex items-start justify-between mb-4">
+            <div className="space-y-1.5 pr-4">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-[10px] sm:text-xs rounded px-2 py-1 uppercase tracking-wider shrink-0">
                   {method}
                 </div>
-                <DialogTitle className="text-xl font-bold text-slate-900 tracking-tight">
+                <DialogTitle className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
               {selectedEndpoint?.desc && (
-                <DialogDescription className="text-slate-600 text-sm">
+                <DialogDescription className="text-slate-600 text-xs sm:text-sm mt-1">
                   {selectedEndpoint.desc}
                 </DialogDescription>
               )}
             </div>
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="text-slate-500 hover:text-slate-700 transition-colors"
+              className="text-slate-400 hover:text-slate-600 transition-colors shrink-0 p-1 -mr-1 -mt-1"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
           </div>
 
-          <div className="p-5 sm:p-6 space-y-6">
+          <div className="space-y-5 sm:space-y-6">
             {/* Full Request URL Section */}
-            <div className="border border-slate-300 rounded-lg p-3 relative flex items-center justify-between gap-3">
-              <div className="font-mono text-sm text-slate-800 break-all flex-1">
+            <div className="border border-slate-300 rounded-lg p-3 relative flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="font-mono text-xs sm:text-sm text-slate-800 break-all flex-1">
                 {(() => {
                   if (!selectedEndpoint) return '';
                   let finalPath = selectedEndpoint.path.split('?')[0];
@@ -693,7 +693,7 @@ function MainApp() {
                 })()}
               </div>
               <Button 
-                className="shrink-0 bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-medium px-4 py-1.5 h-auto rounded-md"
+                className="shrink-0 bg-[#3b82f6] hover:bg-[#2563eb] text-white text-xs font-medium px-4 py-2 sm:py-1.5 h-auto rounded-md w-full sm:w-auto"
                 onClick={() => {
                   let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                   const queryParams = new URLSearchParams();
