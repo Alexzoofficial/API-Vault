@@ -101,40 +101,7 @@ function MainApp() {
   const [botVerificationOpen, setBotVerificationOpen] = useState(false);
   const [visibleCategories, setVisibleCategories] = useState(5);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setOrigin(window.location.origin);
-
-    // Bot Verification Logic
-    const lastVerification = localStorage.getItem('lastVerification');
-    const now = Date.now();
-    if (!lastVerification || now - parseInt(lastVerification) > 30 * 60 * 1000) {
-      setBotVerificationOpen(true);
-    }
-
-    // Adblock Detection Logic
-    const bait = document.createElement('div');
-    bait.className = 'ad-banner adsbox doubleclick sponsor-ad';
-    bait.style.height = '10px';
-    bait.style.width = '10px';
-    bait.style.position = 'absolute';
-    bait.style.left = '-9999px';
-    bait.style.top = '-9999px';
-    document.body.appendChild(bait);
-
-    setTimeout(() => {
-      const isBlocked = bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none';
-      if (isBlocked) {
-        setAdblockDetected(true);
-      }
-      bait.remove();
-    }, 500);
-  }, []);
-
-  const handleVerificationSuccess = () => {
-    localStorage.setItem('lastVerification', Date.now().toString());
-    setBotVerificationOpen(false);
-  };
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const categories = useMemo(() => {
     const rawCategories = JSON.parse(JSON.stringify(endpointsData.endpoints || []));
@@ -167,7 +134,6 @@ function MainApp() {
     
     return newCategories;
   }, []);
-  const totalEndpoints = endpointsData.totalfitur || 0;
 
   const flatEndpoints = useMemo(() => {
     const flat: any[] = [];
@@ -219,6 +185,59 @@ function MainApp() {
     return Array.from(categoryMap.values());
   }, [categories, searchQuery, fuse]);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && visibleCategories < filteredCategories.length) {
+          setVisibleCategories((prev) => prev + 5);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [filteredCategories.length, visibleCategories]);
+
+  useEffect(() => {
+    setOrigin(window.location.origin);
+
+    // Bot Verification Logic
+    const lastVerification = localStorage.getItem('lastVerification');
+    const now = Date.now();
+    if (!lastVerification || now - parseInt(lastVerification) > 30 * 60 * 1000) {
+      setBotVerificationOpen(true);
+    }
+
+    // Adblock Detection Logic
+    const bait = document.createElement('div');
+    bait.className = 'ad-banner adsbox doubleclick sponsor-ad';
+    bait.style.height = '10px';
+    bait.style.width = '10px';
+    bait.style.position = 'absolute';
+    bait.style.left = '-9999px';
+    bait.style.top = '-9999px';
+    document.body.appendChild(bait);
+
+    setTimeout(() => {
+      const isBlocked = bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none';
+      if (isBlocked) {
+        setAdblockDetected(true);
+      }
+      bait.remove();
+    }, 500);
+  }, []);
+
+  const handleVerificationSuccess = () => {
+    localStorage.setItem('lastVerification', Date.now().toString());
+    setBotVerificationOpen(false);
+  };
+
+  const totalEndpoints = endpointsData.totalfitur || 0;
+
   const handleOpenModal = (name: string, details: any) => {
     setSelectedEndpoint({ name, ...details });
     setResponse(null);
@@ -260,10 +279,11 @@ function MainApp() {
       const queryString = queryParams.toString();
       
       let url = '';
+      const baseUrl = 'https://apis.prexzyvilla.site';
       if (finalPath.startsWith('http')) {
         url = `${finalPath}${queryString ? `?${queryString}` : ''}`;
       } else {
-        url = `/api${finalPath}${queryString ? `?${queryString}` : ''}`;
+        url = `${baseUrl}${finalPath}${queryString ? `?${queryString}` : ''}`;
       }
       
       const options: RequestInit = { method };
@@ -554,14 +574,11 @@ function MainApp() {
             })}
             
             {visibleCategories < filteredCategories.length && (
-              <div className="flex justify-center pt-10 pb-20">
-                <Button 
-                  onClick={() => setVisibleCategories(prev => prev + 5)}
-                  className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900 px-8 py-6 rounded-xl shadow-sm hover:shadow-md transition-all text-base font-medium"
-                  variant="outline"
-                >
-                  Load More Categories
-                </Button>
+              <div ref={loadMoreRef} className="flex justify-center pt-10 pb-20">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-8 h-8 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin"></div>
+                  <p className="text-slate-400 text-sm font-medium">Loading more categories...</p>
+                </div>
               </div>
             )}
           </>
@@ -600,37 +617,37 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl p-0 gap-0 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl p-0 gap-0 outline-none">
           {/* Modal Header */}
-          <div className="p-6 sm:p-8 pb-0 flex items-start justify-between">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="bg-[#eef2ff] text-[#4f46e5] font-bold text-[10px] sm:text-xs rounded-md px-2.5 py-1.5 uppercase tracking-wider">
+          <div className="p-5 sm:p-6 pb-0 flex items-start justify-between">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2.5">
+                <div className="bg-blue-50 text-blue-600 font-bold text-[10px] rounded-md px-2 py-1 uppercase tracking-wider border border-blue-100">
                   {method}
                 </div>
-                <DialogTitle className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
               {selectedEndpoint?.desc && (
-                <DialogDescription className="text-slate-500 text-sm sm:text-base font-medium">
+                <DialogDescription className="text-slate-500 text-xs sm:text-sm font-medium leading-relaxed">
                   {selectedEndpoint.desc}
                 </DialogDescription>
               )}
             </div>
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors"
+              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 transition-colors"
             >
-              <X size={28} />
+              <X size={20} />
             </button>
           </div>
 
-          <div className="p-6 sm:p-8 space-y-6">
+          <div className="p-5 sm:p-6 space-y-5">
             {/* Full Request URL Section */}
-            <div className="bg-white rounded-xl p-4 border border-slate-200 relative group">
-              <div className="pr-24 overflow-hidden">
-                <code className="text-[12px] sm:text-sm text-slate-600 font-mono break-all leading-relaxed block">
+            <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 relative group">
+              <div className="pr-20 overflow-hidden">
+                <code className="text-[11px] sm:text-xs text-slate-500 font-mono break-all leading-relaxed block">
                   {(() => {
                     if (!selectedEndpoint) return '';
                     let finalPath = selectedEndpoint.path.split('?')[0];
@@ -643,15 +660,17 @@ function MainApp() {
                       }
                     });
                     const queryString = queryParams.toString();
-                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                    return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+                    const baseUrl = 'https://apis.prexzyvilla.site';
+                    const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
+                    return `${fullUrl}${queryString ? `?${queryString}` : ''}`;
                   })()}
                 </code>
               </div>
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="absolute right-2 top-1/2 -translate-y-1/2">
                 <Button 
                   size="sm" 
-                  className="bg-[#3b82f6] hover:bg-[#2563eb] text-white text-[11px] font-bold h-9 px-4 rounded-lg shadow-sm transition-all"
+                  variant="secondary"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-7 px-3 rounded-md shadow-sm transition-all"
                   onClick={() => {
                     let finalPath = selectedEndpoint?.path.split('?')[0] || '';
                     const queryParams = new URLSearchParams();
@@ -663,8 +682,9 @@ function MainApp() {
                       }
                     });
                     const queryString = queryParams.toString();
-                    const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                    copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
+                    const baseUrl = 'https://apis.prexzyvilla.site';
+                    const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
+                    copyToClipboard(`${fullUrl}${queryString ? `?${queryString}` : ''}`);
                   }}
                 >
                   {copied ? 'Copied' : 'Copy URL'}
@@ -675,24 +695,21 @@ function MainApp() {
             {/* Parameters Section */}
             {Object.keys(params).length > 0 && (
               <div className="space-y-3">
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-3">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
                     const cleanKey = isOptional ? key.slice(0, -1) : key;
                     
                     return (
-                      <div key={key} className="space-y-1.5">
-                        <label className="text-sm font-bold text-slate-700 flex items-center justify-between px-1">
-                          <span>{cleanKey}</span>
-                          {isOptional && (
-                            <span className="text-[10px] text-slate-400 font-medium">Optional</span>
-                          )}
+                      <div key={key} className="space-y-1">
+                        <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider px-1">
+                          {cleanKey} {isOptional && <span className="text-slate-300 font-normal">(Optional)</span>}
                         </label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
                           placeholder={`Enter ${cleanKey}...`}
-                          className="bg-slate-50 border-slate-200 text-slate-900 h-12 rounded-xl focus-visible:ring-blue-500 transition-all text-sm"
+                          className="bg-white border-slate-200 text-slate-900 h-10 rounded-lg focus-visible:ring-blue-500 transition-all text-sm"
                         />
                       </div>
                     );
@@ -702,30 +719,31 @@ function MainApp() {
             )}
 
             {/* Response Section */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="flex items-center justify-between px-1">
-                <h4 className="text-xl font-bold text-slate-900">Response</h4>
-                <div className="flex items-center gap-3">
-                  <div className={`px-3 py-1 rounded-lg text-xs font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-[#ecfdf5] text-[#10b981]' : (response ? 'bg-red-50 text-red-600' : 'bg-slate-50 text-slate-400')}`}>
+                <h4 className="text-lg font-bold text-slate-900">Response</h4>
+                <div className="flex items-center gap-2">
+                  <div className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${response?.status >= 200 && response?.status < 300 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : (response ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-[#f0fdf4] text-[#16a34a] border border-[#dcfce7]')}`}>
                     {response ? response.status : '200'}
                   </div>
-                  <div className="text-[#94a3b8] text-xs font-medium">
+                  <div className="text-slate-400 text-[10px] font-medium">
                     {response ? `${response.time}ms` : '200ms'}
                   </div>
                 </div>
               </div>
               
-              <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-[100px]">
+              <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm min-h-[80px]">
                 {loading ? (
-                  <div className="p-6 flex items-center justify-center h-full">
-                    <div className="text-slate-400 font-mono text-sm animate-pulse">Loading...</div>
+                  <div className="p-5 flex items-center justify-start h-full">
+                    <div className="text-slate-600 font-mono text-sm">Loading...</div>
                   </div>
                 ) : response ? (
                   <>
-                    <div className="absolute top-3 right-3 z-10">
+                    <div className="absolute top-2 right-2 z-10">
                       <Button 
                         size="sm" 
-                        className="bg-[#3b82f6] hover:bg-[#2563eb] text-white text-[11px] font-bold h-8 px-4 rounded-lg shadow-sm transition-all"
+                        variant="ghost"
+                        className="bg-white/90 backdrop-blur hover:bg-white text-slate-500 text-[10px] font-bold h-7 px-3 rounded-md shadow-sm border border-slate-200 transition-all"
                         onClick={() => {
                           const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
                           copyToClipboard(textToCopy);
@@ -735,25 +753,25 @@ function MainApp() {
                       </Button>
                     </div>
                     
-                    <div className="p-5 overflow-auto max-h-[400px] custom-scrollbar">
+                    <div className="p-4 overflow-auto max-h-[350px] custom-scrollbar">
                       {response.type === 'json' ? (
-                        <pre className="text-[13px] sm:text-[14px] text-slate-700 font-mono leading-relaxed">
+                        <pre className="text-[12px] text-slate-600 font-mono leading-relaxed">
                           {JSON.stringify(response.data, null, 2)}
                         </pre>
                       ) : response.type === 'image' ? (
-                        <div className="flex justify-center p-2">
+                        <div className="flex justify-center p-1">
                           <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" referrerPolicy="no-referrer" />
                         </div>
                       ) : (
-                        <div className="text-[13px] sm:text-[14px] text-slate-700 font-mono whitespace-pre-wrap">
+                        <div className="text-[12px] text-slate-600 font-mono whitespace-pre-wrap">
                           {String(response.data)}
                         </div>
                       )}
                     </div>
                   </>
                 ) : (
-                  <div className="p-6 flex items-center justify-center h-full min-h-[100px]">
-                    <div className="text-slate-400 font-mono text-sm">Loading...</div>
+                  <div className="p-5 flex items-center justify-start h-full min-h-[80px]">
+                    <div className="text-slate-600 font-mono text-sm">Loading...</div>
                   </div>
                 )}
               </div>
@@ -763,18 +781,18 @@ function MainApp() {
             <Button 
               onClick={handleTestEndpoint} 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl transition-all shadow-lg active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11 text-sm font-bold rounded-xl transition-all shadow-md active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? (
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  <div className="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                   Executing...
                 </div>
               ) : 'Send Request'}
             </Button>
 
             {/* Modal Ad */}
-            <div className="flex justify-center pt-2">
+            <div className="flex justify-center pt-1">
               <AdBanner width={320} height={50} dataKey="3f774e44518c99b802b52db67915bdbe" />
             </div>
           </div>
