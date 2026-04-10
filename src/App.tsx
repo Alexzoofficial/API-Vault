@@ -522,14 +522,8 @@ function MainApp() {
                     return (
                       <div className="contents" key={`frag-${itemIdx}`}>
                         {card}
-                        {/* 300x250 Banner every 2 endpoints */}
-                        {((itemIdx + 1) % 2 === 0) && (
-                          <div className="flex justify-center items-center bg-slate-50 rounded-xl border border-slate-200 overflow-hidden min-h-[250px]">
-                            <AdBanner width={300} height={250} dataKey="36c65a945aa722669a63704442691dd9" />
-                          </div>
-                        )}
-                        {/* 728x90 Banner every 5 endpoints */}
-                        {((itemIdx + 1) % 5 === 0) && (
+                        {/* 728x90 Banner every 10 endpoints */}
+                        {((itemIdx + 1) % 10 === 0) && (
                           <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center py-4 hidden md:flex bg-slate-50 rounded-xl border border-slate-200 my-2">
                             <AdBanner width={728} height={90} dataKey="3f774e44518c99b802b52db67915bdbe" />
                           </div>
@@ -539,13 +533,6 @@ function MainApp() {
                   })}
                 </div>
               </motion.div>
-              
-              {/* Insert 300x250 Banner after every 3 categories */}
-              {(idx + 1) % 3 === 0 && (
-                <div className="mt-20">
-                  <AdBanner width={300} height={250} dataKey="36c65a945aa722669a63704442691dd9" />
-                </div>
-              )}
             </div>
             );
             })}
@@ -587,20 +574,20 @@ function MainApp() {
 
       {/* Test Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl p-0 gap-0 outline-none">
+        <DialogContent className="bg-white border-none text-slate-900 max-w-[95vw] sm:max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl p-0 gap-0 outline-none">
           {/* Modal Header */}
-          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 p-5 sm:p-7 flex items-start justify-between">
-            <div className="flex flex-col gap-1.5 overflow-hidden">
+          <div className="sticky top-0 z-10 bg-white border-b border-slate-100 p-4 sm:p-7 flex items-start justify-between">
+            <div className="flex flex-col gap-1 overflow-hidden">
               <div className="flex items-center gap-2">
                 <div className="bg-blue-50 text-blue-600 font-mono text-[10px] sm:text-xs font-bold rounded-md px-2 py-1 flex-shrink-0">
                   {method}
                 </div>
-                <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 truncate">
+                <DialogTitle className="text-lg sm:text-2xl font-bold text-slate-900 truncate">
                   {selectedEndpoint?.name}
                 </DialogTitle>
               </div>
               {selectedEndpoint?.desc && (
-                <DialogDescription className="text-slate-500 text-sm leading-relaxed line-clamp-2 sm:line-clamp-none">
+                <DialogDescription className="text-slate-500 text-[11px] sm:text-sm leading-relaxed line-clamp-1 sm:line-clamp-none">
                   {selectedEndpoint.desc}
                 </DialogDescription>
               )}
@@ -609,39 +596,18 @@ function MainApp() {
               onClick={() => setIsModalOpen(false)} 
               className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0"
             >
-              <X size={24} />
+              <X size={20} />
             </button>
           </div>
 
-          <div className="p-5 sm:p-8 space-y-6 sm:space-y-8">
+          <div className="p-4 sm:p-8 space-y-4 sm:space-y-8">
             {/* Full Request URL Section */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Full Request URL</h4>
-              <div className="bg-white rounded-xl p-2.5 sm:p-4 border border-slate-200 flex items-center justify-between gap-2 transition-all hover:border-blue-200 shadow-sm">
-                <div className="flex-1 overflow-hidden">
-                  <code className="text-[10px] sm:text-sm text-slate-600 font-mono truncate block px-1">
-                    {(() => {
-                      if (!selectedEndpoint) return '';
-                      let finalPath = selectedEndpoint.path.split('?')[0];
-                      const queryParams = new URLSearchParams();
-                      Object.entries(params).forEach(([key, value]) => {
-                        const isOptional = key.endsWith('?');
-                        const cleanKey = isOptional ? key.slice(0, -1) : key;
-                        if (value || !isOptional) {
-                          queryParams.append(cleanKey, value as string);
-                        }
-                      });
-                      const queryString = queryParams.toString();
-                      const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                      return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
-                    })()}
-                  </code>
-                </div>
-                <Button 
-                  size="sm" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-8 px-3 rounded-lg shadow-sm transition-all flex-shrink-0"
-                  onClick={() => {
-                    let finalPath = selectedEndpoint?.path.split('?')[0] || '';
+            <div className="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 flex items-center justify-between gap-2 transition-all hover:border-blue-200 shadow-sm">
+              <div className="flex-1 overflow-hidden">
+                <code className="text-[10px] sm:text-sm text-slate-600 font-mono truncate block">
+                  {(() => {
+                    if (!selectedEndpoint) return '';
+                    let finalPath = selectedEndpoint.path.split('?')[0];
                     const queryParams = new URLSearchParams();
                     Object.entries(params).forEach(([key, value]) => {
                       const isOptional = key.endsWith('?');
@@ -652,38 +618,56 @@ function MainApp() {
                     });
                     const queryString = queryParams.toString();
                     const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
-                    copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
-                  }}
-                >
-                  {copied ? 'Copied' : 'Copy URL'}
-                </Button>
+                    return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+                  })()}
+                </code>
               </div>
+              <Button 
+                size="sm" 
+                className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] sm:text-xs font-bold h-8 px-3 rounded-lg shadow-sm transition-all flex-shrink-0"
+                onClick={() => {
+                  let finalPath = selectedEndpoint?.path.split('?')[0] || '';
+                  const queryParams = new URLSearchParams();
+                  Object.entries(params).forEach(([key, value]) => {
+                    const isOptional = key.endsWith('?');
+                    const cleanKey = isOptional ? key.slice(0, -1) : key;
+                    if (value || !isOptional) {
+                      queryParams.append(cleanKey, value as string);
+                    }
+                  });
+                  const queryString = queryParams.toString();
+                  const baseUrl = finalPath.startsWith('http') ? finalPath : `${origin}/api${finalPath}`;
+                  copyToClipboard(`${baseUrl}${queryString ? `?${queryString}` : ''}`);
+                }}
+              >
+                {copied ? 'Copied' : 'Copy URL'}
+              </Button>
             </div>
 
             {/* Parameters Section */}
             {Object.keys(params).length > 0 && (
-              <div className="space-y-4">
-                <h4 className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">Query Parameters</h4>
-                <div className="grid grid-cols-1 gap-4">
+              <div className="space-y-3">
+                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Parameters</h4>
+                <div className="grid grid-cols-1 gap-3">
                   {Object.keys(params).map((key) => {
                     const isOptional = key.endsWith('?');
                     const cleanKey = isOptional ? key.slice(0, -1) : key;
                     
                     return (
-                      <div key={key} className="flex flex-col gap-2">
-                        <label className="text-sm font-bold text-slate-700 flex items-center justify-between px-1">
+                      <div key={key} className="flex flex-col gap-1.5">
+                        <label className="text-[11px] sm:text-sm font-bold text-slate-700 flex items-center justify-between px-1">
                           <span>{cleanKey}</span>
                           {isOptional ? (
-                            <span className="text-[9px] text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Optional</span>
+                            <span className="text-[8px] text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded-full uppercase font-bold tracking-wider">Optional</span>
                           ) : (
-                            <span className="text-[9px] text-red-500 bg-red-50 px-2 py-0.5 rounded-full uppercase font-bold tracking-wider">Required</span>
+                            <span className="text-[8px] text-red-500 bg-red-50 px-1.5 py-0.5 rounded-full uppercase font-bold tracking-wider">Required</span>
                           )}
                         </label>
                         <Input
                           value={params[key]}
                           onChange={(e) => setParams({ ...params, [key]: e.target.value })}
                           placeholder={`Enter ${cleanKey}...`}
-                          className="bg-white border-slate-200 text-slate-900 h-12 sm:h-14 rounded-2xl focus-visible:ring-blue-500 transition-all shadow-sm"
+                          className="bg-white border-slate-200 text-slate-900 h-10 sm:h-12 rounded-xl focus-visible:ring-blue-500 transition-all shadow-sm text-sm"
                         />
                       </div>
                     );
@@ -696,7 +680,7 @@ function MainApp() {
             <Button 
               onClick={handleTestEndpoint} 
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl sm:rounded-2xl transition-all shadow-lg hover:shadow-blue-100 active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 sm:h-14 text-sm sm:text-base font-bold rounded-xl transition-all shadow-lg hover:shadow-blue-100 active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? (
                 <div className="flex items-center gap-2">
@@ -708,24 +692,24 @@ function MainApp() {
 
             {/* Response Section */}
             {response && (
-              <div className="space-y-4 pt-6 border-t border-slate-100">
+              <div className="space-y-3 pt-4 border-t border-slate-100">
                 <div className="flex items-center justify-between px-1">
-                  <h4 className="text-sm sm:text-lg font-bold text-slate-900">Response</h4>
+                  <h4 className="text-xs sm:text-base font-bold text-slate-900">Response</h4>
                   <div className="flex items-center gap-2">
-                    <div className={`px-3 py-1 rounded-xl text-xs font-bold ${response.status >= 200 && response.status < 300 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
+                    <div className={`px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-bold ${response.status >= 200 && response.status < 300 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'}`}>
                       {response.status}
                     </div>
-                    <div className="bg-slate-50 text-slate-400 px-3 py-1 rounded-xl text-xs font-bold">
+                    <div className="bg-slate-50 text-slate-400 px-2 py-0.5 rounded-lg text-[10px] sm:text-xs font-bold">
                       {response.time}ms
                     </div>
                   </div>
                 </div>
                 
-                <div className="relative bg-white border border-slate-200 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden group shadow-sm">
-                  <div className="absolute top-4 right-4 z-10">
+                <div className="relative bg-white border border-slate-200 rounded-xl overflow-hidden group shadow-sm">
+                  <div className="absolute top-3 right-3 z-10">
                     <Button 
                       size="sm" 
-                      className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold h-8 px-4 rounded-xl shadow-md transition-all opacity-0 group-hover:opacity-100 sm:opacity-100"
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold h-7 px-3 rounded-lg shadow-md transition-all opacity-0 group-hover:opacity-100 sm:opacity-100"
                       onClick={() => {
                         const textToCopy = response.type === 'json' ? JSON.stringify(response.data, null, 2) : String(response.data);
                         copyToClipboard(textToCopy);
@@ -735,17 +719,17 @@ function MainApp() {
                     </Button>
                   </div>
                   
-                  <div className="p-6 overflow-auto max-h-[400px] custom-scrollbar">
+                  <div className="p-4 overflow-auto max-h-[300px] custom-scrollbar">
                     {response.type === 'json' ? (
-                      <pre className="text-[13px] text-slate-700 font-mono leading-relaxed">
+                      <pre className="text-[11px] sm:text-[13px] text-slate-700 font-mono leading-relaxed">
                         {JSON.stringify(response.data, null, 2)}
                       </pre>
                     ) : response.type === 'image' ? (
-                      <div className="flex justify-center p-2">
-                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-xl shadow-sm" />
+                      <div className="flex justify-center p-1">
+                        <img src={response.data} alt="API Response" className="max-w-full h-auto rounded-lg shadow-sm" />
                       </div>
                     ) : (
-                      <div className="text-[13px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
+                      <div className="text-[11px] sm:text-[13px] text-slate-600 font-mono leading-relaxed whitespace-pre-wrap">
                         {String(response.data).length > 2000 ? String(response.data).substring(0, 2000) + '...' : String(response.data)}
                       </div>
                     )}
@@ -757,27 +741,34 @@ function MainApp() {
         </DialogContent>
       </Dialog>
 
+
+
       {/* Bot Verification Modal */}
       <Dialog open={botVerificationOpen} onOpenChange={() => {}}>
         <DialogContent 
-          className="bg-white border-slate-200 text-slate-900 sm:max-w-md [&>button]:hidden" 
+          className="bg-white border-none text-slate-900 max-w-[90vw] sm:max-w-md w-full rounded-[2rem] shadow-2xl p-0 gap-0 outline-none [&>button]:hidden" 
           onPointerDownOutside={(e) => e.preventDefault()} 
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
-          <div className="flex flex-col items-center text-center p-6 space-y-4">
-            <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-2">
-              <Shield size={32} />
+          <div className="flex flex-col items-center text-center p-8 sm:p-10 space-y-6">
+            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center shadow-inner">
+              <Shield size={40} />
             </div>
-            <DialogTitle className="text-2xl font-bold text-slate-900">Bot Verification</DialogTitle>
-            <DialogDescription className="text-slate-600 text-base">
-              Please complete the verification to continue using API Vault.
-            </DialogDescription>
-            <div className="py-2">
+            <div className="space-y-2">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-slate-900">Bot Verification</DialogTitle>
+              <DialogDescription className="text-slate-500 text-sm sm:text-base leading-relaxed">
+                Please complete the verification to continue using API Vault.
+              </DialogDescription>
+            </div>
+            <div className="w-full flex justify-center py-2 overflow-hidden">
               <Turnstile 
                 siteKey="0x4AAAAAAC2peINI9p1_A0No"
                 onSuccess={handleVerificationSuccess}
                 options={{ theme: 'light' }}
               />
+            </div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">
+              Secure Connection by Cloudflare
             </div>
           </div>
         </DialogContent>

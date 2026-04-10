@@ -5,86 +5,6 @@
   "totalfitur": 2058,
   "endpoints": [
     {
-      "name": "Featured APIs",
-      "items": [
-        {
-          "zyfoox": {
-            "path": "https://alexzo.vercel.app/",
-            "desc": "Premium zyfoox API for advanced integrations.",
-            "description": "Premium zyfoox API for advanced integrations."
-          }
-        },
-        {
-          "Web search": {
-            "path": "https://alexzo.vercel.app/",
-            "desc": "High-performance Web Search API.",
-            "description": "High-performance Web Search API."
-          }
-        },
-        {
-          "News API": {
-            "path": "https://alexzo.vercel.app/",
-            "desc": "Real-time News API from global sources.",
-            "description": "Real-time News API from global sources."
-          }
-        },
-        {
-          "Weather API": {
-            "path": "https://alexzo.vercel.app/",
-            "desc": "Accurate Weather API with forecasting.",
-            "description": "Accurate Weather API with forecasting."
-          }
-        }
-      ]
-    },
-    {
-      "name": "Social Media Downloaders",
-      "items": [
-        {
-          "YouTube Video Downloader": {
-            "path": "https://apivault.pages.dev/yt-download",
-            "desc": "Download YouTube videos in MP4 format.",
-            "description": "Download YouTube videos in MP4 format."
-          }
-        },
-        {
-          "Instagram Reel Downloader": {
-            "path": "https://apivault.pages.dev/ig-reel",
-            "desc": "Download Instagram Reels easily.",
-            "description": "Download Instagram Reels easily."
-          }
-        },
-        {
-          "TikTok No Watermark": {
-            "path": "https://apivault.pages.dev/tiktok-dl",
-            "desc": "Download TikTok videos without watermark.",
-            "description": "Download TikTok videos without watermark."
-          }
-        },
-        {
-          "Twitter Video Downloader": {
-            "path": "https://apivault.pages.dev/twitter-vid",
-            "desc": "Download videos from Twitter/X.",
-            "description": "Download videos from Twitter/X."
-          }
-        },
-        {
-          "Facebook Video Downloader": {
-            "path": "https://apivault.pages.dev/fb-vid",
-            "desc": "Download public Facebook videos.",
-            "description": "Download public Facebook videos."
-          }
-        },
-        {
-          "Pinterest Image/Video": {
-            "path": "https://apivault.pages.dev/pinterest",
-            "desc": "Download media from Pinterest.",
-            "description": "Download media from Pinterest."
-          }
-        }
-      ]
-    },
-    {
       "name": "Artificial Intelligence",
       "items": [
         {
@@ -330,6 +250,39 @@
             "desc": "Chat with GLM-5 AI model",
             "path": "/ai/zai?text=",
             "description": "Chat with GLM-5 AI model"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Featured APIs",
+      "items": [
+        {
+          "zyfoox": {
+            "path": "https://alexzo.vercel.app/",
+            "desc": "Premium zyfoox API for advanced integrations.",
+            "description": "Premium zyfoox API for advanced integrations."
+          }
+        },
+        {
+          "Web search": {
+            "path": "https://alexzo.vercel.app/",
+            "desc": "High-performance Web Search API.",
+            "description": "High-performance Web Search API."
+          }
+        },
+        {
+          "News API": {
+            "path": "https://alexzo.vercel.app/",
+            "desc": "Real-time News API from global sources.",
+            "description": "Real-time News API from global sources."
+          }
+        },
+        {
+          "Weather API": {
+            "path": "https://alexzo.vercel.app/",
+            "desc": "Accurate Weather API with forecasting.",
+            "description": "Accurate Weather API with forecasting."
           }
         }
       ]
@@ -800,214 +753,6 @@
       ]
     },
     {
-      "name": "Downloader",
-      "items": [
-        {
-          "AIO Downloader": {
-            "desc": "Universal downloader for all social media platforms",
-            "path": "/download/aio?url=",
-            "description": "Universal downloader for all social media platforms"
-          }
-        },
-        {
-          "Capcut": {
-            "desc": "Download on capcut",
-            "path": "/download/capcut?url=",
-            "description": "Download on capcut"
-          }
-        },
-        {
-          "DoodsStream Downloader": {
-            "desc": "Get download link from DoodsStream video",
-            "path": "/download/doods?url=",
-            "description": "Get download link from DoodsStream video"
-          }
-        },
-        {
-          "Douyin": {
-            "desc": "Download on douyin",
-            "path": "/download/douyin?url=",
-            "description": "Download on douyin"
-          }
-        },
-        {
-          "Facebook Downloader": {
-            "desc": "Download Facebook videos",
-            "path": "/download/facebook?url=",
-            "description": "Download Facebook videos"
-          }
-        },
-        {
-          "Facebook Downloader V2": {
-            "desc": "Download Facebook videos with multiple quality options",
-            "path": "/download/facebookv2?url=",
-            "description": "Download Facebook videos with multiple quality options"
-          }
-        },
-        {
-          "Instagram V2": {
-            "desc": "Download Instagram reels, posts, photos, videos, and audio from Instagram URLs",
-            "path": "/download/ig2?url=",
-            "description": "Download Instagram reels, posts, photos, videos, and audio from Instagram URLs"
-          }
-        },
-        {
-          "Instagram Downloader": {
-            "desc": "Download Instagram posts, reels, and stories with multiple fallback methods",
-            "path": "/download/instagram?url=",
-            "description": "Download Instagram posts, reels, and stories with multiple fallback methods"
-          }
-        },
-        {
-          "MediaFire Downloader": {
-            "desc": "Get download links from MediaFire files and folders",
-            "path": "/download/mediafire?url=",
-            "description": "Get download links from MediaFire files and folders"
-          }
-        },
-        {
-          "Pinterest": {
-            "desc": "Download video/image on pinterest",
-            "path": "/download/pinterest?url=",
-            "description": "Download video/image on pinterest"
-          }
-        },
-        {
-          "Pinterest V2": {
-            "desc": "Download video/image on pinterest",
-            "path": "/download/pinterestV2?url=",
-            "description": "Download video/image on pinterest"
-          }
-        },
-        {
-          "RedNote Downloader": {
-            "desc": "Download videos and images from RedNote/Xiaohongshu",
-            "path": "/download/rednote?url=",
-            "description": "Download videos and images from RedNote/Xiaohongshu"
-          }
-        },
-        {
-          "RedNote Media": {
-            "desc": "Redirect to RedNote media URL for direct download",
-            "path": "/download/rednote-media?url=",
-            "description": "Redirect to RedNote media URL for direct download"
-          }
-        },
-        {
-          "Web2Zip": {
-            "desc": "Save website as ZIP file",
-            "path": "/download/saveweb2zip?url=",
-            "description": "Save website as ZIP file"
-          }
-        },
-        {
-          "Sfile": {
-            "desc": "Download on sfile.mobi",
-            "path": "/download/sfile?url=",
-            "description": "Download on sfile.mobi"
-          }
-        },
-        {
-          "Snackvideo": {
-            "desc": "Download video on snackvideo",
-            "path": "/download/snackvideo?url=",
-            "description": "Download video on snackvideo"
-          }
-        },
-        {
-          "Soundcloud": {
-            "desc": "Download on soundcloud",
-            "path": "/download/soundcloud?url=",
-            "description": "Download on soundcloud"
-          }
-        },
-        {
-          "Spotify Downloader": {
-            "desc": "Download Spotify tracks with multiple quality options and metadata",
-            "path": "/download/spotify?url=",
-            "description": "Download Spotify tracks with multiple quality options and metadata"
-          }
-        },
-        {
-          "Terabox": {
-            "desc": "Download on terabox",
-            "path": "/download/terabox?url=",
-            "description": "Download on terabox"
-          }
-        },
-        {
-          "Threads": {
-            "desc": "Download video/image on threads",
-            "path": "/download/threads?url=",
-            "description": "Download video/image on threads"
-          }
-        },
-        {
-          "Threads V2": {
-            "desc": "Download video/image on threads",
-            "path": "/download/threadsV2?url=",
-            "description": "Download video/image on threads"
-          }
-        },
-        {
-          "TikTok": {
-            "desc": "Download video/image on tiktok",
-            "path": "/download/tiktok?url=",
-            "description": "Download video/image on tiktok"
-          }
-        },
-        {
-          "TikTok Downloader V2": {
-            "desc": "Download TikTok videos and slideshows with multiple quality options",
-            "path": "/download/tiktokV2?url=",
-            "description": "Download TikTok videos and slideshows with multiple quality options"
-          }
-        },
-        {
-          "TikTok V3": {
-            "desc": "Download video on tiktok",
-            "path": "/download/tiktokV3?url=",
-            "description": "Download video on tiktok"
-          }
-        },
-        {
-          "TikTok Video Downloader": {
-            "desc": "Download TikTok video without watermark with complete metadata",
-            "path": "/download/tiktokvideo?url=",
-            "description": "Download TikTok video without watermark with complete metadata"
-          }
-        },
-        {
-          "TikTok Slide Downloader": {
-            "desc": "Download TikTok image slide/photo post with metadata",
-            "path": "/download/tiktokslide?url=",
-            "description": "Download TikTok image slide/photo post with metadata"
-          }
-        },
-        {
-          "Twitter/X Downloader": {
-            "desc": "Download images and videos from Twitter/X posts",
-            "path": "/download/twitter?url=",
-            "description": "Download images and videos from Twitter/X posts"
-          }
-        },
-        {
-          "YouTube Downloader": {
-            "desc": "Download YouTube videos in multiple formats (video/audio)",
-            "path": "/download/ytdownload?url=&type?=&format?=&quality?=&bitrate?=",
-            "description": "Download YouTube videos in multiple formats (video/audio)"
-          }
-        },
-        {
-          "YouTube Video Info": {
-            "desc": "Get information about a YouTube video",
-            "path": "/download/ytinfo?url=",
-            "description": "Get information about a YouTube video"
-          }
-        }
-      ]
-    },
-    {
       "name": "Games",
       "items": [
         {
@@ -1385,25 +1130,6 @@
             "desc": "Search for videos on xvideos.com",
             "path": "/nsfw/xvideos-search?query=",
             "description": "Search for videos on xvideos.com"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Downloader",
-      "items": [
-        {
-          "XNXX Video Downloader": {
-            "desc": "Downloader for a specific xnxx.com video",
-            "path": "/nsfw/xnxx-dl?url=",
-            "description": "Downloader for a specific xnxx.com video"
-          }
-        },
-        {
-          "XVideos Video Downloader": {
-            "desc": "Downloader for a specific xvideos.com video",
-            "path": "/nsfw/xvideos-dl?url=",
-            "description": "Downloader for a specific xvideos.com video"
           }
         }
       ]
@@ -14759,6 +14485,280 @@
             "path": "https://api.publicapis.org/entries?id=500",
             "desc": "Extended public API endpoint 500 for various testing purposes.",
             "description": "Extended public API endpoint 500 for various testing purposes."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Social Media Downloaders",
+      "items": [
+        {
+          "YouTube Video Downloader": {
+            "path": "https://apivault.pages.dev/yt-download",
+            "desc": "Download YouTube videos in MP4 format.",
+            "description": "Download YouTube videos in MP4 format."
+          }
+        },
+        {
+          "Instagram Reel Downloader": {
+            "path": "https://apivault.pages.dev/ig-reel",
+            "desc": "Download Instagram Reels easily.",
+            "description": "Download Instagram Reels easily."
+          }
+        },
+        {
+          "TikTok No Watermark": {
+            "path": "https://apivault.pages.dev/tiktok-dl",
+            "desc": "Download TikTok videos without watermark.",
+            "description": "Download TikTok videos without watermark."
+          }
+        },
+        {
+          "Twitter Video Downloader": {
+            "path": "https://apivault.pages.dev/twitter-vid",
+            "desc": "Download videos from Twitter/X.",
+            "description": "Download videos from Twitter/X."
+          }
+        },
+        {
+          "Facebook Video Downloader": {
+            "path": "https://apivault.pages.dev/fb-vid",
+            "desc": "Download public Facebook videos.",
+            "description": "Download public Facebook videos."
+          }
+        },
+        {
+          "Pinterest Image/Video": {
+            "path": "https://apivault.pages.dev/pinterest",
+            "desc": "Download media from Pinterest.",
+            "description": "Download media from Pinterest."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Downloader",
+      "items": [
+        {
+          "AIO Downloader": {
+            "desc": "Universal downloader for all social media platforms",
+            "path": "/download/aio?url=",
+            "description": "Universal downloader for all social media platforms"
+          }
+        },
+        {
+          "Capcut": {
+            "desc": "Download on capcut",
+            "path": "/download/capcut?url=",
+            "description": "Download on capcut"
+          }
+        },
+        {
+          "DoodsStream Downloader": {
+            "desc": "Get download link from DoodsStream video",
+            "path": "/download/doods?url=",
+            "description": "Get download link from DoodsStream video"
+          }
+        },
+        {
+          "Douyin": {
+            "desc": "Download on douyin",
+            "path": "/download/douyin?url=",
+            "description": "Download on douyin"
+          }
+        },
+        {
+          "Facebook Downloader": {
+            "desc": "Download Facebook videos",
+            "path": "/download/facebook?url=",
+            "description": "Download Facebook videos"
+          }
+        },
+        {
+          "Facebook Downloader V2": {
+            "desc": "Download Facebook videos with multiple quality options",
+            "path": "/download/facebookv2?url=",
+            "description": "Download Facebook videos with multiple quality options"
+          }
+        },
+        {
+          "Instagram V2": {
+            "desc": "Download Instagram reels, posts, photos, videos, and audio from Instagram URLs",
+            "path": "/download/ig2?url=",
+            "description": "Download Instagram reels, posts, photos, videos, and audio from Instagram URLs"
+          }
+        },
+        {
+          "Instagram Downloader": {
+            "desc": "Download Instagram posts, reels, and stories with multiple fallback methods",
+            "path": "/download/instagram?url=",
+            "description": "Download Instagram posts, reels, and stories with multiple fallback methods"
+          }
+        },
+        {
+          "MediaFire Downloader": {
+            "desc": "Get download links from MediaFire files and folders",
+            "path": "/download/mediafire?url=",
+            "description": "Get download links from MediaFire files and folders"
+          }
+        },
+        {
+          "Pinterest": {
+            "desc": "Download video/image on pinterest",
+            "path": "/download/pinterest?url=",
+            "description": "Download video/image on pinterest"
+          }
+        },
+        {
+          "Pinterest V2": {
+            "desc": "Download video/image on pinterest",
+            "path": "/download/pinterestV2?url=",
+            "description": "Download video/image on pinterest"
+          }
+        },
+        {
+          "RedNote Downloader": {
+            "desc": "Download videos and images from RedNote/Xiaohongshu",
+            "path": "/download/rednote?url=",
+            "description": "Download videos and images from RedNote/Xiaohongshu"
+          }
+        },
+        {
+          "RedNote Media": {
+            "desc": "Redirect to RedNote media URL for direct download",
+            "path": "/download/rednote-media?url=",
+            "description": "Redirect to RedNote media URL for direct download"
+          }
+        },
+        {
+          "Web2Zip": {
+            "desc": "Save website as ZIP file",
+            "path": "/download/saveweb2zip?url=",
+            "description": "Save website as ZIP file"
+          }
+        },
+        {
+          "Sfile": {
+            "desc": "Download on sfile.mobi",
+            "path": "/download/sfile?url=",
+            "description": "Download on sfile.mobi"
+          }
+        },
+        {
+          "Snackvideo": {
+            "desc": "Download video on snackvideo",
+            "path": "/download/snackvideo?url=",
+            "description": "Download video on snackvideo"
+          }
+        },
+        {
+          "Soundcloud": {
+            "desc": "Download on soundcloud",
+            "path": "/download/soundcloud?url=",
+            "description": "Download on soundcloud"
+          }
+        },
+        {
+          "Spotify Downloader": {
+            "desc": "Download Spotify tracks with multiple quality options and metadata",
+            "path": "/download/spotify?url=",
+            "description": "Download Spotify tracks with multiple quality options and metadata"
+          }
+        },
+        {
+          "Terabox": {
+            "desc": "Download on terabox",
+            "path": "/download/terabox?url=",
+            "description": "Download on terabox"
+          }
+        },
+        {
+          "Threads": {
+            "desc": "Download video/image on threads",
+            "path": "/download/threads?url=",
+            "description": "Download video/image on threads"
+          }
+        },
+        {
+          "Threads V2": {
+            "desc": "Download video/image on threads",
+            "path": "/download/threadsV2?url=",
+            "description": "Download video/image on threads"
+          }
+        },
+        {
+          "TikTok": {
+            "desc": "Download video/image on tiktok",
+            "path": "/download/tiktok?url=",
+            "description": "Download video/image on tiktok"
+          }
+        },
+        {
+          "TikTok Downloader V2": {
+            "desc": "Download TikTok videos and slideshows with multiple quality options",
+            "path": "/download/tiktokV2?url=",
+            "description": "Download TikTok videos and slideshows with multiple quality options"
+          }
+        },
+        {
+          "TikTok V3": {
+            "desc": "Download video on tiktok",
+            "path": "/download/tiktokV3?url=",
+            "description": "Download video on tiktok"
+          }
+        },
+        {
+          "TikTok Video Downloader": {
+            "desc": "Download TikTok video without watermark with complete metadata",
+            "path": "/download/tiktokvideo?url=",
+            "description": "Download TikTok video without watermark with complete metadata"
+          }
+        },
+        {
+          "TikTok Slide Downloader": {
+            "desc": "Download TikTok image slide/photo post with metadata",
+            "path": "/download/tiktokslide?url=",
+            "description": "Download TikTok image slide/photo post with metadata"
+          }
+        },
+        {
+          "Twitter/X Downloader": {
+            "desc": "Download images and videos from Twitter/X posts",
+            "path": "/download/twitter?url=",
+            "description": "Download images and videos from Twitter/X posts"
+          }
+        },
+        {
+          "YouTube Downloader": {
+            "desc": "Download YouTube videos in multiple formats (video/audio)",
+            "path": "/download/ytdownload?url=&type?=&format?=&quality?=&bitrate?=",
+            "description": "Download YouTube videos in multiple formats (video/audio)"
+          }
+        },
+        {
+          "YouTube Video Info": {
+            "desc": "Get information about a YouTube video",
+            "path": "/download/ytinfo?url=",
+            "description": "Get information about a YouTube video"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Downloader",
+      "items": [
+        {
+          "XNXX Video Downloader": {
+            "desc": "Downloader for a specific xnxx.com video",
+            "path": "/nsfw/xnxx-dl?url=",
+            "description": "Downloader for a specific xnxx.com video"
+          }
+        },
+        {
+          "XVideos Video Downloader": {
+            "desc": "Downloader for a specific xvideos.com video",
+            "path": "/nsfw/xvideos-dl?url=",
+            "description": "Downloader for a specific xvideos.com video"
           }
         }
       ]
