@@ -335,10 +335,13 @@ function MainApp() {
       });
     } catch (error: any) {
       setResponse({
-        data: error.message || 'Failed to fetch',
+        data: {
+          error: 'Failed to fetch',
+          message: error.message || 'Network error or CORS issue'
+        },
         status: 0,
         time: 0,
-        type: 'error'
+        type: 'json'
       });
     } finally {
       setLoading(false);
@@ -516,7 +519,7 @@ function MainApp() {
                     const name = Object.keys(itemObj)[0];
                     const details = itemObj[name];
                     const isExternal = details.path.startsWith('http');
-                    const displayPath = isExternal ? details.path.split('?')[0] : `https://apis.prexzyvilla.site${details.path.split('?')[0]}`;
+                    const displayPath = isExternal ? details.path.split('?')[0] : `https://apivault.pages.dev${details.path.split('?')[0]}`;
                     const isPremiumItem = details.isPremium;
                     
                     const card = isPremiumItem ? (
@@ -687,7 +690,7 @@ function MainApp() {
                     }
                   });
                   const queryString = queryParams.toString();
-                  const baseUrl = 'https://apis.prexzyvilla.site';
+                  const baseUrl = 'https://apivault.pages.dev';
                   const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
                   return `${fullUrl}${queryString ? `?${queryString}` : ''}`;
                 })()}
@@ -705,7 +708,7 @@ function MainApp() {
                     }
                   });
                   const queryString = queryParams.toString();
-                  const baseUrl = 'https://apis.prexzyvilla.site';
+                  const baseUrl = 'https://apivault.pages.dev';
                   const fullUrl = finalPath.startsWith('http') ? finalPath : `${baseUrl}${finalPath}`;
                   copyToClipboard(`${fullUrl}${queryString ? `?${queryString}` : ''}`);
                 }}
